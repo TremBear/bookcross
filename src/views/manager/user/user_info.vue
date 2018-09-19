@@ -51,7 +51,7 @@ export default {
     return {
       user:{},
       imageUrl: '',
-      action: process.env.BASE_API+'/udfs/upload'
+      action: process.env.BASE_API+'bbscommon/udfs/upload'
     }
   },
   created: function(){
