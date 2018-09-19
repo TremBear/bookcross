@@ -104,7 +104,7 @@
       // 未读息列表
       getUnreadList() {
         let params = {userId:this.userInfo.userId, pageNum:this.pageNum, pageSize:this.pageSize} // 组装参数
-        this.$store.dispatch('Post', { url: '/front/msg/unReadList', data:params })  // 请求
+        this.$store.dispatch('Post', { url: '/bbsusercenter/msg/unReadList', data:params })  // 请求
           .then(res => {
             //接口返回数据
             if (res.restCode === '0000') {
@@ -119,7 +119,7 @@
       // 已读消息列表
       getReadedList() {
         let params = {userId:this.userInfo.userId, pageNum:this.pageNum, pageSize:this.pageSize} // 组装参数
-        this.$store.dispatch('Post', { url: '/front/msg/readList', data:params })  // 请求
+        this.$store.dispatch('Post', { url: '/bbsusercenter/msg/readList', data:params })  // 请求
           .then(res => {
             //接口返回数据
             if (res.restCode === '0000') {
@@ -133,7 +133,7 @@
 
       // 查询请求
       getDetail(id) {
-        this.$store.dispatch('Get', { url: '/front/msg/content/'+id }).then(res => {
+        this.$store.dispatch('Get', { url: '/bbsusercenter/msg/content/'+id }).then(res => {
           if (res.restCode === '0000') {
             this.msgData=res.data
             return res.data
@@ -145,7 +145,7 @@
 
       // 修改状态
       modifyStatus(msgId) {
-        this.$store.dispatch('Get', { url: '/front/msg/read/'+msgId }).then(res => {
+        this.$store.dispatch('Get', { url: '/bbsusercenter/msg/read/'+msgId }).then(res => {
           if (res.restCode === '0000') {
             this.reload()  //  刷新页面
           }

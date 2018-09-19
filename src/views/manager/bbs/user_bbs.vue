@@ -286,7 +286,7 @@
         }
         console.info(params)
 
-        this.tokenPost("/front/topic/praiseOrCancel", params)
+        this.tokenPost("/bbsusercenter/collect/praiseOrCancel", params)
 
       },
 
@@ -298,7 +298,7 @@
         layer.confirm(msg, {
           btn: ['确定', '取消'] //按钮
         }, function () { // 确定按钮
-          let url = '/front/topic/deleteDraft';
+          let url = '/bbsusercenter/draft/deleteDraft';
           let params = {id:id}
           console.log(params)
           that.tokenPost(url, params)
@@ -347,7 +347,7 @@
       // 查询我的收藏列表
       getMyCollectTopics() {
         let params = {userId:this.userInfo.userId, pageNum:this.pageNum, pageSize:this.pageSize, token:""} // 组装参数
-        this.$store.dispatch('TokenPost', { url: '/userCenter/myCollectTopics', data:params })  // 请求
+        this.$store.dispatch('TokenPost', { url: '/bbsusercenter/collect/getCollects', data:params })  // 请求
           .then(res => {
             //接口返回数据
             if (res.restCode === '0000') {
@@ -362,7 +362,7 @@
       // 查看我的点赞列表
       getMyPraiseTopics() {
         let params = {userId:this.userInfo.userId, pageNum:this.pageNum, pageSize:this.pageSize, token:""} // 组装参数
-        this.$store.dispatch('TokenPost', { url: '/userCenter/myPraiseTopics', data:params })  // 请求
+        this.$store.dispatch('TokenPost', { url: '/bbsusercenter/praise/getPraises', data:params })  // 请求
           .then(res => {
             //接口返回数据
             if (res.restCode === '0000') {

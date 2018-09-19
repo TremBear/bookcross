@@ -159,7 +159,7 @@ export default {
 
       if (this.handleVerifUser()) {
          //请求后台
-         this.$store.dispatch('TokenPost', { url: '/bbspost/topic/appendTopicContent', data: data }).then(res => {
+         this.$store.dispatch('TokenPost', { url: '/bbsusercenter/topic/appendTopicContent', data: data }).then(res => {
            if (res.restCode === '0000') {
              //成功后跳转到帖子详情页面
              let datas={id:this.topicsItem.id, entry:1}
