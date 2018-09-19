@@ -24,13 +24,17 @@ const user = {
       state.roles = roles
     },
     SET_LABLE_ITEM:(state, labelList) => {
-      state.labelList=labelList
+      sessionStorage.setItem('labelList',JSON.stringify(labelList))
+      const  label =JSON.parse(sessionStorage.getItem('labelList'))
+      state.labelList=label
     },
     SET_LABLE_ID:(state, labelId) =>{
       state.labelId=labelId
     },
     SET_SIDE: (state,sideItem) => {
-      state.sideItem = sideItem
+      sessionStorage.setItem('sideItem',JSON.stringify(sideItem))
+      const  sideI =JSON.parse(sessionStorage.getItem('sideItem'))
+      state.sideItem = sideI
     }
   },
 

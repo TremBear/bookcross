@@ -5,9 +5,9 @@
         <div class="layui-col-md8">
           <div class="fly-panel" style="margin-bottom: 0;">
             <div class="fly-panel-title fly-filter">
-              <a v-on:click="handleEssences(1)" :class="classActive==1?'layui-this':''">全部</a>
+              <a :class="classActive==1?'layui-this':''" @click="handleEssences(1)">全部</a>
               <span class="fly-mid"/>
-              <a v-on:click="handleEssences(2)" :class="classActive==2?'layui-this':''">精华</a>
+              <a :class="classActive==2?'layui-this':''" @click="handleEssences(2)">精华</a>
               <span class="fly-mid"/>
             </div>
             <ul class="fly-list">
@@ -16,8 +16,8 @@
                   <img :src="!item.userImagePath?'/static/cweg.jpg':item.userImagePath" :alt="item.userNickname">
                 </a>
                 <h2>
-                  <a class="layui-badge">{{lableDic(item.labelId)}}</a>
-                  <a v-on:click="handleDetail(item)" >{{ item.topicTitle }}</a>
+                  <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+                  <a @click="handleDetail(item)" >{{ item.topicTitle }}</a>
                 </h2>
                 <div class="fly-list-info">
                   <a href="#" link>
@@ -44,15 +44,15 @@
 
             </ul>
             <div style="text-align: center"/>
-            <el-pagination style="text-align: center"
-                           @current-change="handleCurrentChange"
-                           :page-size="pageSize"
-                           :current-page="pageNum"
+            <el-pagination
+              :page-size="pageSize"
+              :current-page="pageNum"
+              :total="total"
+              style="text-align: center"
               prev-text="上一页"
               next-text="下一页"
               layout="prev, pager, next"
-              :total="total">
-            </el-pagination>
+              @current-change="handleCurrentChange"/>
           </div>
         </div>
         <right-bar/>
@@ -64,9 +64,8 @@
 <script>
 import Rightbar from '@/components/Rightbar'
 import Sidebar from '@/components/Sidebar'
+import { mapGetters } from 'vuex'
 import store from '@/store'
-import { mapGetters ,mapState} from 'vuex'
-
 export default {
   name: 'Dashboard',
   components: {
@@ -76,43 +75,46 @@ export default {
   computed: {
     ...mapGetters([
       'labelList'
-    ])
+    ]),
+    labelList() {
+      return JSON.parse(sessionStorage.getItem('labelList'))
+    }
   },
   data() {
     return {
       topicsItme: [],
       total: 0,
-      lableItem:{},
+      lableItem: {},
       url: '/bbspost/topic/readAllTopics',
-      pageSize:13,
+      pageSize: 13,
       labelId: 1,
       lableName: '',
       keyword: '',
       pageNum: 1,
-      type:1,
+      type: 1,
       classActive: 1
     }
   },
+  watch: {
+    labelList() {
+      this.getAlNotice()
+    }
+  },
   created() {
-    this.eventVue.$emit('getIsShow',true)
+    this.eventVue.$emit('getIsShow', true)
     this.handleLabelId()
     this.handleSarch()
     this.getAlNotice()
   },
-  watch:{
-    labelList(){
-      this.getAlNotice()
-    }
-  },
   methods: {
     getAlNotice() {
-      const labelId =JSON.parse(sessionStorage.getItem('labelId'))
-       if(labelId){
-         this.labelId = labelId.id
-       }
-      const type= JSON.parse(sessionStorage.getItem('navType'))
-      let  data ={ labelId: this.labelId ,pageSize: this.pageSize ,pageNum: this.pageNum ,type: type ,keyword: this.keyword }
-      this.$store.dispatch('Post', { url: this.url, data:data }).then(res => {
+      const labelId = JSON.parse(sessionStorage.getItem('labelId'))
+      if (labelId) {
+        this.labelId = labelId.id
+      }
+      const type = JSON.parse(sessionStorage.getItem('navType'))
+      const data = { labelId: this.labelId, pageSize: this.pageSize, pageNum: this.pageNum, type: type, keyword: this.keyword }
+      this.$store.dispatch('Post', { url: this.url, data: data }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItme = res.data.list
           this.total = res.data.total
@@ -122,11 +124,11 @@ export default {
       })
     },
     // 获取首页帖子信息 、首页搜索功能分页
-    handleEssences(data){
-      if(data ===1){
+    handleEssences(data) {
+      if (data === 1) {
         this.url = '/bbspost/topic/readAllTopics'
       }
-      if(data ===2){
+      if (data === 2) {
         this.url = '/bbspost/topic/readEssences'
       }
       this.classActive = data
@@ -134,13 +136,13 @@ export default {
       this.getAlNotice()
     },
     // 页面分页
-    handleCurrentChange(val){
-      this.pageNum=val
+    handleCurrentChange(val) {
+      this.pageNum = val
       this.getAlNotice()
     },
     // 查询
-    handleSarch(){
-      this.eventVue.$on("getSarch",(message)=>{   //这里最好用箭头函数，不然this指向有问题
+    handleSarch() {
+      this.eventVue.$on('getSarch', (message) => { // 这里最好用箭头函数，不然this指向有问题
         this.keyword = message
         this.url = '/bbspost/topic/search'
         this.pageNum = 1
@@ -148,28 +150,27 @@ export default {
       })
     },
     // 标签点击事件
-    handleLabelId(){
-      this.eventVue.$on("getLabelId",(data)=>{   //这里最好用箭头函数，不然this指向有问题
-        sessionStorage.setItem("labelId",JSON.stringify(data))
-         this.labelId = data.id
-         this.getAlNotice(data.id)
+    handleLabelId() {
+      this.eventVue.$on('getLabelId', (data) => { // 这里最好用箭头函数，不然this指向有问题
+        sessionStorage.setItem('labelId', JSON.stringify(data))
+        this.labelId = data.id
+        this.getAlNotice(data.id)
       })
-
     },
-    handleDetail(data){
-      let datas={id:data.id, entry:1}
-      sessionStorage.setItem("detail",JSON.stringify(datas))
-      this.$router.push({path:'detail#goto'})
+    handleDetail(data) {
+      const datas = { id: data.id, entry: 1 }
+      sessionStorage.setItem('detail', JSON.stringify(datas))
+      this.$router.push({ path: 'detail#goto' })
     },
     // 翻译数据字典
-    lableDic(val){
+    lableDic(val) {
       let lable = ''
       this.labelList.labelDtoList.map((item, index) => {
-        if(item.id === val){
-          lable= item.labelName
+        if (item.id === val) {
+          lable = item.labelName
         }
       })
-      return  lable
+      return lable
     },
     // 日期进行转换
     formatTime(time) {
