@@ -196,16 +196,24 @@
 </template>
 
 <script>
-  import store from '@/store'
-  import  Rightbar from '@/components/Rightbar'
-  import Sidebar from '@/components/Sidebar'
-
-  export  default {
+import store from '@/store'
+import Rightbar from '@/components/Rightbar'
+import Sidebar from '@/components/Sidebar'
+import { mapGetters } from 'vuex'
+export  default {
     name: 'user_bbs',
     inject:['reload'],
     components: {
       'right-bar': Rightbar,
       'side-bar': Sidebar
+    },
+    computed: {
+      ...mapGetters([
+        'sideItem'
+      ]),
+      sideItem(){
+        return store.getters.sideItem
+      }
     },
     data() {
       return {
@@ -435,7 +443,7 @@
       // 翻译数据字典
       lableDic(val){
         let lable = ''
-        store.getters.sideItem.labelDtoList.map((item, index) => {
+        this.sideItem.labelDtoList.map((item, index) => {
           if(item.id === val){
             lable= item.labelName
           }

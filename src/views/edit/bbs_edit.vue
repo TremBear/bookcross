@@ -69,7 +69,7 @@ import wangeditor from '@/components/wangeditor'
 import { getToken } from '@/utils/auth'
 import { parseTime } from '@/utils/index'
 import previewDialog from '@/components/PreviewDialog'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'bbs_edit',
   components: {
@@ -77,7 +77,14 @@ export default {
     'preview-dialog':previewDialog
   },
   inject: ['userInfo'],
-  inject: ['labelList'],
+  computed: {
+    ...mapGetters([
+      'sideItem'
+    ]),
+    sideItem(){
+      return store.getters.sideItem
+    }
+  },
   data() {
     return {
       topicsItem:{},
@@ -116,7 +123,7 @@ export default {
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: JSON.parse(detail) }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItem = res.data;
-          const index = store.getters.sideItem.id
+          const index = this.sideItem.id
           this.replyType =  this.global.categoryItems[index]
         }
       }).catch((err) => {
