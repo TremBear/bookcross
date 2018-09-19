@@ -36,9 +36,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import  store from '@/store'
 export  default {
   name: 'PreviewDialog',
-  inject: ['labelList'],
   props: {
     dialogVisible: {
       type: Boolean,
@@ -47,6 +48,14 @@ export  default {
     previewData:{
       type: Object,
       default: {}
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'labelList'
+    ]),
+    labelList(){
+      return store.getters.labelList
     }
   },
   data () {
