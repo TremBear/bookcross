@@ -23,7 +23,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 0)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -64,7 +64,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDraftDetail(item)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <em>
@@ -99,7 +99,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -134,7 +134,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -169,7 +169,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -441,7 +441,7 @@ export default {
     lableDic(data) {
       let lable = ''
       const code = this.global.categoryItems[data.postContentType]
-      const side = this.sideItem.find((element) => (element.categoryCode === code))
+      const side = this.sideItem.find((element) => (element.id === code))
       side.labelDtoList.map((item, index) => {
         if (item.id === data.labelId) {
           lable = item.labelName
