@@ -90,12 +90,20 @@ import previewDialog from '@/components/PreviewDialog'
 import  store from '@/store'
 import { getToken } from '@/utils/auth'
 import eventVue from '@/utils/event'
-import { parseTime } from '@/utils/index'
+import { mapGetters } from 'vuex'
 export default {
   name: 'bbs_publish',
   components: {
     'wang-editor': wangeditor,
     'preview-dialog':previewDialog
+  },
+  computed: {
+    ...mapGetters([
+      'labelList'
+    ]),
+    labelList(){
+      return store.getters.labelList
+    }
   },
     data() {
     return {
@@ -147,7 +155,7 @@ export default {
     }
   },
   created() {
-    const  data =JSON.parse(sessionStorage.getItem('labelList'))
+    const  data =this.labelList
     if(data){
       this.lables = data.labelDtoList
       this.labelValue = this.lables[0].id
