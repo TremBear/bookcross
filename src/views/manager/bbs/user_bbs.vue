@@ -253,6 +253,7 @@ export default {
     tokenPost(url, params) {
       this.$store.dispatch('TokenPost', { url: url, data: params })
         .then(res => {
+			console.info(res)
           if (res.restCode === '0000') {
             layer.msg('操作成功') // 操作成功，弹框
             this.reload() //  刷新页面
@@ -283,17 +284,18 @@ export default {
 
     // 取消收藏或者点赞
     cancel(data, type) {
-      const params = { id: data.id, topicTitle: data.topicTitle, type1: '', type2: data.postContentType }
+      const params = { userId: this.userInfo.userId, topicId: data.id, topicTitle: data.topicTitle, userNickname: this.userInfo.userNickname, postContentType: data.postContentType};
+	  var url = '';
       if (type == 'collect') {
-        params.type1 = 2
+		url  = '/bbsusercenter/collect/collectOrCancel';
       } else if (type == 'praise') {
-        params.type1 = 1
+		url  = '/bbsusercenter/praise/praiseOrCancel';
       } else {
 
       }
       console.info(params)
 
-      this.tokenPost('/bbsusercenter/collect/praiseOrCancel', params)
+      this.tokenPost(url, params)
     },
 
     // 删除草稿箱
