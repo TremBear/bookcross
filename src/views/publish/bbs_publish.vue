@@ -217,7 +217,7 @@ export default {
       }
       console.log(data);
       //请求后台
-      this.$store.dispatch('Post', { url: '/front/topic/addTopic', data: data }).then(res => {
+      this.$store.dispatch('Post', { url: 'bbspost/topic/addTopic', data: data }).then(res => {
         console.log(res);
         if (res.restCode === '0000') {
           //成功后跳转到发布帖子详情页面
@@ -280,7 +280,7 @@ export default {
       }
       console.log(data);
       //请求后台
-      this.$store.dispatch('Post', { url: '/front/topic/addDraft', data: data }).then(res => {
+      this.$store.dispatch('Post', { url: 'bbspost/topic/addDraft', data: data }).then(res => {
         console.log(res);
         if (res.restCode === '0000') {
           //成功后跳转到发布帖子详情页面
