@@ -211,7 +211,7 @@ export default {
       'sideItem'
     ]),
     sideItem() {
-      return store.getters.sideItem
+      return JSON.parse(sessionStorage.getItem('sideItem'))
     }
   },
   data() {
