@@ -4,11 +4,11 @@
     <div class="fly-panel">
       <div class="fly-panel-title">
         <h3 >社区公告</h3>
-        <h4 style="float: right;margin-top: -50px;"><a v-on:click="handleMore">更多</a></h4>
+        <h4 style="float: right;margin-top: -50px;"><a @click="handleMore">更多</a></h4>
       </div>
       <ul class="fly-panel-main fly-list-static " >
         <li v-for="(item, index) in noticeItme" :key="index" >
-           <a v-on:click="handleDetail(item,'2')" target="_blank" >{{ item.topicTitle.substring(0, 16) }}</a>
+          <a target="_blank" @click="handleDetail(item,'2')" >{{ item.topicTitle.substring(0, 16) }}</a>
           <span class="fly-list-info" style="left: 52px;">{{ formatTime(item.modifyTime) }}  </span>...
         </li>
       </ul>
@@ -18,7 +18,7 @@
       <dt class="fly-panel-title"><h3 >最新评论</h3></dt>
       <dd v-for="(item, index) in latestItme" :key="index" style="border-bottom: 1px dotted #E9E9E9;">
         <label>#{{ item.replyFloor }}楼 {{ item.userNickname }} {{ item.publishedTime }} </label>
-           对帖子 <a v-on:click="handleDetail(item,'1')"> “{{ item.postTitle }}” </a>   <br> 评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
+        对帖子 <a @click="handleDetail(item,'1')"> “{{ item.postTitle }}” </a>   <br> 评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
 
       </dd>
     </dl>
@@ -34,27 +34,6 @@
             <ul class="mine-view jie-row">
               <li>
                 <a>站内统计:</a>
-                <em>{{ dailyCount.commentCount }}</em>
-              </li>
-              <li>
-                <a>回帖数量:</a>
-                <em>{{ dailyCount.topicCount }}</em>
-              </li>
-              <li>
-                <a>用户数量:</a>
-                <em>{{ dailyCount.userCount }}</em>
-              </li>
-            </ul>
-          </div>
-          <!--
-                          作者：349036010@qq.com
-                          时间：2018-07-20
-                          描述：今日统计
-                      -->
-          <div class="layui-tab-item">
-            <ul class="mine-view jie-row">
-              <li>
-                <a>站内统计:</a>
                 <em>{{ totalCount.commentCount }}</em>
               </li>
               <li>
@@ -67,6 +46,27 @@
               </li>
             </ul>
           </div>
+          <!--
+                          作者：349036010@qq.com
+                          时间：2018-07-20
+                          描述：今日统计
+                      -->
+          <div class="layui-tab-item">
+            <ul class="mine-view jie-row">
+              <li>
+                <a>站内统计:</a>
+                <em>{{ dailyCount.commentCount }}</em>
+              </li>
+              <li>
+                <a>回帖数量:</a>
+                <em>{{ dailyCount.topicCount }}</em>
+              </li>
+              <li>
+                <a>用户数量:</a>
+                <em>{{ dailyCount.userCount }}</em>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -74,12 +74,12 @@
 </template>
 
 <script>
-  import { parseTime } from '@/utils/index'
+import { parseTime } from '@/utils/index'
 import store from '@/store'
 export default {
   name: 'Rightbar',
-  inject:['reloadAppMain'],
-  data(){
+  inject: ['reloadAppMain'],
+  data() {
     return {
       latestItme: [],
       dailyCount: {},
@@ -126,11 +126,11 @@ export default {
       })
     },
     // 详细信息页面
-    handleDetail(data,type){
-      let datas={id:data.id, entry:1,type:type}
-      sessionStorage.setItem("detail",JSON.stringify(datas))
+    handleDetail(data, type) {
+      const datas = { id: data.id, entry: 1, type: type }
+      sessionStorage.setItem('detail', JSON.stringify(datas))
       this.reloadAppMain()
-      this.$router.push({path:'detail#goto'})
+      this.$router.push({ path: 'detail#goto' })
     },
     // 日期互转
     formatTime(time) {
@@ -140,10 +140,10 @@ export default {
       return time
     },
     // 公告更多功能
-    handleMore(){
-      const  sideItem= store.getters.sideItem
+    handleMore() {
+      const sideItem = store.getters.sideItem
       this.$store.commit('SET_LABLE_ITEM', sideItem[1])
-      sessionStorage.setItem("navType",this.global.categoryItems[sideItem[1].id])
+      sessionStorage.setItem('navType', this.global.categoryItems[sideItem[1].id])
     }
   }
 }
