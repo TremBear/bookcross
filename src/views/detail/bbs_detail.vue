@@ -310,7 +310,6 @@ export default {
 		url = '/bbsusercenter/collect/collectOrCancel';
 	  }
 	  
-	  console.log(data)
       this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
         if (res.restCode === '0000') {
           if (item === 2) {

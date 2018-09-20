@@ -120,6 +120,7 @@ export default {
       const detail = sessionStorage.getItem('edit')
 
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: JSON.parse(detail) }).then(res => {
+	  
         if (res.restCode === '0000') {
           this.topicsItem = res.data
           const index = this.sideItem.id
@@ -238,10 +239,10 @@ export default {
       return time
     },
 
-     // 翻译数据字典
+    // 翻译数据字典
     lableDic(data) {
       let lable = ''
-      const code = this.global.categoryItems[data.postContentType]
+      const code = this.global.categoryItems[data.topicType]
       const side = this.sideItem.find((element) => (element.id === code))
       side.labelDtoList.map((item, index) => {
         if (item.id === data.labelId) {
