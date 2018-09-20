@@ -170,7 +170,7 @@ export default {
     }
     if (draftId){
       console.log(draftId)
-      this.$store.dispatch('Post', { url: '/userCenter/myDraftDetail', data: draft }).then(res => {
+      this.$store.dispatch('Post', { url: '/bbspost/draft/readDraftDetail', data: draft }).then(res => {
         console.log(res);
         if (res.restCode === '0000'&& res.data) {
             this.labelValue= res.data.labelId
@@ -268,7 +268,7 @@ export default {
       }
       topic.topicContent=this.editorContent.trim()
       //1代表优车社区，2代表公告，3代表意见
-      topic.postType=1
+      topic.drafType=1
       topic.isOpenComment=this.commentValue;
       topic.isRealName = this.value;
       //0代表普通，1代表草稿
