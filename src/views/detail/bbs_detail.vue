@@ -297,13 +297,21 @@ export default {
     // 点赞 或 收藏
     handleBBS(item) {
       const data = {
-        id: this.topicsItem.id,
+        topicId: this.topicsItem.id,
         topicTitle: this.topicsItem.topicTitle,
-        type1: item,
-        type2: this.replyType,
+        postContentType: this.replyType,
         token: ''
       }
-      this.$store.dispatch('TokenPost', { url: '/bbspost/topic/praiseOrCancel', data: data }).then(res => {
+	  
+	  let url = '';
+	  if (item === 1) {
+		url = '/bbsusercenter/praise/praiseOrCancel';
+	  } else if(item === 2) {
+		url = '/bbsusercenter/collect/collectOrCancel';
+	  }
+	  
+	  console.log(data)
+      this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
         if (res.restCode === '0000') {
           if (item === 2) {
             this.topicsItem.collectCount = res.data.num
