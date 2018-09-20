@@ -275,7 +275,7 @@ export default {
       layer.confirm(msg, {
         btn: ['确定', '取消'] // 按钮
       }, function() { // 确定按钮
-        const url = '/front/topicReply/discussPost'
+        const url = '/bbspost/topicReply/userdiscussPost'
         const params = { type: type, id: id, isOpenComment: isOpenComment, userId: that.userInfo.userId }
         console.log(params)
         that.tokenPost(url, params)
