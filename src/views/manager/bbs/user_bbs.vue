@@ -232,7 +232,7 @@ export default {
       type: 1
     }
   },
-  created: function() {
+  mounted() {
     this.getMyTopics() // 定义方法
   },
   methods: {
