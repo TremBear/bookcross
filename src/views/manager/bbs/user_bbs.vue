@@ -23,7 +23,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 0)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -64,7 +64,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDraftDetail(item)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <em>
@@ -99,7 +99,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -134,7 +134,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -169,7 +169,7 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+              <a class="layui-badge">{{ lableDic(item) }}</a>
               <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
@@ -253,6 +253,7 @@ export default {
     tokenPost(url, params) {
       this.$store.dispatch('TokenPost', { url: url, data: params })
         .then(res => {
+			console.info(res)
           if (res.restCode === '0000') {
             layer.msg('操作成功') // 操作成功，弹框
             this.reload() //  刷新页面
@@ -283,17 +284,18 @@ export default {
 
     // 取消收藏或者点赞
     cancel(data, type) {
-      const params = { id: data.id, topicTitle: data.topicTitle, type1: '', type2: data.postContentType }
+      const params = { userId: this.userInfo.userId, topicId: data.id, topicTitle: data.topicTitle, userNickname: this.userInfo.userNickname, postContentType: data.postContentType};
+	  var url = '';
       if (type == 'collect') {
-        params.type1 = 2
+		url  = '/bbsusercenter/collect/collectOrCancel';
       } else if (type == 'praise') {
-        params.type1 = 1
+		url  = '/bbsusercenter/praise/praiseOrCancel';
       } else {
 
       }
       console.info(params)
 
-      this.tokenPost('/bbsusercenter/collect/praiseOrCancel', params)
+      this.tokenPost(url, params)
     },
 
     // 删除草稿箱
@@ -441,7 +443,7 @@ export default {
     lableDic(data) {
       let lable = ''
       const code = this.global.categoryItems[data.postContentType]
-      const side = this.sideItem.find((element) => (element.categoryCode === code))
+      const side = this.sideItem.find((element) => (element.id === code))
       side.labelDtoList.map((item, index) => {
         if (item.id === data.labelId) {
           lable = item.labelName

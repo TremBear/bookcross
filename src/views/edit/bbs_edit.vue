@@ -7,7 +7,7 @@
         <div class="fly-panel detail-box">
           <h1>{{ topicsItem.topicTitle }}</h1>
           <div class="fly-detail-info">
-            <span class="layui-badge layui-bg-blue">{{ lableDic(topicsItem.labelId) }}</span>
+            <span class="layui-badge layui-bg-blue">{{ lableDic(topicsItem) }}</span>
             <span v-if="topicsItem.topicType===3 || topicsItem.topicType===4" class="layui-badge layui-bg-red" >置顶</span>
             <span v-if="topicsItem.topicType===2 || topicsItem.topicType===4" class="layui-badge layui-bg-red" >精华</span>
             <span class="fly-list-nums">
@@ -238,16 +238,16 @@ export default {
       return time
     },
 
-    // 翻译数据标签字典
-    lableDic(val) {
+     // 翻译数据字典
+    lableDic(data) {
       let lable = ''
-      if (val) {
-        this.labelList.labelDtoList.map((item, index) => {
-          if (item.id === val) {
-            lable = item.labelName
-          }
-        })
-      }
+      const code = this.global.categoryItems[data.postContentType]
+      const side = this.sideItem.find((element) => (element.id === code))
+      side.labelDtoList.map((item, index) => {
+        if (item.id === data.labelId) {
+          lable = item.labelName
+        }
+      })
       return lable
     },
 
