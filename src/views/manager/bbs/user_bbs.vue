@@ -316,7 +316,7 @@ export default {
     // 我的草稿箱列表
     getMyDraftTopis() {
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
-      this.$store.dispatch('TokenPost', { url: '/userCenter/myDraftTopis', data: params }) // 请求
+      this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myDraftTopis', data: params }) // 请求
         .then(res => {
           // 接口返回数据
           console.log(res)
@@ -339,7 +339,7 @@ export default {
     // 我的帖子列表
     getMyTopics() { // 具体的方法实现
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
-      this.$store.dispatch('TokenPost', { url: '/userCenter/myTopics', data: params }) // 请求
+      this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myTopics', data: params }) // 请求
         .then(res => {
           // 接口返回数据
           if (res.restCode === '0000') {
@@ -384,7 +384,7 @@ export default {
     // 查询我的评论列表
     getMyReplyTopics() {
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
-      this.$store.dispatch('TokenPost', { url: '/userCenter/myReplyTopics', data: params }) // 请求
+      this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myReplyTopics', data: params }) // 请求
         .then(res => {
           // 接口返回数据
           if (res.restCode === '0000') {
