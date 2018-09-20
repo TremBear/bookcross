@@ -59,7 +59,7 @@ export default {
       action: process.env.BASE_API + 'bbscommon/udfs/upload'
     }
   },
-  created: function() {
+  mounted() {
     this.user = store.getters.userInfo
     if (this.user.userLogo) {
       this.imageUrl = this.user.userLogo

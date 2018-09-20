@@ -87,7 +87,7 @@ export default {
       noticeItme: []
     }
   },
-  created() {
+  mounted() {
     this.getAllPost()
     this.getAllLatest()
     this.getCount()

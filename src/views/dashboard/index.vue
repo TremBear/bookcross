@@ -100,7 +100,7 @@ export default {
       this.getAlNotice()
     }
   },
-  created() {
+  mounted() {
     this.eventVue.$emit('getIsShow', true)
     this.handleLabelId()
     this.handleSarch()

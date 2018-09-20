@@ -34,7 +34,7 @@ export default {
       return store.getters.labelList.labelDtoList
     }
   },
-  created() {
+  mounted() {
     const labelId = JSON.parse(sessionStorage.getItem('labelId'))
     if (labelId) {
       this.isActive = labelId.id

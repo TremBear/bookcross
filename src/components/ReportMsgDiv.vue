@@ -60,7 +60,7 @@ export  default {
       reportMsg:''
     }
   },
-  created() {
+  mounted() {
     const that= this
     this.$nextTick(function(){
       that.handleReport()

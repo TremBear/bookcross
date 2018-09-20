@@ -41,7 +41,7 @@ export default {
 
     }
   },
-  created() {
+  mounted() {
     let params =this.$route.params
     if(params){
       sessionStorage.setItem("path",JSON.stringify(this.$route.params))
