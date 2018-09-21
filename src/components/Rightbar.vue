@@ -7,9 +7,11 @@
         <h4 style="float: right;margin-top: -50px;"><a @click="handleMore">更多</a></h4>
       </div>
       <ul class="fly-panel-main fly-list-static " >
-        <li v-for="(item, index) in noticeItme" :key="index" >
-          <a target="_blank" @click="handleDetail(item,'2')" >{{ item.topicTitle.substring(0, 16) }}</a>
-          <span class="fly-list-info" style="left: 52px;">{{ formatTime(item.modifyTime) }}  </span>...
+        <li v-for="(item, index) in noticeItme" :key="index" style="list-style-type: none;">
+          <div class="fly-list-info">
+            <a link style="font-size: 14px; color: #c16262;" @click="handleDetail(item,'2')">{{ item.topicTitle.substring(0, 16) }}</a>
+            <span class="fly-list-nums">{{ formatTime(item.modifyTime) }} ... </span>
+          </div>
         </li>
       </ul>
     </div>
@@ -18,7 +20,7 @@
       <dt class="fly-panel-title"><h3 >最新评论</h3></dt>
       <dd v-for="(item, index) in latestItme" :key="index" style="border-bottom: 1px dotted #E9E9E9;">
         <label>#{{ item.replyFloor }}楼 {{ item.userNickname }} {{ item.publishedTime }} </label>
-        对帖子 <a @click="handleDetail(item,'1')"> “{{ item.postTitle }}” </a>   <br> 评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
+        对帖子 <a style="font-size: 15px; color: #999;" @click="handleDetail(item,'1')"> “{{ item.postTitle }}” </a>    评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
 
       </dd>
     </dl>
@@ -149,6 +151,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 
 </style>
