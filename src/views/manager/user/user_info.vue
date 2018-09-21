@@ -68,7 +68,7 @@ export default {
   methods: {
     handleSubmit() {
       this.user.userLogo = this.imageUrl
-      this.$store.dispatch('Post', { url: '/front/frontuser/updateInfo', data: this.user }).then(res => {
+      this.$store.dispatch('Post', { url: '/bbsusercenter/frontuser/updateInfo', data: this.user }).then(res => {
         if (res.restCode === '0000') {
           layer.alert('修改个人信息成功,需刷新一下页面！', {
             icon: 1,
