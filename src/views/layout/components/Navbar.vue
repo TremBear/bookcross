@@ -80,7 +80,7 @@ export default {
       this.toggleSideBar()
     }
   },
-  created() {
+  mounted() {
     this.toggleSideBar()
   },
   methods: {

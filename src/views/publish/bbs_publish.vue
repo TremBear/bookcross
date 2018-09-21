@@ -154,7 +154,7 @@ export default {
       ]
     }
   },
-  created() {
+  mounted() {
     const  data =this.labelList
     if(data){
       this.lables = data.labelDtoList

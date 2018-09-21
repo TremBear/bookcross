@@ -27,7 +27,7 @@ export default {
     }
   },
   mixins: [ResizeMixin],
-  created() {
+  mounted() {
     this.getCategory()
     this.headeIsShow()
   },

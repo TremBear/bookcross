@@ -66,7 +66,7 @@ export   default {
     }
 
   },
-  created() {
+  mounted() {
     const urlItems=this.$router.currentRoute.fullPath.split('?')
     if(urlItems){
       this.isActive = urlItems[0]

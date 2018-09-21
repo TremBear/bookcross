@@ -154,7 +154,7 @@ export default {
       ]
     }
   },
-  created() {
+  mounted() {
     this.getPosts()
     this.eventVue.$emit('getIsShow', true)
   },
