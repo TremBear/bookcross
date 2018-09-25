@@ -8,7 +8,7 @@
       </ul>
       <div class="fly-column-right layui-hide-xs">
         <div style="position: relative;margin-left: 10px;display: inline-block;vertical-align: top;">
-          <i class="layui-icon" style="loat: left;margin-left: 274px;position: absolute;" @click="handleSerch"></i>
+          <i class="layui-icon" style="loat: left;margin-left: 274px;position: absolute;cursor:pointer;" @click="handleSerch"></i>
           <input v-model="search" type="text" name="1" placeholder="请输入搜索内容" style="height: 38px;width: 300px; line-height: 38px; border: 1px solid #e6e6e6; background-color: #fff; border-radius: 2px;  box-sizing: border-box!important;">
           <a class="layui-btn" @click="getReload('publish')">发表新帖</a>
         </div>

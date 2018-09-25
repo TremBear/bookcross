@@ -144,7 +144,11 @@ export default {
     handleSarch() {
       this.eventVue.$on('getSarch', (message) => { // 这里最好用箭头函数，不然this指向有问题
         this.keyword = message
-        this.url = '/bbspost/topic/search'
+        if (this.keyword) {
+          this.url = '/bbspost/topic/search'
+        } else {
+          this.url = '/bbspost/topic/readAllTopics'
+        }
         this.pageNum = 1
         this.getAlNotice()
       })
