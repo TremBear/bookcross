@@ -26,7 +26,7 @@
                   <span>{{ formatTime(item.modifyTime) }}</span>
 
                   <span class="fly-list-kiss layui-hide-xs" >
-                    <span>•{{ item.publishedTime }} </span>
+                    <span v-if="item.publishedTime">•{{ item.publishedTime }} </span>
                     <span v-if="item.replyUsername">•最后回复来自{{ item.replyUsername }}</span>
                   </span>
                   <span class="fly-list-nums">
