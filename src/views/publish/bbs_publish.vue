@@ -102,7 +102,8 @@ export default {
       'labelList'
     ]),
     labelList(){
-      return store.getters.labelList
+      //return store.getters.labelList
+	  return JSON.parse(sessionStorage.getItem('labelList'))
     }
   },
     data() {
@@ -155,11 +156,11 @@ export default {
     }
   },
   mounted() {
-    const  data =this.labelList
-    if(data){
-      this.lables = data.labelDtoList
-      this.labelValue = this.lables[0].id
-      this.postType =this.global.categoryItems[data.id]
+    this.lables = this.labelList
+	console.log(this.lables)
+    if(this.lables){
+      this.labelValue = this.lables.id
+      this.postType =this.global.categoryItems[this.lables.id]
     }
     this.eventVue.$emit('getIsShow',false)
     //获取编辑页面信息
