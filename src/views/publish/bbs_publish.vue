@@ -156,9 +156,10 @@ export default {
     }
   },
   mounted() {
-    this.lables = this.labelList
+    const  data = this.labelList
 	console.log(this.lables)
     if(this.lables){
+	  this.lables = data.labelDtoList
       this.labelValue = this.lables.id
       this.postType =this.global.categoryItems[this.lables.id]
     }
