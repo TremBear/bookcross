@@ -329,7 +329,7 @@ export default {
         })
     },
 
-    // 跳转到草稿箱详情页
+    // 跳转到草稿箱编辑页
     handleDraftDetail(data) {
       console.info(data)
       sessionStorage.setItem('draftId', JSON.stringify(data.id))
@@ -447,6 +447,7 @@ export default {
       side.labelDtoList.map((item, index) => {
         if (item.id === data.labelId) {
           lable = item.labelName
+		  return 
         }
       })
       return lable
