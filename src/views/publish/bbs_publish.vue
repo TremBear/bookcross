@@ -179,6 +179,7 @@ export default {
             this.commentValue = res.data.isOpenComment;
             this.value = res.data.isRealName
             this.topicStatus = 1
+            this.postType = res.data.postContentType
             this.topicId = res.data.id
         }
       }).catch((err) => {
