@@ -328,6 +328,7 @@ export default {
         labelId:this.labelValue,
         userNickname:name,
         modifyTime:new Date()/*parseTime(new Date(),'{y}-{m}-{d} {h}:{i}:{s}')*/,
+        userImagePath:userInfo.userLogo
       }
       console.log(this.previewData)
     },
