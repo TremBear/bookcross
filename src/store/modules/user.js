@@ -4,36 +4,35 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const user = {
   state: {
     token: getToken(),
-    userInfo:{},
+    userInfo: {},
     roles: [],
     sideItem: {},
-    labelList:[],
-    labelId:''
+    labelList: [],
+    labelId: ''
   },
 
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    USER_INFO:(state,userInfo) => {
-      sessionStorage.setItem('userInfo',JSON.stringify(userInfo))
-      const  user =JSON.parse(sessionStorage.getItem('userInfo'))
+    USER_INFO: (state, userInfo) => {
+      sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
+      const user = JSON.parse(sessionStorage.getItem('userInfo'))
       state.userInfo = user
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
-    SET_LABLE_ITEM:(state, labelList) => {
-      sessionStorage.setItem('labelList',JSON.stringify(labelList))
-      const  label =JSON.parse(sessionStorage.getItem('labelList'))
-      state.labelList=label
+    SET_LABLE_ITEM: (state, labelList) => {
+      sessionStorage.setItem('labelList', JSON.stringify(labelList))
+      state.labelList = JSON.parse(sessionStorage.getItem('labelList'))
     },
-    SET_LABLE_ID:(state, labelId) =>{
-      state.labelId=labelId
+    SET_LABLE_ID: (state, labelId) => {
+      state.labelId = labelId
     },
-    SET_SIDE: (state,sideItem) => {
-      sessionStorage.setItem('sideItem',JSON.stringify(sideItem))
-      const  sideI =JSON.parse(sessionStorage.getItem('sideItem'))
+    SET_SIDE: (state, sideItem) => {
+      sessionStorage.setItem('sideItem', JSON.stringify(sideItem))
+      const sideI = JSON.parse(sessionStorage.getItem('sideItem'))
       state.sideItem = sideI
     }
   },

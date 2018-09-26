@@ -120,9 +120,10 @@ export default {
       const detail = sessionStorage.getItem('edit')
 
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: JSON.parse(detail) }).then(res => {
-	  
+
         if (res.restCode === '0000') {
           this.topicsItem = res.data
+          console.log(1)
           const index = this.sideItem.id
           this.replyType = this.global.categoryItems[index]
         }

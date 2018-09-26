@@ -1,12 +1,12 @@
 <template>
   <div class="fly-header layui-bg-black">
     <div class="layui-container">
-      <a class="fly-logo" href="/">
-        <img src="/static/logo.png" alt="layui">
+      <a class="fly-logo" href="/BBS">
+        <img :src="logoImg">
       </a>
       <ul class="layui-nav fly-nav layui-hide-xs">
         <li class="layui-nav-item layui-this" v-for="(item, index) in categorysItme" :key="index">
-          <a v-on:click="handleCategory(index)"><i class="iconfont" :class="item.categoryLogo"/>{{item.categoryName}}</a>
+          <a v-on:click="handleCategory(item)"><i class="iconfont" :class="item.categoryLogo"/>{{item.categoryName}}</a>
         </li>
       </ul>
       <ul class="layui-nav fly-nav-user" v-show="notlogin">
@@ -58,9 +58,10 @@ export default {
   },
   data() {
     return {
+      logoImg: './static/logo.png',
       login: false,
       notlogin: true,
-      imgUrl:'/static/cweg.jpg'
+      imgUrl:'./static/cweg.jpg'
     }
   },
   components: {
@@ -82,15 +83,16 @@ export default {
   },
   mounted() {
     this.toggleSideBar()
+    setInterval(this.getElevatorList(), 15000)
   },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('GetInfo').then(ress => {
-        if(ress.restCode === '0000'){
+        if(ress.restCode === '0000') {
           if (this.userInfo) {
             this.notlogin = false
             this.login = true
-            if(this.userInfo.userLogo){
+            if (this.userInfo.userLogo) {
               this.imgUrl = this.userInfo.userLogo
             }
           }
@@ -102,22 +104,24 @@ export default {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
     },
-    handleCategory(index){
-      this.$emit('getSidebar', index)
+    handleCategory(data) {
+      console.log(data)
+      this.$emit('getSidebar', data)
       this.$router.push('/')
     },
-    handleCommand(data){
-      if(data === 'exit'){
-        this.$store.dispatch('LogOut').then(res=>{
-
+    getElevatorList() {
+      console.log(1)
+    },
+    handleCommand(data) {
+      if (data === 'exit') {
+        this.$store.dispatch('LogOut').then(res => {
         })
         this.$router.push('/')
         this.$router.go()
 
-      }else{
+      }else {
         this.$router.push(data)
       }
-
     }
   }
 

@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import store from '@/store'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -31,14 +31,15 @@ export default {
       'labelList'
     ]),
     labelList() {
-      return store.getters.labelList.labelDtoList
+      return store.getters.labelList
+    }
+  },
+  watch: {
+    labelList(curVal, oldVal) {
+      this.isActive = curVal[0].id
     }
   },
   mounted() {
-    const labelId = JSON.parse(sessionStorage.getItem('labelId'))
-    if (labelId) {
-      this.isActive = labelId.id
-    }
   },
   methods: {
     handleSide(data) {

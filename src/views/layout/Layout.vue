@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <navbar v-bind:categorysItme="categorysItme" @getSidebar="getSidebar"/>
+    <navbar :categorys-itme="categorysItme" @getSidebar="getSidebar"/>
     <sidebar v-show="isShow" />
     <div>
       <app-main/>
@@ -20,40 +20,53 @@ export default {
     AppMain,
     Footbar
   },
+  mixins: [ResizeMixin],
   data() {
     return {
-      categorysItme: [],
-      isShow: true
+      isShow: true,
+      categorysItme: []
     }
   },
-  mixins: [ResizeMixin],
   mounted() {
-    this.getCategory()
     this.headeIsShow()
+  },
+  beforeMount() {
+    this.getCategory()
+    this.getLableItem()
   },
   methods: {
     getCategory() {
-      this.$store.dispatch('Get', { url: '/bbsadmin/categoryManager/allCategorys'}).then(res => {
+      if (this.categorysItme) {
+        this.$store.dispatch('Get', { url: '/bbsadmin/categoryManager/allCategorys' }).then(res => {
+          if (res.restCode === '0000') {
+            this.categorysItme = res.data
+            if (this.categorysItme) {
+              this.$store.commit('SET_SIDE', this.categorysItme)
+              this.$store.commit('SET_LABLE_ITEM', this.categorysItme[0].labelDtoList)
+              sessionStorage.setItem('navType', this.global.categoryItems[this.categorysItme[0].id])
+            }
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+    },
+    getLableItem() {
+      this.$store.dispatch('Get', { url: '/bbsadmin/labelManager/getLableList' }).then(res => {
         if (res.restCode === '0000') {
-          this.categorysItme = res.data
-           if(this.categorysItme ) {
-             this.$store.commit('SET_SIDE', this.categorysItme)
-             this.$store.commit('SET_LABLE_ITEM', this.categorysItme[0])
-             sessionStorage.setItem("navType",this.global.categoryItems[this.categorysItme[0].id])
-           }
+          sessionStorage.setItem('setDidtLabes', JSON.stringify(res.data))
         }
       }).catch((err) => {
         console.log(err)
       })
     },
-    getSidebar(data){
-      console.log(this.categorysItme[data])
-      this.$store.commit('SET_LABLE_ITEM', this.categorysItme[data])
-      this.$store.commit('SET_SIDE', this.categorysItme)
-      sessionStorage.setItem("navType",this.global.categoryItems[this.categorysItme[data].id])
+    getSidebar(data) {
+      this.$store.commit('SET_LABLE_ITEM', data.labelDtoList)
+      this.eventVue.$emit('getLabelId', data.labelDtoList[0])
+      this.$router.push('home')
     },
-    headeIsShow(){
-      this.eventVue.$on("getIsShow",(message)=>{   //这里最好用箭头函数，不然this指向有问题
+    headeIsShow() {
+      this.eventVue.$on('getIsShow', (message) => { // 这里最好用箭头函数，不然this指向有问题
         this.isShow = message
       })
     }
@@ -61,7 +74,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss">
   @import "src/styles/mixin.scss";
   .app-wrapper {
     @include clearfix;

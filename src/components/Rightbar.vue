@@ -90,9 +90,11 @@ export default {
     }
   },
   mounted() {
-    this.getAllPost()
-    this.getAllLatest()
-    this.getCount()
+    this.$nextTick(function() {
+      this.getAllPost()
+      this.getAllLatest()
+      this.getCount()
+    })
   },
   methods: {
     // 加载公告数据
@@ -119,7 +121,6 @@ export default {
     getCount() {
       this.$store.dispatch('Post', { url: '/bbscommon/count/bbsCount' }).then(res => {
         if (res.restCode === '0000') {
-          console.log(res)
           this.dailyCount = res.data.dailyCount
           this.totalCount = res.data.totalCount
         }
