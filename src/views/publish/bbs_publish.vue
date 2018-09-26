@@ -102,7 +102,8 @@ export default {
       'labelList'
     ]),
     labelList(){
-      return store.getters.labelList
+      //return store.getters.labelList
+	  return JSON.parse(sessionStorage.getItem('labelList'))
     }
   },
     data() {
@@ -155,11 +156,12 @@ export default {
     }
   },
   mounted() {
-    const  data =this.labelList
-    if(data){
-      this.lables = data.labelDtoList
-      this.labelValue = this.lables[0].id
-      this.postType =this.global.categoryItems[data.id]
+    const  data = this.labelList
+	console.log(this.lables)
+    if(this.lables){
+	  this.lables = data.labelDtoList
+      this.labelValue = this.lables.id
+      this.postType =this.global.categoryItems[this.lables.id]
     }
     this.eventVue.$emit('getIsShow',false)
     //获取编辑页面信息
@@ -179,6 +181,7 @@ export default {
             this.commentValue = res.data.isOpenComment;
             this.value = res.data.isRealName
             this.topicStatus = 1
+            this.postType = res.data.postContentType
             this.topicId = res.data.id
         }
       }).catch((err) => {
@@ -269,11 +272,11 @@ export default {
       topic.topicContent=this.editorContent.trim()
       //1代表优车社区，2代表公告，3代表意见
       topic.drafType=1
-      topic.isOpenComment=this.commentValue;
-      topic.isRealName = this.value;
+      topic.isOpenComment=this.commentValue
+      topic.isRealName = this.value
       //0代表普通，1代表草稿
-      topic.topicStatus = this.topicStatus;
-
+      topic.topicStatus = this.topicStatus
+      topic.id = this.topicId
       const data = {
         draft:JSON.stringify(topic),
         token:token
@@ -325,6 +328,7 @@ export default {
         labelId:this.labelValue,
         userNickname:name,
         modifyTime:new Date()/*parseTime(new Date(),'{y}-{m}-{d} {h}:{i}:{s}')*/,
+        userImagePath:userInfo.userLogo
       }
       console.log(this.previewData)
     },
