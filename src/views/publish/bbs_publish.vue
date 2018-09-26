@@ -17,7 +17,7 @@
                     <div class="layui-input-block">
                       <el-select v-model="labelValue" placeholder="请选择">
                         <el-option
-                          v-for="item in lables"
+                          v-for="item in labelList"
                           :key="item.id"
                           :label="item.labelName"
                           :value="item.id">
@@ -103,7 +103,7 @@ export default {
     ]),
     labelList(){
       //return store.getters.labelList
-	  return JSON.parse(sessionStorage.getItem('labelList'))
+	  return store.getters.labelList
     }
   },
     data() {
@@ -156,10 +156,9 @@ export default {
     }
   },
   mounted() {
-    const  data = this.labelList
-	console.log(this.lables)
-    if(this.lables){
-	  this.lables = data.labelDtoList
+    const data = this.labelList
+    if (this.lables) {
+	  this.lables = data
       this.labelValue = this.lables.id
       this.postType =this.global.categoryItems[this.lables.id]
     }
@@ -171,9 +170,7 @@ export default {
       id:draftId
     }
     if (draftId){
-      console.log(draftId)
       this.$store.dispatch('Post', { url: '/bbspost/draft/readDraftDetail', data: draft }).then(res => {
-        console.log(res);
         if (res.restCode === '0000'&& res.data) {
             this.labelValue= res.data.labelId
             this.title_input = res.data.topicTitle
@@ -218,7 +215,6 @@ export default {
         topic:JSON.stringify(topic),
         token:token
       }
-      console.log(data);
       //请求后台
       this.$store.dispatch('Post', { url: 'bbspost/topic/addTopic', data: data }).then(res => {
         console.log(res);
@@ -264,7 +260,6 @@ export default {
         return
       }
       topic.topicTitle=this.title_input.trim()
-
       if(this.editorContent==''){
         this.danger=true
         return
@@ -281,10 +276,8 @@ export default {
         draft:JSON.stringify(topic),
         token:token
       }
-      console.log(data);
       //请求后台
       this.$store.dispatch('Post', { url: 'bbspost/topic/addDraft', data: data }).then(res => {
-        console.log(res);
         if (res.restCode === '0000') {
           //成功后跳转到发布帖子详情页面
           layer.alert("保存草稿成功！",{
@@ -294,7 +287,6 @@ export default {
           this.$router.push({path:'/manager/user_bbs',query: { pageId: 'myDraft' }})
         }
         else{
-          console.log(res.restMsg);
           layer.alert("保存草稿失败！",{
             icon:5,
             title:"提示"
@@ -327,7 +319,7 @@ export default {
         topicType:this.postType,
         labelId:this.labelValue,
         userNickname:name,
-        modifyTime:new Date()/*parseTime(new Date(),'{y}-{m}-{d} {h}:{i}:{s}')*/,
+        modifyTime:new Date(),
         userImagePath:userInfo.userLogo
       }
       console.log(this.previewData)
@@ -338,7 +330,6 @@ export default {
     },
     handleEditor(data){
       this.editorContent = data
-       console.log(data)
     }
   }
 }

@@ -52,13 +52,16 @@ export default {
       }
     },
     getLableItem() {
-      this.$store.dispatch('Get', { url: '/bbsadmin/labelManager/getLableList' }).then(res => {
-        if (res.restCode === '0000') {
-          sessionStorage.setItem('setDidtLabes', JSON.stringify(res.data))
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
+     const ditcLabls = JSON.parse(sessionStorage.getItem('setDidtLabes'))
+      if(ditcLabls){
+        this.$store.dispatch('Get', { url: '/bbsadmin/labelManager/getLableList' }).then(res => {
+          if (res.restCode === '0000') {
+            sessionStorage.setItem('setDidtLabes', JSON.stringify(res.data))
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
     },
     getSidebar(data) {
       this.$store.commit('SET_LABLE_ITEM', data.labelDtoList)
