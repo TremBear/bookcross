@@ -75,10 +75,17 @@ export default {
     'wang-editor': wangeditor,
     'preview-dialog': previewDialog
   },
+  computed: {
+    ...mapGetters([
+      'dictLabels'
+    ]),
+    dictLabels() {
+      return store.getters.dictLabels
+    }
+  },
   inject: ['userInfo'],
   data() {
     return {
-      labelList: JSON.parse(sessionStorage.getItem('setDidtLabes')),
       topicsItem: {},
       dialogVisible: false,
       item: {},
@@ -208,14 +215,14 @@ export default {
         postContentType: this.replyType,
         token: ''
       }
-	  
+
 	  let url = '';
 	  if (item === 1) {
 		url = '/bbsusercenter/praise/praiseOrCancel';
 	  } else if(item === 2) {
 		url = '/bbsusercenter/collect/collectOrCancel';
 	  }
-	  
+
       this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
         if (res.restCode === '0000') {
           if (item === 2) {
@@ -247,7 +254,7 @@ export default {
     // 翻译数据字典
     lableDic(data) {
       let lable = ''
-      this.labelList.map((item, index) => {
+      this.dictLabels.map((item, index) => {
         if (item.id === data.labelId) {
           lable = item.labelName
 		  return
