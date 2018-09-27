@@ -20,7 +20,7 @@
       <dt class="fly-panel-title"><h3 >最新评论</h3></dt>
       <dd v-for="(item, index) in latestItme" :key="index" style="border-bottom: 1px dotted #E9E9E9;">
         <label>#{{ item.replyFloor }}楼 {{ item.userNickname }} {{ item.publishedTime }} </label>
-        对帖子 <a style="font-size: 15px; color: #999;" @click="handleDetail(item.topicId,1)"> “{{ item.postTitle }}” </a>    评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
+        对帖子 <a style="font-size: 15px; color: #999;" @click="handleDetail(item.topicId,item.replyType)"> “{{ item.postTitle }}” </a>    评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
 
       </dd>
     </dl>
@@ -78,6 +78,7 @@
 <script>
 import { parseTime } from '@/utils/index'
 import store from '@/store'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Rightbar',
   inject: ['reloadAppMain'],
@@ -87,6 +88,14 @@ export default {
       dailyCount: {},
       totalCount: {},
       noticeItme: []
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'dictLabels'
+    ]),
+    dictLabels() {
+      return store.getters.dictLabels
     }
   },
   mounted() {
@@ -102,7 +111,6 @@ export default {
       this.$store.dispatch('Post', { url: '/bbspost/bulletin/readTop' }).then(res => {
         if (res.restCode === '0000') {
           this.noticeItme = res.data
-
         }
       }).catch((err) => {
         console.log(err)
@@ -113,6 +121,7 @@ export default {
       this.$store.dispatch('Post', { url: '/bbspost/topicReply/readLast' }).then(res => {
         if (res.restCode === '0000') {
           this.latestItme = res.data
+          console.log(this.latestItme)
         }
       }).catch((err) => {
         console.log(err)
@@ -131,7 +140,6 @@ export default {
     },
     // 详细信息页面
     handleDetail(id, type) {
-      console.log(id)
       const datas = { id: id, entry: 1, type: type }
       sessionStorage.setItem('detail', JSON.stringify(datas))
       this.reloadAppMain()
