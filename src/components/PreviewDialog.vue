@@ -74,7 +74,7 @@ export  default {
     lableDic(val){
       let lable = ''
       if(val) {
-        this.labelList.labelDtoList.map((item, index) => {
+        this.labelList.map((item, index) => {
           if(item.id === val){
             lable= item.labelName
           }

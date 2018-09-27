@@ -284,7 +284,13 @@ export default {
 
     // 取消收藏或者点赞
     cancel(data, type) {
-      const params = { userId: this.userInfo.userId, topicId: data.id, topicTitle: data.topicTitle, userNickname: this.userInfo.userNickname, postContentType: data.postContentType};
+      const params = { 
+		  authorId:data.userId,
+		  topicId: data.id, 
+		  topicTitle: data.topicTitle, 
+		  postContentType: data.postContentType
+	  };
+	  
 	  var url = '';
       if (type == 'collect') {
 		url  = '/bbsusercenter/collect/collectOrCancel';
