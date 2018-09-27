@@ -296,8 +296,10 @@ export default {
     },
     // 点赞 或 收藏
     handleBBS(item) {
+	console.info(this.topicsItem)
       const data = {
         topicId: this.topicsItem.id,
+		authorId:this.topicsItem.userId,
         topicTitle: this.topicsItem.topicTitle,
         postContentType: this.replyType,
         token: ''

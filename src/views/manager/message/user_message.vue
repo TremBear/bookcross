@@ -13,9 +13,12 @@
                           描述：未读息列表
                       -->
           <div class="layui-tab-item layui-show">
+			<input type='checkbox' style="margin-top: 4px" class='input-checkbox' :checked="unreadIdList.length === unreadList.length" @click='checkedAll()'>全选
+			<a class="layui-btn but_style" @click="readAllMsg()">已读</a>
             <ul class="mine-view jie-row">
 
               <li v-for="(item, index) in unreadList" :key="index">
+				<input style="margin-top: 4px" type='checkbox' :checked="unreadIdList.indexOf(item.id)>=0" name='checkboxinput' class='input-checkbox' @click='checkedOne(item.id)'> 
                 <a class="jie-title" target="_blank" v-on:click="msgViewData(item.id, item.status)" >{{item.title}}</a>
                 <i>{{formatTime(item.sendTime)}}</i>
               </li>
@@ -90,11 +93,14 @@
         labelId: 1,
         lableName: '',
         unreadList : {},
+		unreadIdList : [],
         readedList : {},
         dialogVisible:false,
         msgData: {},
         msgId:'',
-        magStatus:''
+        magStatus:'',
+		// 初始化全选按钮, 默认不选
+		isCheckedAll: false
       }
     },
     created: function() {
@@ -161,8 +167,49 @@
         this.dialogVisible = true
         this.magStatus = status
       },
-
-
+	  
+	  //checkedOne
+	  checkedOne (id) {
+        let idIndex = this.unreadIdList.indexOf(id)
+        if (idIndex >= 0) {
+          // 如果已经包含了该id, 则去除(单选按钮由选中变为非选中状态)
+          this.unreadIdList.splice(idIndex, 1)
+        } else {
+          // 选中该checkbox
+          this.unreadIdList.push(id)
+        }
+		
+		console.info(this.unreadIdList)
+      },
+	  
+	  //checkedAll
+      checkedAll () {
+        this.isCheckedAll = !this.isCheckedAll
+        if (this.isCheckedAll) {
+          // 全选时
+          this.unreadIdList = []
+          this.unreadList.forEach(function (item) {
+            this.unreadIdList.push(item.id)
+          }, this)
+        } else {
+          this.unreadIdList = []
+        }
+		
+		console.info(this.unreadIdList)
+	  },
+	  
+	  // 批量已读
+	  readAllMsg() {
+		 let params = {userId:this.userInfo.userId, ids:this.unreadIdList.join(",")} // 组装参数
+		 this.$store.dispatch('Post', { url: '/bbsusercenter/msg/readSelected',  data:params }).then(res => {
+          if (res.restCode === '0000') {
+            this.reload()  //  刷新页面
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+	  },
+	  
       // 关闭弹框
       handleClose(){
         this.dialogVisible = false
@@ -202,5 +249,9 @@
 </script>
 
 <style scoped>
-
+	.but_style{
+		height: 27px;
+		line-height: 27px;
+		font-size: 15px;
+	}
 </style>
