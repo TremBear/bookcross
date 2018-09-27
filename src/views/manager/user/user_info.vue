@@ -30,7 +30,12 @@
           <div class="layui-form-item">
             <label for="L_username" class="layui-form-label">昵称</label>
             <div class="layui-input-inline">
-              <input id="L_username" v-model="user.userNickname" type="text" name="username" required lay-verify="required" autocomplete="off" class="layui-input">
+			 <div v-if="0 === user.nicknameChangeTimes">
+				<input id="L_username" v-model="user.userNickname" type="text" name="username" required lay-verify="required" autocomplete="off" class="layui-input" disabled="disabled">
+			 </div>
+			 <div v-else>
+				<input id="L_username" v-model="user.userNickname" type="text" name="username" required lay-verify="required" autocomplete="off" class="layui-input">
+			 </div>
             </div>
           </div>
           <div class="layui-form-item">

@@ -200,19 +200,30 @@ export default {
       console.log(data)
     },
 
-    // 点赞或收藏
+    // 点赞 或 收藏
     handleBBS(item) {
-      console.log(this.topicsItem)
       const data = {
-        id: this.topicsItem.id,
+        topicId: this.topicsItem.id,
         topicTitle: this.topicsItem.topicTitle,
-        type1: item,
-        type2: this.replyType,
+        postContentType: this.replyType,
         token: ''
       }
-      this.$store.dispatch('TokenPost', { url: '/bbspost/topic/praiseOrCancel', data: data }).then(res => {
+	  
+	  let url = '';
+	  if (item === 1) {
+		url = '/bbsusercenter/praise/praiseOrCancel';
+	  } else if(item === 2) {
+		url = '/bbsusercenter/collect/collectOrCancel';
+	  }
+	  
+      this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
         if (res.restCode === '0000') {
-          console.log(res)
+          if (item === 2) {
+            this.topicsItem.collectCount = res.data.num
+          }
+          if (item === 1) {
+            this.topicsItem.praiseCount = res.data.num
+          }
         }
       }).catch((err) => {
         console.log(err)
@@ -239,6 +250,7 @@ export default {
       this.labelList.map((item, index) => {
         if (item.id === data.labelId) {
           lable = item.labelName
+		  return
         }
       })
       return lable
