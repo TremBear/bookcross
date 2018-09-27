@@ -172,15 +172,21 @@ export default {
       detail['pageSize'] = this.pageSize
       detail['pageNum'] = this.pageNum
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: detail }).then(res => {
-        console.log(res)
         if (res.restCode === '0000') {
           this.topicsItem = res.data
           if (res.data.replyDetail) {
             this.replyDetailList = res.data.replyDetail.list
             this.total = res.data.replyDetail.total
           }
-          const index = this.dictLabels.id
-          this.replyType = this.global.categoryItems[index]
+          this.dictLabels.map((item, index) => {
+            if (item.id === this.topicsItem.labelId) {
+              this.replyType = this.global.categoryItems[item.categoryId]
+              return ''
+            }
+          })
+          if (!this.replyType) {
+            this.replyType = 2
+          }
         }
       }).catch((err) => {
         console.log(err)
@@ -231,6 +237,7 @@ export default {
         if (this.item) {
           data.quoteId = this.item.id
         }
+        console.log(data)
         this.$store.dispatch('TokenPost', { url: '/bbspost/topicReply/add', data: data }).then(res => {
           if (res.restCode === '0000') {
             this.item = {}
@@ -303,7 +310,7 @@ export default {
 	console.info(this.topicsItem)
       const data = {
         topicId: this.topicsItem.id,
-		authorId:this.topicsItem.userId,
+		    authorId:this.topicsItem.userId,
         topicTitle: this.topicsItem.topicTitle,
         postContentType: this.replyType,
         token: ''
