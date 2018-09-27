@@ -213,6 +213,7 @@ export default {
         topicId: this.topicsItem.id,
         topicTitle: this.topicsItem.topicTitle,
         postContentType: this.replyType,
+		authorId:this.topicsItem.userId,
         token: ''
       }
 	  
