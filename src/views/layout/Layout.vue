@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <navbar :categorys-itme="categorysItme" @getSidebar="getSidebar"/>
+    <navbar />
     <sidebar v-show="isShow" />
     <div>
       <app-main/>
@@ -23,51 +23,17 @@ export default {
   mixins: [ResizeMixin],
   data() {
     return {
-      isShow: true,
-      categorysItme: []
+      isShow: true
     }
   },
   mounted() {
     this.headeIsShow()
   },
   beforeMount() {
-    this.getCategory()
-    this.getLableItem()
+    this.$store.dispatch('GetCategorys', { url: '/bbsadmin/categoryManager/allCategorys' })
+    this.$store.dispatch('GetLablesList', { url: '/bbsadmin/labelManager/getLableList' })
   },
   methods: {
-    getCategory() {
-      if (this.categorysItme) {
-        this.$store.dispatch('Get', { url: '/bbsadmin/categoryManager/allCategorys' }).then(res => {
-          if (res.restCode === '0000') {
-            this.categorysItme = res.data
-            if (this.categorysItme) {
-              this.$store.commit('SET_SIDE', this.categorysItme)
-              this.$store.commit('SET_LABLE_ITEM', this.categorysItme[0].labelDtoList)
-              sessionStorage.setItem('navType', this.global.categoryItems[this.categorysItme[0].id])
-            }
-          }
-        }).catch((err) => {
-          console.log(err)
-        })
-      }
-    },
-    getLableItem() {
-     const ditcLabls = JSON.parse(sessionStorage.getItem('setDidtLabes'))
-      if(ditcLabls){
-        this.$store.dispatch('Get', { url: '/bbsadmin/labelManager/getLableList' }).then(res => {
-          if (res.restCode === '0000') {
-            sessionStorage.setItem('setDidtLabes', JSON.stringify(res.data))
-          }
-        }).catch((err) => {
-          console.log(err)
-        })
-      }
-    },
-    getSidebar(data) {
-      this.$store.commit('SET_LABLE_ITEM', data.labelDtoList)
-      this.eventVue.$emit('getLabelId', data.labelDtoList[0])
-      this.$router.push('home')
-    },
     headeIsShow() {
       this.eventVue.$on('getIsShow', (message) => { // 这里最好用箭头函数，不然this指向有问题
         this.isShow = message

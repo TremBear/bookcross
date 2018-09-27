@@ -99,14 +99,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'labelList'
+      'labelList',
+      'navType'
     ]),
-    labelList(){
-      //return store.getters.labelList
-	  return store.getters.labelList
+    labelList() {
+	    return store.getters.labelList
+    },
+    navType() {
+      return store.getters.navType
     }
   },
-    data() {
+  data() {
     return {
       title_input:'',
       options: [{
@@ -160,7 +163,7 @@ export default {
     if (this.lables) {
 	  this.lables = data
       this.labelValue = this.lables.id
-      this.postType =this.global.categoryItems[this.lables.id]
+      this.postType =this.navType
     }
     this.eventVue.$emit('getIsShow',false)
     //获取编辑页面信息

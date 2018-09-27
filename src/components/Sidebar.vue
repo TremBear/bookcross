@@ -28,15 +28,30 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'labelList'
+      'labelList',
+      'navType',
+      'sideItem'
     ]),
     labelList() {
       return store.getters.labelList
+    },
+    navType() {
+      return store.getters.navType
+    },
+    sideItem() {
+      return store.getters.sideItem
     }
   },
   watch: {
     labelList(curVal, oldVal) {
-      this.isActive = curVal[0].id
+      if (curVal) {
+        this.isActive = curVal[0].id
+        this.eventVue.$emit('getLabelId', curVal[0])
+      }
+    },
+    navType(curVal, oldVal) {
+      console.log(this.sideItem)
+      console.log(curVal)
     }
   },
   mounted() {

@@ -9,7 +9,7 @@
       <ul class="fly-panel-main fly-list-static " >
         <li v-for="(item, index) in noticeItme" :key="index" style="list-style-type: none;">
           <div class="fly-list-info">
-            <a link style="font-size: 14px; color: #c16262;" @click="handleDetail(item,'2')">{{ item.topicTitle.substring(0, 16) }}</a>
+            <a link style="font-size: 14px; color: #c16262;" @click="handleDetail(item.id,2)">{{ item.topicTitle.substring(0, 16) }}</a>
             <span class="fly-list-nums">{{ formatTime(item.modifyTime) }} ... </span>
           </div>
         </li>
@@ -20,7 +20,7 @@
       <dt class="fly-panel-title"><h3 >最新评论</h3></dt>
       <dd v-for="(item, index) in latestItme" :key="index" style="border-bottom: 1px dotted #E9E9E9;">
         <label>#{{ item.replyFloor }}楼 {{ item.userNickname }} {{ item.publishedTime }} </label>
-        对帖子 <a style="font-size: 15px; color: #999;" @click="handleDetail(item,'1')"> “{{ item.postTitle }}” </a>    评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
+        对帖子 <a style="font-size: 15px; color: #999;" @click="handleDetail(item.topicId,1)"> “{{ item.postTitle }}” </a>    评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
 
       </dd>
     </dl>
@@ -102,6 +102,7 @@ export default {
       this.$store.dispatch('Post', { url: '/bbspost/bulletin/readTop' }).then(res => {
         if (res.restCode === '0000') {
           this.noticeItme = res.data
+
         }
       }).catch((err) => {
         console.log(err)
@@ -129,8 +130,9 @@ export default {
       })
     },
     // 详细信息页面
-    handleDetail(data, type) {
-      const datas = { id: data.id, entry: 1, type: type }
+    handleDetail(id, type) {
+      console.log(id)
+      const datas = { id: id, entry: 1, type: type }
       sessionStorage.setItem('detail', JSON.stringify(datas))
       this.reloadAppMain()
       this.$router.push({ path: 'detail#goto' })
@@ -144,9 +146,10 @@ export default {
     },
     // 公告更多功能
     handleMore() {
-      const sideItem = store.getters.sideItem
-      this.$store.commit('SET_LABLE_ITEM', sideItem[1])
-      sessionStorage.setItem('navType', this.global.categoryItems[sideItem[1].id])
+      this.$store.commit('SET_NAV_TYPE','2')
+      this.$store.commit('SET_LABLE_ITEM')
+      this.$router.push('/')
+      this.eventVue.$emit('getLabelId')
     }
   }
 }

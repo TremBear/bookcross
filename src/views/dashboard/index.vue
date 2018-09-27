@@ -16,7 +16,7 @@
                   <img :src="!item.userImagePath?'./static/cweg.jpg':item.userImagePath" :alt="item.userNickname">
                 </a>
                 <h2>
-                  <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
+                  <a class="layui-badge" v-if="item.labelId" >{{ lableDic(item.labelId) }}</a>
                   <a @click="handleDetail(item)" >{{ item.topicTitle }}</a>
                 </h2>
                 <div class="fly-list-info">
@@ -55,7 +55,7 @@
               @current-change="handleCurrentChange"/>
           </div>
         </div>
-        <right-bar/>
+        <keep-alive><right-bar/></keep-alive>
       </div>
     </div>
   </div>
@@ -64,15 +64,28 @@
 <script>
 import Rightbar from '@/components/Rightbar'
 import Sidebar from '@/components/Sidebar'
+import { mapGetters } from 'vuex'
+import store from '@/store'
 export default {
   name: 'Dashboard',
   components: {
     'right-bar': Rightbar,
     'side-bar': Sidebar
   },
+  computed: {
+    ...mapGetters([
+      'dictLabels',
+      'navType'
+    ]),
+    dictLabels() {
+      return store.getters.dictLabels
+    },
+    navType() {
+      return store.getters.navType
+    }
+  },
   data() {
     return {
-      ditcLabls: JSON.parse(sessionStorage.getItem('setDidtLabes')),
       topicsItme: [],
       total: 0,
       lableItem: {},
@@ -105,8 +118,7 @@ export default {
       if (labelId) {
         this.labelId = labelId.id
       }
-      const type = JSON.parse(sessionStorage.getItem('navType'))
-      const data = { labelId: this.labelId, pageSize: this.pageSize, pageNum: this.pageNum, type: type, keyword: this.keyword }
+      const data = { labelId: this.labelId, pageSize: this.pageSize, pageNum: this.pageNum, type: this.navType, keyword: this.keyword }
       this.$store.dispatch('Post', { url: this.url, data: data }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItme = res.data.list
@@ -149,9 +161,13 @@ export default {
     // 标签点击事件
     handleLabelId() {
       this.eventVue.$on('getLabelId', (data) => { // 这里最好用箭头函数，不然this指向有问题
-        sessionStorage.setItem('labelId', JSON.stringify(data))
-        this.labelId = data.id
-        this.getAlNotice(data.id)
+        if (data){
+          sessionStorage.setItem('labelId', JSON.stringify(data))
+          this.labelId = data.id
+          this.getAlNotice(data.id)
+        }else{
+          this.getAlNotice()
+        }
       })
     },
     handleDetail(data) {
@@ -162,7 +178,7 @@ export default {
     // 翻译数据字典
     lableDic(val) {
       let lable = ''
-      this.ditcLabls.map((item, index) => {
+      this.dictLabels.map((item, index) => {
         if (item.id === val) {
           lable = item.labelName
         }

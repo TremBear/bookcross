@@ -1,11 +1,11 @@
 <template>
   <div class="fly-header layui-bg-black">
     <div class="layui-container">
-      <a class="fly-logo" href="/BBS">
+      <a class="fly-logo" href="./">
         <img :src="logoImg">
       </a>
       <ul class="layui-nav fly-nav layui-hide-xs">
-        <li class="layui-nav-item layui-this" v-for="(item, index) in categorysItme" :key="index">
+        <li class="layui-nav-item layui-this" v-for="(item, index) in sideItem" :key="index">
           <a v-on:click="handleCategory(item)"><i class="iconfont" :class="item.categoryLogo"/>{{item.categoryName}}</a>
         </li>
       </ul>
@@ -48,14 +48,6 @@ import Hamburger from '@/components/Hamburger'
 import store from '@/store'
 
 export default {
-  props: {
-    categorysItme: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    }
-  },
   data() {
     return {
       logoImg: './static/logo.png',
@@ -64,16 +56,20 @@ export default {
       imgUrl:'./static/cweg.jpg'
     }
   },
-  components: {
+  components:{
     Breadcrumb,
     Hamburger
   },
   computed: {
     ...mapGetters([
-      'userInfo'
+      'userInfo',
+      'sideItem'
     ]),
-    userInfo(){
+    userInfo() {
       return store.getters.userInfo
+    },
+    sideItem() {
+      return store.getters.sideItem
     }
   },
   watch: {
@@ -83,7 +79,7 @@ export default {
   },
   mounted() {
     this.toggleSideBar()
-    setInterval(this.getElevatorList(), 15000)
+    this.getElevatorList
   },
   methods: {
     toggleSideBar() {
@@ -105,12 +101,13 @@ export default {
       })
     },
     handleCategory(data) {
-      console.log(data)
-      this.$emit('getSidebar', data)
+      this.$store.commit('SET_LABLE_ITEM', data.labelDtoList)
+      this.$store.commit('SET_NAV_TYPE', this.global.categoryItems[data.id])
       this.$router.push('/')
     },
     getElevatorList() {
       console.log(1)
+      setInterval(this.getElevatorList(), 15000)
     },
     handleCommand(data) {
       if (data === 'exit') {

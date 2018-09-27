@@ -56,8 +56,8 @@ export  default {
   data() {
     return {
       selectOptions: [],
-      seleValue:'',
-      reportMsg:''
+      seleValue: '',
+      reportMsg: ''
     }
   },
   mounted() {
@@ -73,7 +73,6 @@ export  default {
     },
     // 下拉框的值
     handleInput(data){
-      console.log(data)
       this.seleValue = data
     },
     // 提交举报内容
@@ -88,15 +87,12 @@ export  default {
     handleReport(){
       console.log(0)
       this.$store.dispatch('Get', { url: '/bbsadmin/reprotManager/allReportTypes'}).then(res => {
-        console.log(res)
         if (res.restCode === '0000') {
-
           this.selectOptions = res.data
         }
       }).catch((err) => {
         console.log(err)
       })
-
     }
   }
 }

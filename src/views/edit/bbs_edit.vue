@@ -76,16 +76,9 @@ export default {
     'preview-dialog': previewDialog
   },
   inject: ['userInfo'],
-  computed: {
-    ...mapGetters([
-      'sideItem'
-    ]),
-    sideItem() {
-      return store.getters.sideItem
-    }
-  },
   data() {
     return {
+      labelList: JSON.parse(sessionStorage.getItem('setDidtLabes')),
       topicsItem: {},
       dialogVisible: false,
       item: {},
@@ -243,9 +236,7 @@ export default {
     // 翻译数据字典
     lableDic(data) {
       let lable = ''
-      const code = this.global.categoryItems[data.topicType]
-      const side = this.sideItem.find((element) => (element.id === code))
-      side.labelDtoList.map((item, index) => {
+      this.labelList.map((item, index) => {
         if (item.id === data.labelId) {
           lable = item.labelName
         }
