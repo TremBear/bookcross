@@ -5,6 +5,11 @@ const WIDTH = 1024
 const RATIO = 3
 
 export default {
+  data() {
+    return {
+      categorysItme: []
+    }
+  },
   watch: {
     $route(route) {
       if (this.device === 'mobile' && this.sidebar.opened) {

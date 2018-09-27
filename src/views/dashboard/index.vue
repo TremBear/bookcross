@@ -13,7 +13,7 @@
             <ul class="fly-list">
               <li v-for="(item, index) in topicsItme" :key="index">
                 <a href="#" class="fly-avatar">
-                  <img :src="!item.userImagePath?'/static/cweg.jpg':item.userImagePath" :alt="item.userNickname">
+                  <img :src="!item.userImagePath?'./static/cweg.jpg':item.userImagePath" :alt="item.userNickname">
                 </a>
                 <h2>
                   <a class="layui-badge">{{ lableDic(item.labelId) }}</a>
@@ -64,24 +64,15 @@
 <script>
 import Rightbar from '@/components/Rightbar'
 import Sidebar from '@/components/Sidebar'
-import { mapGetters } from 'vuex'
-import store from '@/store'
 export default {
   name: 'Dashboard',
   components: {
     'right-bar': Rightbar,
     'side-bar': Sidebar
   },
-  computed: {
-    ...mapGetters([
-      'labelList'
-    ]),
-    labelList() {
-      return JSON.parse(sessionStorage.getItem('labelList'))
-    }
-  },
   data() {
     return {
+      ditcLabls: JSON.parse(sessionStorage.getItem('setDidtLabes')),
       topicsItme: [],
       total: 0,
       lableItem: {},
@@ -101,10 +92,12 @@ export default {
     }
   },
   mounted() {
-    this.eventVue.$emit('getIsShow', true)
-    this.handleLabelId()
-    this.handleSarch()
-    this.getAlNotice()
+    this.$nextTick(function() {
+      this.eventVue.$emit('getIsShow', true)
+      this.handleLabelId()
+      this.handleSarch()
+      this.getAlNotice()
+    })
   },
   methods: {
     getAlNotice() {
@@ -144,7 +137,11 @@ export default {
     handleSarch() {
       this.eventVue.$on('getSarch', (message) => { // 这里最好用箭头函数，不然this指向有问题
         this.keyword = message
-        this.url = '/bbspost/topic/search'
+        if (this.keyword) {
+          this.url = '/bbspost/topic/search'
+        } else {
+          this.url = '/bbspost/topic/readAllTopics'
+        }
         this.pageNum = 1
         this.getAlNotice()
       })
@@ -165,7 +162,7 @@ export default {
     // 翻译数据字典
     lableDic(val) {
       let lable = ''
-      this.labelList.labelDtoList.map((item, index) => {
+      this.ditcLabls.map((item, index) => {
         if (item.id === val) {
           lable = item.labelName
         }

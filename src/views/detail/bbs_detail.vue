@@ -19,7 +19,7 @@
             </div>
             <div class="detail-about">
               <a class="fly-avatar" href="#">
-                <img :src="!topicsItem.userImagePath?'/static/cweg.jpg':topicsItem.userImagePath" alt="贤心">
+                <img :src="!topicsItem.userImagePath?'./static/cweg.jpg':topicsItem.userImagePath" alt="贤心">
               </a>
               <div class="fly-detail-user">
                 <a href="user_info.html" class="fly-link">
@@ -304,14 +304,14 @@ export default {
         postContentType: this.replyType,
         token: ''
       }
-	  
+
 	  let url = '';
 	  if (item === 1) {
 		url = '/bbsusercenter/praise/praiseOrCancel';
 	  } else if(item === 2) {
 		url = '/bbsusercenter/collect/collectOrCancel';
 	  }
-	  
+
       this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
         if (res.restCode === '0000') {
           if (item === 2) {
