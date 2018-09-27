@@ -1,14 +1,17 @@
 import { login, logout, getInfo, get, post } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import  global_ from '@/utils/public'
 
 const user = {
   state: {
     token: getToken(),
     userInfo: {},
     roles: [],
-    sideItem: {},
+    sideItem: [],
     labelList: [],
-    labelId: ''
+    labelId: '',
+    dictLabels: [],
+    navType: ''
   },
 
   mutations: {
@@ -24,16 +27,19 @@ const user = {
       state.roles = roles
     },
     SET_LABLE_ITEM: (state, labelList) => {
-      sessionStorage.setItem('labelList', JSON.stringify(labelList))
-      state.labelList = JSON.parse(sessionStorage.getItem('labelList'))
+      state.labelList = labelList
     },
     SET_LABLE_ID: (state, labelId) => {
       state.labelId = labelId
     },
     SET_SIDE: (state, sideItem) => {
-      sessionStorage.setItem('sideItem', JSON.stringify(sideItem))
-      const sideI = JSON.parse(sessionStorage.getItem('sideItem'))
-      state.sideItem = sideI
+      state.sideItem = sideItem
+    },
+    SET_DICT_LABELS: (state, dictLabels) => {
+      state.dictLabels = dictLabels
+    },
+    SET_NAV_TYPE: (state, navType) => {
+      state.navType = navType
     }
   },
 
@@ -52,7 +58,29 @@ const user = {
         })
       })
     },
-
+    GetLablesList({ commit, state }, data) {
+      return new Promise((resolve, reject) => {
+        get(data.url, data.params).then(response => {
+          commit('SET_DICT_LABELS', response.data)
+          // resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    GetCategorys({ commit, state }, data) {
+      return new Promise((resolve, reject) => {
+        get(data.url, data.params).then(response => {
+          commit('SET_SIDE', response.data)
+          console.log(response.data)
+          commit('SET_LABLE_ITEM', response.data[0].labelDtoList)
+          const type = global_.categoryItems[response.data[0].id]
+          commit('SET_NAV_TYPE', type)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {

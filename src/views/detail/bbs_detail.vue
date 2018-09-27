@@ -94,7 +94,7 @@
             </div>
           </div>
         </div>
-        <right-bar/>
+        <keep-alive><right-bar/></keep-alive>
       </div>
     </div>
     <div><report-msg-div :reply-data="replyData" :reply-title="replyTitle" :dialog-visible="dialogVisible" @handleClose="handleClose" @handleSubmit="handleSubmit"/></div>
@@ -118,10 +118,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'labelList'
+      'dictLabels',
+      'navType'
     ]),
-    labelList() {
-      return store.getters.labelList
+    dictLabels() {
+      return store.getters.dictLabels
+    },
+    navType() {
+      return store.getters.navType
     }
   },
   data() {
@@ -163,19 +167,19 @@ export default {
     getPosts() {
       const detail = JSON.parse(sessionStorage.getItem('detail'))
       if (!detail.type) {
-        const type = this.global.categoryItems[this.labelList.id]
-        detail['type'] = type
+        detail['type'] = this.navType
       }
       detail['pageSize'] = this.pageSize
       detail['pageNum'] = this.pageNum
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: detail }).then(res => {
+        console.log(res)
         if (res.restCode === '0000') {
           this.topicsItem = res.data
           if (res.data.replyDetail) {
             this.replyDetailList = res.data.replyDetail.list
             this.total = res.data.replyDetail.total
           }
-          const index = this.labelList.id
+          const index = this.dictLabels.id
           this.replyType = this.global.categoryItems[index]
         }
       }).catch((err) => {
@@ -197,7 +201,7 @@ export default {
     lableDic(val) {
       let lable = ''
       if (val) {
-        this.labelList.labelDtoList.map((item, index) => {
+        this.dictLabels.map((item, index) => {
           if (item.id === val) {
             lable = item.labelName
           }
@@ -305,12 +309,12 @@ export default {
         token: ''
       }
 
-	  let url = '';
-	  if (item === 1) {
-		url = '/bbsusercenter/praise/praiseOrCancel';
-	  } else if(item === 2) {
-		url = '/bbsusercenter/collect/collectOrCancel';
-	  }
+	    let url = '';
+	    if (item === 1) {
+		   url = '/bbsusercenter/praise/praiseOrCancel';
+	     } else if(item === 2) {
+		   url = '/bbsusercenter/collect/collectOrCancel';
+	     }
 
       this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
         if (res.restCode === '0000') {
