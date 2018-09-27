@@ -208,10 +208,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'sideItem'
+      'sideItem',
+      'dictLabels'
     ]),
     sideItem() {
-      return JSON.parse(sessionStorage.getItem('sideItem'))
+      return store.getters.sideItem
+    },
+    dictLabels(){
+      return store.getters.dictLabels
     }
   },
   data() {
@@ -442,12 +446,10 @@ export default {
     // 翻译数据字典
     lableDic(data) {
       let lable = ''
-      const code = this.global.categoryItems[data.postContentType]
-      const side = this.sideItem.find((element) => (element.id === code))
-      side.labelDtoList.map((item, index) => {
+      this.dictLabels.map((item, index) => {
         if (item.id === data.labelId) {
           lable = item.labelName
-		  return 
+		  return
         }
       })
       return lable
