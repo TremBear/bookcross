@@ -6,6 +6,7 @@ const getters = {
   labelList: state => state.user.labelList,
   labelId: state => state.user.labelId,
   dictLabels: state => state.user.dictLabels,
-  navType: state => state.user.navType
+  navType: state => state.user.navType,
+  userIsClass: state => state.user.userIsClass
 }
 export default getters

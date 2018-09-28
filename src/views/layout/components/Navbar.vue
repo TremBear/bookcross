@@ -110,6 +110,7 @@ export default {
       setInterval(this.getElevatorList(), 15000)
     },
     handleCommand(data) {
+      this.$store.commit('SET_IS_CLASS', data)
       if (data === 'exit') {
         this.$store.dispatch('LogOut').then(res => {
         })

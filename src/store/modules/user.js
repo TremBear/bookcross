@@ -11,6 +11,7 @@ const user = {
     labelList: [],
     labelId: '',
     dictLabels: [],
+    userIsClass: '/manager/user',
     navType: ''
   },
 
@@ -40,6 +41,9 @@ const user = {
     },
     SET_NAV_TYPE: (state, navType) => {
       state.navType = navType
+    },
+    SET_IS_CLASS: (state, userIsClass) => {
+      state.userIsClass = userIsClass
     }
   },
 

@@ -1,7 +1,7 @@
 <template>
   <div class="layui-container fly-marginTop fly-user-main">
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
-      <li class="layui-nav-item " v-for="(item, index) in menuList" :key="index" :class="{'layui-this':isActive === item.listLink }">
+      <li class="layui-nav-item " v-for="(item, index) in menuList" :key="index" :class="{'layui-this':userIsClass === item.listLink }">
         <a v-on:click="handleClass(item)">
           <router-link :to="item.listLink"><i class="layui-icon">{{item.icon}}</i>{{item.title}} <span class="layui-badge" v-show="false">99+</span></router-link>
         </a>
@@ -24,11 +24,21 @@
 </template>
 
 <script>
+import store from '@/store'
+import { mapGetters } from 'vuex'
 export   default {
   name: 'manager',
   provide(){
     return{
       reload: this.reload
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'userIsClass'
+    ]),
+    userIsClass() {
+      return store.getters.userIsClass
     }
   },
   data() {
@@ -50,13 +60,12 @@ export   default {
           title:'我的消息',
           icon:''
         }
-      ],
-      isActive:'/manager/user'
+      ]
     }
   },
   methods: {
     handleClass(data) {
-      this.isActive =  data.listLink
+      this.$store.commit('SET_IS_CLASS', data.listLink)
     },
     reload(){
       this.isRouterAlive =false
