@@ -172,7 +172,7 @@ export default {
             // 成功后跳转到帖子详情页面
             const datas = { id: this.topicsItem.id, entry: 1 }
             sessionStorage.setItem('detail', JSON.stringify(datas))
-            this.$router.push({ path: 'detail#goto' })
+            this.$router.push({ path: 'detail' })
           } else {
             layer.msg(res.restMsg)
           }
@@ -267,7 +267,7 @@ export default {
     // 验证用户是否登录
     handleVerifUser() {
       if (!this.userInfo) {
-        const data = 'bbs_edit#goto'
+        const data = 'bbs_edit'
         this.$router.push({ name: 'login', params: { data }})
         return false
       } else {

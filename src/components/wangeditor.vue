@@ -1,6 +1,10 @@
 <template>
-  <div ref="editor" style="text-align:left;">
-    <span v-html="content"/>
+  <div style="border: 1px solid #dcdfe6;">
+    <div id="editor" style="text-align:left;"/>
+    <div v-if="replyConent" v-html="replyConent"/>
+    <div id="editor1" style="text-align:left;height: 200px; ">
+      <span v-html="content"/>
+    </div>
   </div>
 
 </template>
@@ -19,6 +23,10 @@ export default {
     content: {
       type: String,
       default: ''
+    },
+    replyConent: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -28,7 +36,7 @@ export default {
     }
   },
   mounted() {
-    this.wangEditor = new E(this.$refs.editor)
+    this.wangEditor = new E('#editor', '#editor1')
     this.wangEditor.customConfig.onchange = (html) => {
       this.editor = html
       this.$emit('handleEditor', this.editor)

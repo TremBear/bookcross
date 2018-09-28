@@ -13,7 +13,7 @@
                 <a @click="handleReportPost(topicsItem)"><i class="layui-icon" title="举报">&#x1007;</i> 举报</a>
                 <a @click="handleBBS(2)"><i class="layui-icon" title="收藏">&#xe658;</i> {{ getNum(topicsItem.collectCount) }}</a>
                 <a @click="handleBBS(1)"><i class="layui-icon" title="点赞">&#xe6c6;</i> {{ getNum(topicsItem.praiseCount) }}</a>
-                <a href="#goto"><i class="layui-icon" title="评论">&#xe611;</i> {{ getNum(topicsItem.replyCount) }}</a>
+                <a @click="handleReplyToReply"><i class="layui-icon" title="评论">&#xe611;</i> {{ getNum(topicsItem.replyCount) }}</a>
                 <i class="iconfont" title="浏览">&#xe60b;</i> {{ getNum(topicsItem.browseCount) }}
               </span>
             </div>
@@ -59,7 +59,7 @@
                   <p v-html="item.replyComment"/>
                 </div>
                 <div class="jieda-reply">
-                  <a href="#goto" @click="handleReplyToReply(item)">
+                  <a  @click="handleReplyToReply(item,index)">
                     <span type="reply">
                       <i class="iconfont icon-svgmoban53" />
                       回复
@@ -85,7 +85,7 @@
               <div class="layui-form-item layui-form-text">
                 <a name="comment"/>
                 <div class="layui-input-block">
-                  <wang-editor ref="wangEditor" :menus="menus" :content="content" @handleEditor="handleEditor"/>
+                  <wang-editor ref="wangEditor" :menus="menus" :replyConent="replyConent" :content="content" @handleEditor="handleEditor"/>
                 </div>
               </div>
               <div class="layui-item">
@@ -134,6 +134,7 @@ export default {
       // 回显内容
       content: '',
       // 输入的内容
+      replyConent: '',
       editor: '',
       dialogVisible: false,
       item: {},
@@ -177,6 +178,7 @@ export default {
           if (res.data.replyDetail) {
             this.replyDetailList = res.data.replyDetail.list
             this.total = res.data.replyDetail.total
+            this.replyConent = ''
           }
           this.dictLabels.map((item, index) => {
             if (item.id === this.topicsItem.labelId) {
@@ -216,10 +218,14 @@ export default {
       return lable
     },
     // 回复的回复
-    handleReplyToReply(item) {
-      this.content = '@' + item.userNickname + ' ' + this.formatTime(item.replyTime) + ' ' + item.replyComment + '\n'
-      this.content = this.content.replace('\r\n', '＜br＞')
-      this.item = item
+    handleReplyToReply(item, index) {
+      var anchor = this.$el.querySelector('#goto')
+      document.documentElement.scrollTop = anchor.offsetTop
+      if (index) {
+        this.replyConent = ''
+        this.replyConent = '\n @' + item.userNickname + ' ' + this.formatTime(item.replyTime) + ' ' + item.replyComment + '\n -------------------------------'
+        this.item = item
+      }
     },
     handleEditor(data) {
       this.editor = data
@@ -227,6 +233,10 @@ export default {
     // 回复提交菜单
     handleReply() {
       if (this.handleVerifUser()) {
+        if (this.replyConent) {
+          this.editor = this.replyConent + this.editor
+        }
+        console.log(this.editor)
         const data = {
           topicId: this.topicsItem.id,
           replyType: this.replyType,
@@ -237,7 +247,6 @@ export default {
         if (this.item) {
           data.quoteId = this.item.id
         }
-        console.log(data)
         this.$store.dispatch('TokenPost', { url: '/bbspost/topicReply/add', data: data }).then(res => {
           if (res.restCode === '0000') {
             this.item = {}
@@ -315,14 +324,12 @@ export default {
         postContentType: this.replyType,
         token: ''
       }
-
 	    let url = '';
 	    if (item === 1) {
-		   url = '/bbsusercenter/praise/praiseOrCancel';
+		    url = '/bbsusercenter/praise/praiseOrCancel';
 	     } else if(item === 2) {
-		   url = '/bbsusercenter/collect/collectOrCancel';
+		    url = '/bbsusercenter/collect/collectOrCancel';
 	     }
-
       this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
         if (res.restCode === '0000') {
           if (item === 2) {
@@ -345,7 +352,7 @@ export default {
     handleVerifUser() {
       this.userInfo = store.getters.userInfo
       if (!this.userInfo.userName) {
-        const data = 'detail#goto'
+        const data = 'detail'
         this.$router.push({ name: 'login', params: { data }})
         return false
       } else {
@@ -357,6 +364,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 
 </style>

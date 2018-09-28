@@ -143,7 +143,7 @@ export default {
       const datas = { id: id, entry: 1, type: type }
       sessionStorage.setItem('detail', JSON.stringify(datas))
       this.reloadAppMain()
-      this.$router.push({ path: 'detail#goto' })
+      this.$router.push({ path: 'detail' })
     },
     // 日期互转
     formatTime(time) {

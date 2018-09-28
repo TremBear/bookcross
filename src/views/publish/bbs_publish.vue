@@ -229,7 +229,7 @@ export default {
           })
           let datas={id:res.data.id, entry:res.data.entry}
           sessionStorage.setItem("detail",JSON.stringify(datas))
-          this.$router.push({path:'detail#goto'})
+          this.$router.push({path:'detail'})
         }
         else{
           console.log(res.restMsg);

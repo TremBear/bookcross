@@ -173,7 +173,7 @@ export default {
     handleDetail(data) {
       const datas = { id: data.id, entry: 1 }
       sessionStorage.setItem('detail', JSON.stringify(datas))
-      this.$router.push({ path: 'detail#goto' })
+      this.$router.push({ path: 'detail' })
     },
     // 翻译数据字典
     lableDic(val) {
