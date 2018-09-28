@@ -121,7 +121,6 @@ export default {
       this.$store.dispatch('Post', { url: '/bbspost/topicReply/readLast' }).then(res => {
         if (res.restCode === '0000') {
           this.latestItme = res.data
-          console.log(this.latestItme)
         }
       }).catch((err) => {
         console.log(err)

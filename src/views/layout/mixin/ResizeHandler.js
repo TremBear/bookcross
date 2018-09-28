@@ -32,7 +32,6 @@ export default {
       return rect.width - RATIO < WIDTH
     },
     resizeHandler() {
-      console.log(document.hidden)
       if (!document.hidden) {
         const isMobile = this.isMobile()
 

@@ -80,7 +80,6 @@ const user = {
       return new Promise((resolve, reject) => {
         get(data.url, data.params).then(response => {
           commit('SET_SIDE', response.data)
-          console.log(response.data)
           commit('SET_LABLE_ITEM', response.data[0].labelDtoList)
           const type = global_.categoryItems[response.data[0].id]
           commit('SET_NAV_TYPE', type)

@@ -86,7 +86,7 @@ export default {
     var that = this
     setInterval(function() {
       that.getElevatorList()
-    }, 3000)
+    }, 10000)
   },
   methods: {
     toggleSideBar() {
