@@ -1,7 +1,7 @@
 <template>
   <div style="border: 1px solid #dcdfe6;">
     <div id="editor" style="text-align:left;"/>
-    <div v-if="replyConent" v-html="replyConent"/>
+    <div v-if="replyConent" v-html="replyConent" style="color: #187d2f;margin-left: 6px;"/>
     <div id="editor1" style="text-align:left;height: 200px; ">
       <span v-html="content"/>
     </div>
