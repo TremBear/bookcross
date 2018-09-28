@@ -2,11 +2,11 @@
   <div class="fly-panel fly-panel-user" pad20>
     <div class="layui-tab layui-tab-brief" lay-filter="user">
       <ul id="LAY_mine" class="layui-tab-title">
-        <li data-type="mine-jie" lay-id="index" class="layui-this" @click="getMyTopics()">我的发帖</li>
-        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyDraftTopis()">我的草稿</li>
-        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyCollectTopics()">我收藏的帖</li>
-        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyPraiseTopics()">我点赞的帖</li>
-        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyReplyTopics()">我评论的帖</li>
+        <li data-type="mine-jie" lay-id="index" class="layui-this" @click="getMyTopics(1)">我的发帖</li>
+        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyDraftTopis(1)">我的草稿</li>
+        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyCollectTopics(1)">我收藏的帖</li>
+        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyPraiseTopics(1)">我点赞的帖</li>
+        <li data-type="collection" data-url="/collection/find/" lay-id="collection" @click="getMyReplyTopics(1)">我评论的帖</li>
       </ul>
       <div class="layui-tab-content" style="padding: 20px 0;">
         <!--
@@ -228,7 +228,7 @@ export default {
       myReplyTopics: [],
       dialogVisible: false,
       total: 0,
-      pageSize: 13,
+      pageSize: 1,
       labelId: 1,
       lableName: '',
       keyword: '',
@@ -288,13 +288,13 @@ export default {
 
     // 取消收藏或者点赞
     cancel(data, type) {
-      const params = { 
+      const params = {
 		  authorId:data.userId,
-		  topicId: data.id, 
-		  topicTitle: data.topicTitle, 
+		  topicId: data.id,
+		  topicTitle: data.topicTitle,
 		  postContentType: data.postContentType
 	  };
-	  
+
 	  var url = '';
       if (type == 'collect') {
 		url  = '/bbsusercenter/collect/collectOrCancel';
@@ -324,7 +324,10 @@ export default {
     },
 
     // 我的草稿箱列表
-    getMyDraftTopis() {
+    getMyDraftTopis(flag) {
+      if (flag === 1) {
+        this.pageNum = 1;
+      }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myDraftTopis', data: params }) // 请求
         .then(res => {
@@ -347,7 +350,10 @@ export default {
     },
 
     // 我的帖子列表
-    getMyTopics() { // 具体的方法实现
+    getMyTopics(flag) { // 具体的方法实现
+      if (flag === 1) {
+        this.pageNum = 1;
+      }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myTopics', data: params }) // 请求
         .then(res => {
@@ -362,7 +368,10 @@ export default {
     },
 
     // 查询我的收藏列表
-    getMyCollectTopics() {
+    getMyCollectTopics(flag) {
+      if (flag === 1) {
+        this.pageNum = 1;
+      }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/collect/getCollects', data: params }) // 请求
         .then(res => {
@@ -377,7 +386,10 @@ export default {
     },
 
     // 查看我的点赞列表
-    getMyPraiseTopics() {
+    getMyPraiseTopics(flag) {
+      if (flag === 1) {
+        this.pageNum = 1;
+      }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/praise/getPraises', data: params }) // 请求
         .then(res => {
@@ -392,7 +404,10 @@ export default {
     },
 
     // 查询我的评论列表
-    getMyReplyTopics() {
+    getMyReplyTopics(flag) {
+      if (flag === 1) {
+        this.pageNum = 1;
+      }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myReplyTopics', data: params }) // 请求
         .then(res => {
