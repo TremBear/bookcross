@@ -228,7 +228,7 @@ export default {
       myReplyTopics: [],
       dialogVisible: false,
       total: 0,
-      pageSize: 1,
+      pageSize: 13,
       labelId: 1,
       lableName: '',
       keyword: '',
