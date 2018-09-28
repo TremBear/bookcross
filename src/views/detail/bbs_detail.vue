@@ -221,8 +221,8 @@ export default {
     handleReplyToReply(item, index) {
       var anchor = this.$el.querySelector('#goto')
       document.documentElement.scrollTop = anchor.offsetTop
-      if (index) {
-        this.replyConent = ''
+      this.replyConent = ''
+      if (index > 0) {
         this.replyConent = '\n @' + item.userNickname + ' ' + this.formatTime(item.replyTime) + ' ' + item.replyComment + '\n -------------------------------'
         this.item = item
       }

@@ -27,7 +27,7 @@
              </span>
             <el-dropdown-menu slot="dropdown" >
               <el-dropdown-item command="/manager/user"><i class="layui-icon">&#xe620;</i>个人中心</el-dropdown-item>
-              <el-dropdown-item command="/manager/user_message"><i class="layui-icon">&#xe611;</i>我的消息</el-dropdown-item>
+              <el-dropdown-item command="/manager/user_message"><i class="layui-icon">&#xe611;</i>我的消息  <span v-if="mesCount" class="layui-badge layui-bg-red" >{{mesCount}}</span></el-dropdown-item>
               <el-dropdown-item command="exit">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -63,13 +63,17 @@ export default {
   computed: {
     ...mapGetters([
       'userInfo',
-      'sideItem'
+      'sideItem',
+      'mesCount'
     ]),
     userInfo() {
       return store.getters.userInfo
     },
     sideItem() {
       return store.getters.sideItem
+    },
+    mesCount() {
+      return store.getters.mesCount
     }
   },
   watch: {
@@ -79,7 +83,10 @@ export default {
   },
   mounted() {
     this.toggleSideBar()
-    this.getElevatorList
+    var that = this
+    setInterval(function() {
+      that.getElevatorList()
+    }, 3000)
   },
   methods: {
     toggleSideBar() {
@@ -106,8 +113,12 @@ export default {
       this.$router.push('/')
     },
     getElevatorList() {
-      console.log(1)
-      setInterval(this.getElevatorList(), 15000)
+      if (this.userInfo.userId) {
+        this.$store.dispatch('Post', { url: 'bbsusercenter/msg/unReadCount', data: { userId: this.userInfo.userId }}).then(res => {
+          if (res.restCode === '0000')
+            this.$store.commit('SET_MES_COUNT', res.data)
+        })
+      }
     },
     handleCommand(data) {
       this.$store.commit('SET_IS_CLASS', data)

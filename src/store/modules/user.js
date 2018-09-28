@@ -12,7 +12,8 @@ const user = {
     labelId: '',
     dictLabels: [],
     userIsClass: '/manager/user',
-    navType: ''
+    navType: '',
+    mesCount: ''
   },
 
   mutations: {
@@ -44,6 +45,9 @@ const user = {
     },
     SET_IS_CLASS: (state, userIsClass) => {
       state.userIsClass = userIsClass
+    },
+    SET_MES_COUNT: (state, mesCount) => {
+      state.mesCount = mesCount
     }
   },
 

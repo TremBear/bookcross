@@ -3,7 +3,7 @@
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
       <li class="layui-nav-item " v-for="(item, index) in menuList" :key="index" :class="{'layui-this':userIsClass === item.listLink }">
         <a v-on:click="handleClass(item)">
-          <router-link :to="item.listLink"><i class="layui-icon">{{item.icon}}</i>{{item.title}} <span class="layui-badge" v-show="false">99+</span></router-link>
+          <router-link :to="item.listLink"><i class="layui-icon">{{item.icon}}</i>{{item.title}} <span class="layui-badge" v-if="item.listLink === '/manager/user_message'">{{mesCount}}+</span></router-link>
         </a>
       </li>
     </ul>
@@ -35,10 +35,14 @@ export   default {
   },
   computed: {
     ...mapGetters([
-      'userIsClass'
+      'userIsClass',
+      'mesCount'
     ]),
     userIsClass() {
       return store.getters.userIsClass
+    },
+    mesCount() {
+      return store.getters.mesCount
     }
   },
   data() {
