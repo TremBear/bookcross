@@ -77,19 +77,21 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'dictLabels'
+      'dictLabels',
+      'userInfo'
     ]),
     dictLabels() {
       return store.getters.dictLabels
+    },
+    userInfo(){
+      return store.getters.userInfo
     }
   },
-  inject: ['userInfo'],
   data() {
     return {
       topicsItem: {},
       dialogVisible: false,
       item: {},
-      userInfo: JSON.parse(sessionStorage.getItem('userInfo')),
       previewData: {},
       replyType: '',
       value: 0,
@@ -118,14 +120,18 @@ export default {
     // 初始加载帖子详细信息
     getPosts() {
       const detail = sessionStorage.getItem('edit')
-
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: JSON.parse(detail) }).then(res => {
-
         if (res.restCode === '0000') {
           this.topicsItem = res.data
-          console.log(1)
-          const index = this.sideItem.id
-          this.replyType = this.global.categoryItems[index]
+        }
+        this.dictLabels.map((item, index) => {
+          if (item.id === this.topicsItem.labelId) {
+            this.replyType = this.global.categoryItems[item.categoryId]
+            return ''
+          }
+        })
+        if (!this.replyType) {
+          this.replyType = 2
         }
       }).catch((err) => {
         console.log(err)

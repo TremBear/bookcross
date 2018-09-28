@@ -222,8 +222,14 @@ export default {
       var anchor = this.$el.querySelector('#goto')
       document.documentElement.scrollTop = anchor.offsetTop
       this.replyConent = ''
-      if (index > 0) {
-        this.replyConent = '\n @' + item.userNickname + ' ' + this.formatTime(item.replyTime) + ' ' + item.replyComment + '\n -------------------------------'
+      if (index >= 0) {
+        let replyComment = ''
+        if (item.replyComment.indexOf('---------') > 0) {
+          replyComment = item.replyComment.substr(item.replyComment.lastIndexOf('-'))
+        }else {
+          replyComment = item.replyComment
+        }
+        this.replyConent = '\n 回复:' + item.replyFloor + '楼 \n@' + item.userNickname + replyComment + '\n --------------------------------------------------------------'
         this.item = item
       }
     },
@@ -316,7 +322,6 @@ export default {
     },
     // 点赞 或 收藏
     handleBBS(item) {
-	console.info(this.topicsItem)
       const data = {
         topicId: this.topicsItem.id,
 		    authorId:this.topicsItem.userId,
@@ -324,13 +329,13 @@ export default {
         postContentType: this.replyType,
         token: ''
       }
-	    let url = '';
+	    let url = ''
 	    if (item === 1) {
-		    url = '/bbsusercenter/praise/praiseOrCancel';
+		    url = '/bbsusercenter/praise/praiseOrCancel'
 	     } else if(item === 2) {
-		    url = '/bbsusercenter/collect/collectOrCancel';
+		    url = '/bbsusercenter/collect/collectOrCancel'
 	     }
-      this.$store.dispatch('TokenPost', { url: url , data: data }).then(res => {
+      this.$store.dispatch('TokenPost', { url: url, data: data }).then(res => {
         if (res.restCode === '0000') {
           if (item === 2) {
             this.topicsItem.collectCount = res.data.num
