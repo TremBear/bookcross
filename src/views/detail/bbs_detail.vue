@@ -225,7 +225,7 @@ export default {
       if (index >= 0) {
         let replyComment = ''
         if (item.replyComment.indexOf('---------') > 0) {
-          replyComment = item.replyComment.substr(item.replyComment.lastIndexOf('-'))
+          replyComment = item.replyComment.substr(item.replyComment.lastIndexOf('-')+1)
         }else {
           replyComment = item.replyComment
         }
