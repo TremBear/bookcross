@@ -24,7 +24,7 @@
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
               <a class="layui-badge" v-if="item.labelId">{{ lableDic(item) }}</a>
-              <a class="jie-title" target="_blank" @click="handleDetail(item, 0)">{{ item.topicTitle }}</a>
+              <a class="jie-title" target="_blank" style="margin-left: 7px;" @click="handleDetail(item, 0)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
               <em>
@@ -64,8 +64,8 @@
                 <div v-else-if="item.postContentType === 2">公告</div>
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
-              <a class="layui-badge" v-if="item.labelId">{{ lableDic(item) }}</a>
-              <a class="jie-title" target="_blank" @click="handleDraftDetail(item)">{{ item.topicTitle }}</a>
+              <a class="layui-badge"  v-if="item.labelId">{{ lableDic(item) }}</a>
+              <a class="jie-title" style="margin-left: 7px;" target="_blank" @click="handleDraftDetail(item)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <em>
                 <button class="layui-btn layui-btn-xs" @click="handleDraftDetail(item)">编辑</button>
@@ -100,7 +100,7 @@
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
               <a class="layui-badge" v-if="item.labelId">{{ lableDic(item) }}</a>
-              <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
+              <a class="jie-title" style="margin-left: 7px;" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
               <em>
@@ -135,7 +135,7 @@
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
               <a class="layui-badge" v-if="item.labelId">{{ lableDic(item) }}</a>
-              <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
+              <a class="jie-title" style="margin-left: 7px;" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
               <em>
@@ -170,7 +170,7 @@
                 <div v-else-if="item.postContentType === 3">意见帖</div>
               </a>
               <a class="layui-badge" v-if="item.labelId">{{ lableDic(item) }}</a>
-              <a class="jie-title" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
+              <a class="jie-title" style="margin-left: 7px;" target="_blank" @click="handleDetail(item, 1)">{{ item.topicTitle }}</a>
               <i>{{ formatTime(item.modifyTime) }}</i>
               <i style="padding-left: 10px;">{{ item.browseCount }}阅 / {{ item.praiseCount }}赞 / {{ item.collectCount }}收藏</i>
             </li>
