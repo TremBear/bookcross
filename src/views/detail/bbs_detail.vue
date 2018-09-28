@@ -6,7 +6,7 @@
           <div class="fly-panel detail-box">
             <h1>{{ topicsItem.topicTitle }}</h1>
             <div class="fly-detail-info">
-              <span class="layui-badge layui-bg-blue" v-if="topicsItem.labelId">{{ lableDic(topicsItem.labelId) }}</span>
+              <span class="layui-badge layui-bg-blue" :style="topicsItem.labelId?'':{height: 0 +'px' }">{{ lableDic(topicsItem.labelId) }}</span>
               <span v-if="topicsItem.topicType===3 || topicsItem.topicType===4" class="layui-badge layui-bg-red" >置顶</span>
               <span v-if="topicsItem.topicType===2 || topicsItem.topicType===4" class="layui-badge layui-bg-red" >精华</span>
               <span class="fly-list-nums">
@@ -370,5 +370,4 @@ export default {
 </script>
 
 <style >
-
 </style>
