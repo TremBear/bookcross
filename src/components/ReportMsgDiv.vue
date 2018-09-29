@@ -85,7 +85,6 @@ export  default {
     },
     // 加载举报类型
     handleReport(){
-      console.log(0)
       this.$store.dispatch('Get', { url: '/bbsadmin/reprotManager/allReportTypes'}).then(res => {
         if (res.restCode === '0000') {
           this.selectOptions = res.data

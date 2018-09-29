@@ -50,8 +50,6 @@ export default {
       }
     },
     navType(curVal, oldVal) {
-      console.log(this.sideItem)
-      console.log(curVal)
     }
   },
   mounted() {

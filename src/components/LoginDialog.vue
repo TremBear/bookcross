@@ -84,10 +84,6 @@ export default {
   .el-select .el-input__inner:focus{
     border-color:#dcdfe6;
   }
-
-  .detail-body {
-    min-height: 100px;
-  }
   .el-dialog__body {
     padding: 14px 14px;
     color: #606266;
