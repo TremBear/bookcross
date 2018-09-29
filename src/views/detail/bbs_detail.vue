@@ -102,7 +102,7 @@
                 </div>
               </div>
               <div class="layui-item">
-                <button :class="activeClass ? 'layui-btn layui-btn-disabled':'layui-btn'"  @click="handleReply">提交回复</button>
+                <button :class="activeClass ? 'layui-btn layui-btn-disabled':'layui-btn'" :disabled="activeClass"  @click="handleReply">提交回复</button>
               </div>
             </div>
           </div>

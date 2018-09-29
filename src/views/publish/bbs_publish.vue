@@ -68,8 +68,8 @@
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <button :class="sendClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" v-on:click="sendBBS">立即发布</button>
-                  <button :class="draftClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" v-on:click="addDraft">存草稿箱</button>
+                  <button :class="sendClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" :disabled="sendClass" v-on:click="sendBBS">立即发布</button>
+                  <button :class="draftClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" :disabled="draftClass"  v-on:click="addDraft">存草稿箱</button>
                   <button class="layui-btn" style="margin-top: 13px;width: 96px;" v-on:click="previewBbs" >预览</button>
                 </div>
             </div>
