@@ -32,6 +32,7 @@ export default {
   beforeMount() {
     this.$store.dispatch('GetCategorys', { url: '/bbsadmin/categoryManager/allCategorys' })
     this.$store.dispatch('GetLablesList', { url: '/bbsadmin/labelManager/getLableList' })
+    this.$store.dispatch('GetInfo')
   },
   methods: {
     headeIsShow() {
