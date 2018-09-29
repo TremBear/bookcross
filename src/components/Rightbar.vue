@@ -143,6 +143,7 @@ export default {
       sessionStorage.setItem('detail', JSON.stringify(datas))
       this.reloadAppMain()
       this.$router.push({ path: 'detail' })
+      location.reload()
     },
     // 日期互转
     formatTime(time) {
