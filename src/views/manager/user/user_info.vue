@@ -30,7 +30,7 @@
           <div class="layui-form-item">
             <label for="L_userInfoname" class="layui-form-label">昵称{{userInfo.nicknameChangeTimes}}</label>
             <div class="layui-input-inline">
-				<input id="L_userInfoname" v-model="userInfo.userNickname" type="text" name="userInfoname" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === userInfo.nicknameChangeTimes">
+				<input id="L_userInfoname" v-model="userInfo.userNickname" type="text" name="userNickname" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === userInfo.nicknameChangeTimes">
 
             </div>
           </div>
@@ -72,8 +72,13 @@ export default {
     }
   },
   watch: {
-    userInfo(newUser, oldUser) {
-      this.isModify = true
+    'userInfo.userNickname': {
+      handler(newValue, oldValue) {
+        if (newValue != oldValue) {
+          this.isModify = true
+        }
+      },
+      deep: true
     }
   },
   methods: {
