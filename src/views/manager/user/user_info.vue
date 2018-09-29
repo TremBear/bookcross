@@ -66,33 +66,36 @@ export default {
   },
   data() {
     return {
+      isModify: false,
       imageUrl: '',
       action: process.env.BASE_API + 'bbscommon/udfs/upload'
     }
   },
-  mounted() {
+  watch: {
+    userInfo(newUser, oldUser) {
+      this.isModify = true
+    }
   },
   methods: {
     handleSubmit() {
-      const user = {
-        userLogo: this.imageUrl,
-        userId: this.userInfo.userId,
-        userNickname: this.userInfo.userNickname
+      if (this.isModify) {
+        this.$store.dispatch('Post', { url: '/bbsusercenter/frontuser/updateInfo', data: this.userInfo }).then(res => {
+          console.info(res)
+          if (res.restCode === '0000') {
+            layer.msg('修改个人信息成功')
+            this.$store.dispatch('GetInfo')
+            this.isModify = false
+            this.reload() //  刷新页面
+          } else {
+            layer.alert(res.restMsg, {
+              icon: 4,
+              title: '提示'
+            })
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
       }
-      this.$store.dispatch('Post', { url: '/bbsuserInfocenter/frontuserInfo/updateInfo', data: user }).then(res => {
-        console.info(res)
-        if (res.restCode === '0000') {
-          layer.msg('修改个人信息成功')
-          this.reload() //  刷新页面
-        } else {
-          layer.alert(res.restMsg, {
-            icon: 4,
-            title: '提示'
-          })
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = res.data
