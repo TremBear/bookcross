@@ -163,7 +163,7 @@ export default {
   mounted() {
     const data = this.labelList
     if (this.lables) {
-	  this.lables = data
+	    this.lables = data
       this.labelValue = this.lables[0].id
       this.postType =this.navType
     }
@@ -194,7 +194,7 @@ export default {
   methods: {
 
     sendBBS(){
-      this.sendClass = true
+
       //组装后台数据
       var token = getToken();
       var topic = {}
@@ -216,7 +216,7 @@ export default {
       //0代表普通，1代表草稿
       topic.topicStatus = this.topicStatus;
       topic.id = this.topicId
-
+      this.sendClass = true
       const data = {
         topic:JSON.stringify(topic),
         token:token
@@ -260,7 +260,7 @@ export default {
       }
     },
     addDraft(){
-      this.draftClass = true
+
       //组装后台数据
       var token = getToken();
       var topic = {}
@@ -282,6 +282,7 @@ export default {
       //0代表普通，1代表草稿
       topic.topicStatus = this.topicStatus
       topic.id = this.topicId
+      this.draftClass = true
       const data = {
         draft:JSON.stringify(topic),
         token:token
