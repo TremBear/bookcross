@@ -8,18 +8,21 @@ router.beforeEach((to, from, next) => {
   const userInfo = store.getters.userInfo
   if (!userInfo.userName) {
     if (getToken()){
-      console.log(getToken())
       store.dispatch('GetInfo').then(ress => {
         if (ress.restCode === '0000') {
           next()
         } else {
-          next({
-            path: '/'
-          })
+          if (to.path.indexOf("publish")!= -1 ||to.path.indexOf("manager") != -1 || to.path.indexOf("bbs_edit")!= -1) {
+            next({
+              path: '/'
+            })
+          }else{
+            next()
+          }
         }
       })
     } else {
-      if (to.path.indexOf("publish")!= -1 ||to.path.indexOf("manager") != -1 || to.path.indexOf("bbs_edit")!= -1){
+      if (to.path.indexOf("publish")!= -1 ||to.path.indexOf("manager") != -1 || to.path.indexOf("bbs_edit")!= -1) {
         next({
           path: '/'
         })
