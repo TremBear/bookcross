@@ -55,7 +55,7 @@
                     <span>{{ formatTime(item.replyTime) }}</span>
                   </div>
                 </div>
-                <div class="detail-body jieda-body photos" >
+                <div class="detail-body jieda-body photos">
                   <p v-html="item.replyComment"/>
                 </div>
                 <div class="jieda-reply" v-if="item.status != 0">
@@ -400,6 +400,7 @@ export default {
       }
     },
     handleLoginClose() {
+      this.activeClass = false
       this.loginDialogVisible = false
     }
 
@@ -407,5 +408,5 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 </style>
