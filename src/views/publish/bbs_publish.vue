@@ -164,7 +164,7 @@ export default {
     const data = this.labelList
     if (this.lables) {
 	  this.lables = data
-      this.labelValue = this.lables.id
+      this.labelValue = this.lables[0].id
       this.postType =this.navType
     }
     this.eventVue.$emit('getIsShow',false)
