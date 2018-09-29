@@ -80,11 +80,11 @@ export   default {
 
   },
   mounted() {
+    this.$store.commit('SET_IS_SHOW_SIDE', false)
     const urlItems=this.$router.currentRoute.fullPath.split('?')
     if(urlItems){
       this.isActive = urlItems[0]
     }
-    this.eventVue.$emit('getIsShow',false)
   }
 }
 </script>

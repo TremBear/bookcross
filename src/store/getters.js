@@ -8,6 +8,7 @@ const getters = {
   dictLabels: state => state.user.dictLabels,
   navType: state => state.user.navType,
   userIsClass: state => state.user.userIsClass,
-  mesCount: state => state.user.mesCount
+  mesCount: state => state.user.mesCount,
+  isShowSide: state => state.user.isShowSide
 }
 export default getters

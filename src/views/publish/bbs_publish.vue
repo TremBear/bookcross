@@ -15,7 +15,7 @@
                   <div class="layui-col-md3">
                     <label class="layui-form-label">所在标签</label>
                     <div class="layui-input-block">
-                      <el-select v-model="labelValue" placeholder="请选择">
+                      <el-select v-model="labelValue" placeholder="请选择" @change='getlabelList'>
                         <el-option
                           v-for="item in labelList"
                           :key="item.id"
@@ -161,13 +161,7 @@ export default {
     }
   },
   mounted() {
-    const data = this.labelList
-    if (this.lables) {
-	    this.lables = data
-      this.labelValue = this.lables[0].id
-      this.postType =this.navType
-    }
-    this.eventVue.$emit('getIsShow',false)
+    this.$store.commit('SET_IS_SHOW_SIDE', false)
     //获取编辑页面信息
     const draftId = sessionStorage.getItem('draftId')
     const draft = {
@@ -344,6 +338,14 @@ export default {
     },
     handleEditor(data){
       this.editorContent = data
+    },
+    getlabelList() {
+      const data = this.labelList
+      if (this.lables) {
+        this.lables = data
+        this.labelValue = this.lables[0].id
+        this.postType =this.navType
+      }
     }
   }
 }

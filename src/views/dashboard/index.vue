@@ -106,7 +106,7 @@ export default {
   },
   mounted() {
     this.$nextTick(function() {
-      this.eventVue.$emit('getIsShow', true)
+      this.$store.commit('SET_IS_SHOW_SIDE', true)
       this.handleLabelId()
       this.handleSarch()
       this.getAlNotice()

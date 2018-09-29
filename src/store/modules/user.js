@@ -13,7 +13,8 @@ const user = {
     dictLabels: [],
     userIsClass: '/manager/user',
     navType: '',
-    mesCount: ''
+    mesCount: '',
+    isShowSide: true
   },
 
   mutations: {
@@ -48,6 +49,9 @@ const user = {
     },
     SET_MES_COUNT: (state, mesCount) => {
       state.mesCount = mesCount
+    },
+    SET_IS_SHOW_SIDE: (state, isShowSide) => {
+      state.isShowSide = isShowSide
     }
   },
 

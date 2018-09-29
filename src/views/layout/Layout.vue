@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
     <navbar />
-    <sidebar v-show="isShow" />
+    <sidebar v-show="isShowSide" />
     <div>
       <app-main/>
     </div>
@@ -11,6 +11,8 @@
 
 <script>
 import { Navbar, Footbar, Sidebar, AppMain } from './components'
+import { mapGetters } from 'vuex'
+import store from '@/store'
 import ResizeMixin from './mixin/ResizeHandler'
 export default {
   name: 'Layout',
@@ -24,6 +26,14 @@ export default {
   data() {
     return {
       isShow: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'isShowSide'
+    ]),
+    isShowSide() {
+      return store.getters.isShowSide
     }
   },
   mounted() {

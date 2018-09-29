@@ -15,8 +15,8 @@
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   class="avatar-uploader">
-                  <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon">点击上传头像</i>
+                  <img v-if="userInfo.userLogo" :src="userInfo.userLogo" class="avatar">
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </div>
             </div>
@@ -24,13 +24,13 @@
           <div class="layui-form-item">
             <label for="L_email" class="layui-form-label">邮箱</label>
             <div class="layui-input-inline">
-              <input id="L_email" v-model="userInfo.userInfoMail" type="text" name="email" required lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled">
+              <input id="L_email" v-model="userInfo.userMail" type="text" name="email" required lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled">
             </div>
           </div>
           <div class="layui-form-item">
             <label for="L_userInfoname" class="layui-form-label">昵称{{userInfo.nicknameChangeTimes}}</label>
             <div class="layui-input-inline">
-				<input id="L_userInfoname" v-model="userInfo.userInfoNickname" type="text" name="userInfoname" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === userInfo.nicknameChangeTimes">
+				<input id="L_userInfoname" v-model="userInfo.userNickname" type="text" name="userInfoname" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === userInfo.nicknameChangeTimes">
 
             </div>
           </div>
@@ -71,17 +71,17 @@ export default {
     }
   },
   mounted() {
-    if (this.userInfo.userLogo) {
-      this.imageUrl = this.userInfo.userLogo
-    }
   },
   methods: {
     handleSubmit() {
-      this.userInfo.userLogo = this.imageUrl
-      this.$store.dispatch('Post', { url: '/bbsuserInfocenter/frontuserInfo/updateInfo', data: this.userInfo }).then(res => {
+      const user = {
+        userLogo: this.imageUrl,
+        userId: this.userInfo.userId,
+        userNickname: this.userInfo.userNickname
+      }
+      this.$store.dispatch('Post', { url: '/bbsuserInfocenter/frontuserInfo/updateInfo', data: user }).then(res => {
         console.info(res)
         if (res.restCode === '0000') {
-          this.$store.dispatch('GetInfo')
           layer.msg('修改个人信息成功')
           this.reload() //  刷新页面
         } else {
@@ -114,9 +114,9 @@ export default {
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 220px;
-    height: 220px;
-    line-height: 220px;
+    width: 131px;
+    height: 131px;
+    line-height: 131px;
     text-align: center;
   }
   .avatar {

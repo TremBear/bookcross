@@ -113,8 +113,8 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('SET_IS_SHOW_SIDE', false)
     this.getPosts()
-    this.eventVue.$emit('getIsShow', true)
   },
   methods: {
     // 初始加载帖子详细信息
