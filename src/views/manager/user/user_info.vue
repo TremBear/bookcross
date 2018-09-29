@@ -1,6 +1,6 @@
 <template>
-  <div class="fly-panel fly-panel-user" pad20>
-    <div class="layui-tab layui-tab-brief" lay-filter="user">
+  <div class="fly-panel fly-panel-userInfo" pad20>
+    <div class="layui-tab layui-tab-brief" lay-filter="userInfo">
       <ul id="LAY_mine" class="layui-tab-title">
         <li class="layui-this" lay-id="info">我的资料</li>
       </ul>
@@ -24,15 +24,14 @@
           <div class="layui-form-item">
             <label for="L_email" class="layui-form-label">邮箱</label>
             <div class="layui-input-inline">
-              <input id="L_email" v-model="user.userMail" type="text" name="email" required lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled">
+              <input id="L_email" v-model="userInfo.userInfoMail" type="text" name="email" required lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled">
             </div>
           </div>
           <div class="layui-form-item">
-            <label for="L_username" class="layui-form-label">昵称</label>
+            <label for="L_userInfoname" class="layui-form-label">昵称{{userInfo.nicknameChangeTimes}}</label>
             <div class="layui-input-inline">
-			 
-				<input id="L_username" v-model="user.userNickname" type="text" name="username" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === user.nicknameChangeTimes">
-			 
+				<input id="L_userInfoname" v-model="userInfo.userInfoNickname" type="text" name="userInfoname" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === userInfo.nicknameChangeTimes">
+
             </div>
           </div>
           <div class="layui-form-item">
@@ -52,30 +51,39 @@
 
 <script>
 import store from '@/store'
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'UserInfo',
+  name: 'userInfo',
+  inject: ['reload'],
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ]),
+    userInfo() {
+      return store.getters.userInfo
+    }
+  },
   data() {
     return {
-      user: {},
       imageUrl: '',
       action: process.env.BASE_API + 'bbscommon/udfs/upload'
     }
   },
   mounted() {
-    this.user = store.getters.userInfo
-    if (this.user.userLogo) {
-      this.imageUrl = this.user.userLogo
+    if (this.userInfo.userLogo) {
+      this.imageUrl = this.userInfo.userLogo
     }
   },
   methods: {
     handleSubmit() {
-      this.user.userLogo = this.imageUrl
-      this.$store.dispatch('Post', { url: '/bbsusercenter/frontuser/updateInfo', data: this.user }).then(res => {
+      this.userInfo.userLogo = this.imageUrl
+      this.$store.dispatch('Post', { url: '/bbsuserInfocenter/frontuserInfo/updateInfo', data: this.userInfo }).then(res => {
+        console.info(res)
         if (res.restCode === '0000') {
-          layer.alert('修改个人信息成功,需刷新一下页面！', {
-            icon: 1,
-            title: '提示'
-          })
+          this.$store.dispatch('GetInfo')
+          layer.msg('修改个人信息成功')
+          this.reload() //  刷新页面
         } else {
           layer.alert(res.restMsg, {
             icon: 4,

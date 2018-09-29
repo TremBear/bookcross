@@ -326,7 +326,7 @@ export default {
     // 我的草稿箱列表
     getMyDraftTopis(flag) {
       if (flag === 1) {
-        this.pageNum = 1;
+        this.pageNum = 1
       }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myDraftTopis', data: params }) // 请求
@@ -352,7 +352,7 @@ export default {
     // 我的帖子列表
     getMyTopics(flag) { // 具体的方法实现
       if (flag === 1) {
-        this.pageNum = 1;
+        this.pageNum = 1
       }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myTopics', data: params }) // 请求
@@ -370,7 +370,7 @@ export default {
     // 查询我的收藏列表
     getMyCollectTopics(flag) {
       if (flag === 1) {
-        this.pageNum = 1;
+        this.pageNum = 1
       }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/collect/getCollects', data: params }) // 请求
@@ -388,7 +388,7 @@ export default {
     // 查看我的点赞列表
     getMyPraiseTopics(flag) {
       if (flag === 1) {
-        this.pageNum = 1;
+        this.pageNum = 1
       }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/praise/getPraises', data: params }) // 请求
@@ -406,7 +406,7 @@ export default {
     // 查询我的评论列表
     getMyReplyTopics(flag) {
       if (flag === 1) {
-        this.pageNum = 1;
+        this.pageNum = 1
       }
       const params = { userId: this.userInfo.userId, pageNum: this.pageNum, pageSize: this.pageSize, token: '' } // 组装参数
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myReplyTopics', data: params }) // 请求
@@ -415,6 +415,7 @@ export default {
           if (res.restCode === '0000') {
             this.myReplyTopics = res.data.list
             this.total = res.data.total
+            console.info(res.data)
           }
         }).catch((err) => {
           console.log(err)
