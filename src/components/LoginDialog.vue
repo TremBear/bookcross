@@ -1,6 +1,9 @@
 <template>
-  <div class="layui-container fly-marginTop">
-    <div class="fly-panel fly-panel-user" pad20>
+  <el-dialog
+    :visible.sync="loginDialogVisible"
+    :before-close="handleClose"
+    width="30%">
+    <div class="fly-panel fly-panel-user" pad20 style="width: 91%;">
       <div class="layui-tab layui-tab-brief" lay-filter="user">
         <ul class="layui-tab-title">
           <li class="layui-this">登入</li>
@@ -28,40 +31,38 @@
         </div>
       </div>
     </div>
-  </div>
+  </el-dialog>
 </template>
 
 <script>
 export default {
-  name: 'BbsLogin',
+  name: 'LoginDialog',
+  props: {
+    loginDialogVisible: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       email: '',
       pass: ''
     }
   },
-  mounted() {
-    const params = this.$route.params
-    if (params) {
-      sessionStorage.setItem('path', JSON.stringify(this.$route.params))
-    }
-    this.eventVue.$emit('getIsShow', false)
-  },
   methods: {
+    // 关闭举报窗口
+    handleClose() {
+      this.$emit('handleLoginClose')
+    },
     getLogin() {
       const userInfo = { userName: this.email, password: this.pass }
       this.$store.dispatch('Login', userInfo).then(res => {
         if (res.restCode === '0000') {
-          const path = JSON.parse(sessionStorage.getItem('path'))
           layer.alert('登录成功！', {
             icon: 1,
             title: '提示'
           })
-          if (path.data) {
-            this.$router.push({ path: path.data })
-          } else {
-            this.$router.push('/home')
-          }
+          this.$emit('handleLoginClose')
         } else {
           layer.alert(res.restMsg, {
             icon: 5,
@@ -76,6 +77,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
+  .el-select .el-input.is-focus .el-input__inner{
+    border-color:#dcdfe6;
+  }
+  .el-select .el-input__inner:focus{
+    border-color:#dcdfe6;
+  }
+
+  .detail-body {
+    min-height: 100px;
+  }
+  .el-dialog__body {
+    padding: 14px 14px;
+    color: #606266;
+    font-size: 14px;
+  }
+  .el-dialog__header {
+    height: 30px;
+  }
 
 </style>

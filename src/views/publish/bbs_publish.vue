@@ -68,8 +68,8 @@
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <button class="layui-btn" style="margin-top: 13px;" v-on:click="sendBBS">立即发布</button>
-                  <button class="layui-btn" style="margin-top: 13px;" v-on:click="addDraft">存草稿箱</button>
+                  <button :class="sendClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" v-on:click="sendBBS">立即发布</button>
+                  <button :class="draftClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" v-on:click="addDraft">存草稿箱</button>
                   <button class="layui-btn" style="margin-top: 13px;width: 96px;" v-on:click="previewBbs" >预览</button>
                 </div>
             </div>
@@ -112,6 +112,8 @@ export default {
   data() {
     return {
       title_input:'',
+      sendClass: false,
+      draftClass: false,
       options: [{
         label: '昵称',
         value: 0
@@ -192,6 +194,7 @@ export default {
   methods: {
 
     sendBBS(){
+      this.sendClass = true
       //组装后台数据
       var token = getToken();
       var topic = {}
@@ -239,8 +242,11 @@ export default {
           })
         }
       }).catch((err) => {
-        console.log(err)
-        alert("发表话题失败")
+        layer.alert("帖子发布失败！",{
+          icon:5,
+          title:"提示"
+        })
+        this.sendClass = false
       })
     },
     checkInput(txt){
@@ -254,6 +260,7 @@ export default {
       }
     },
     addDraft(){
+      this.draftClass = true
       //组装后台数据
       var token = getToken();
       var topic = {}
@@ -296,8 +303,11 @@ export default {
           })
         }
       }).catch((err) => {
-        console.log(err)
-        alert("保存草稿失败")
+        layer.alert("保存草稿失败！",{
+          icon:5,
+          title:"提示"
+        })
+        this.draftClass = false
       })
     },
     previewBbs(){

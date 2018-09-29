@@ -88,8 +88,21 @@
                   <wang-editor ref="wangEditor" :menus="menus" :replyConent="replyConent" :content="content" @handleEditor="handleEditor"/>
                 </div>
               </div>
+              <div class="layui-form-item">
+                <label  class="layui-form-label">发布形式</label>
+                <div class="layui-input-block">
+                  <el-select v-model="issueValue" placeholder="请选择">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </div>
+              </div>
               <div class="layui-item">
-                <button class="layui-btn" @click="handleReply">提交回复</button>
+                <button :class="activeClass ? 'layui-btn layui-btn-disabled':'layui-btn'"  @click="handleReply">提交回复</button>
               </div>
             </div>
           </div>
@@ -98,6 +111,7 @@
       </div>
     </div>
     <div><report-msg-div :reply-data="replyData" :reply-title="replyTitle" :dialog-visible="dialogVisible" @handleClose="handleClose" @handleSubmit="handleSubmit"/></div>
+    <div><login-dialog :login-dialog-visible="loginDialogVisible" @handleLoginClose="handleLoginClose"/></div>
   </div>
 </template>
 
@@ -105,6 +119,7 @@
 import Rightbar from '@/components/Rightbar'
 import Sidebar from '@/components/Sidebar'
 import ReportMsgDiv from '@/components/ReportMsgDiv'
+import LoginDialog from '@/components/LoginDialog'
 import store from '@/store'
 import wangeditor from '@/components/wangeditor'
 import { mapGetters } from 'vuex'
@@ -114,7 +129,8 @@ export default {
     'right-bar': Rightbar,
     'side-bar': Sidebar,
     'report-msg-div': ReportMsgDiv,
-    'wang-editor': wangeditor
+    'wang-editor': wangeditor,
+    'login-dialog': LoginDialog
   },
   computed: {
     ...mapGetters([
@@ -128,15 +144,30 @@ export default {
       return store.getters.navType
     }
   },
+  watch: {
+    activeClass() {
+
+    }
+  },
   data() {
     return {
+      options: [{
+        label: '昵称',
+        value: 0
+      },{
+        label: '匿名',
+        value: 1
+      }],
+      issueValue: 0,
       topicsItem: [],
       // 回显内容
       content: '',
+      activeClass: false,
       // 输入的内容
       replyConent: '',
       editor: '',
       dialogVisible: false,
+      loginDialogVisible: false,
       item: {},
       userInfo: {},
       replyDetailList: [],
@@ -238,15 +269,17 @@ export default {
     },
     // 回复提交菜单
     handleReply() {
+      this.activeClass = true
+      let that = this
       if (this.handleVerifUser()) {
         if (this.replyConent) {
           this.editor = this.replyConent + this.editor
         }
-        console.log(this.editor)
         const data = {
           topicId: this.topicsItem.id,
           replyType: this.replyType,
           replyComment: this.editor,
+          isRealName:this.issueValue,
           token: '',
           quoteId: ''
         }
@@ -262,6 +295,9 @@ export default {
               icon: 1,
               title: '提示'
             })
+            setTimeout(function() {
+              that.activeClass = false
+            }, 5000)
           }
         }).catch((err) => {
           console.log(err)
@@ -357,12 +393,14 @@ export default {
     handleVerifUser() {
       this.userInfo = store.getters.userInfo
       if (!this.userInfo.userName) {
-        const data = 'detail'
-        this.$router.push({ name: 'login', params: { data }})
+        this.loginDialogVisible = true
         return false
       } else {
         return true
       }
+    },
+    handleLoginClose() {
+      this.loginDialogVisible = false
     }
 
   }

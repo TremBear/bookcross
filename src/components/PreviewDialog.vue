@@ -100,4 +100,7 @@ export  default {
   .el-select .el-input__inner:focus{
     border-color:#dcdfe6;
   }
+  .el-dialog__body {
+    padding: 14px 14px;
+  }
 </style>

@@ -64,6 +64,7 @@ export default {
     ...mapGetters([
       'userInfo',
       'sideItem',
+      'token',
       'mesCount'
     ]),
     userInfo() {
@@ -79,10 +80,21 @@ export default {
   watch: {
     $route(route) {
       this.toggleSideBar()
+    },
+    userInfo() {
+      if (this.userInfo.userLogo) {
+        this.notlogin = false
+        this.login = true
+        if (this.userInfo.userLogo) {
+          this.imgUrl = this.userInfo.userLogo
+        }
+      }
+    },
+    token() {
+      this.toggleSideBar()
     }
   },
   mounted() {
-    this.toggleSideBar()
     var that = this
     setInterval(function() {
       that.getElevatorList()
@@ -99,12 +111,17 @@ export default {
               this.imgUrl = this.userInfo.userLogo
             }
           }
+        } else {
+          this.notlogin = true
+          this.login = false
         }
+      }).catch((err) => {
+        console.log(err)
       })
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
+        // location.reload() // 为了重新实例化vue-router对象 避免bug
       })
     },
     handleCategory(data) {
@@ -126,8 +143,7 @@ export default {
         this.$store.dispatch('LogOut').then(res => {
         })
         this.$router.push('/')
-        this.$router.go()
-
+        // this.$router.go()
       }else {
         this.$router.push(data)
       }
