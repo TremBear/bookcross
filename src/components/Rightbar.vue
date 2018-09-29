@@ -141,7 +141,7 @@ export default {
     handleDetail(id, type) {
       const datas = { id: id, entry: 1, type: type }
       sessionStorage.setItem('detail', JSON.stringify(datas))
-      this.reloadAppMain()
+      /* this.reloadAppMain()*/
       this.$router.push({ path: 'detail' })
       location.reload()
     },
