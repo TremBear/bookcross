@@ -11,8 +11,8 @@
               <span v-if="topicsItem.topicType===2 || topicsItem.topicType===4" class="layui-badge layui-bg-red" >精华</span>
               <span class="fly-list-nums">
                 <a @click="handleReportPost(topicsItem)"><i class="layui-icon" title="举报">&#x1007;</i> 举报</a>
-                <a @click="handleBBS(2)"><i class="layui-icon" title="收藏">&#xe658;</i> {{ getNum(topicsItem.collectCount) }}</a>
-                <a @click="handleBBS(1)"><i class="layui-icon" title="点赞">&#xe6c6;</i> {{ getNum(topicsItem.praiseCount) }}</a>
+                <a @click="handleBBS2" :disabled="collectDisabled"><i class="layui-icon" title="收藏">&#xe658;</i> {{ getNum(topicsItem.collectCount) }}</a>
+                <a @click="handleBBS1" :disabled="praiseDisabled" ><i class="layui-icon" title="点赞">&#xe6c6;</i> {{ getNum(topicsItem.praiseCount) }}</a>
                 <a @click="handleReplyToReply"><i class="layui-icon" title="评论">&#xe611;</i> {{ getNum(topicsItem.replyCount) }}</a>
                 <i class="iconfont" title="浏览">&#xe60b;</i> {{ getNum(topicsItem.browseCount) }}
               </span>
@@ -162,6 +162,8 @@ export default {
       topicsItem: [],
       // 回显内容
       content: '',
+      collectDisabled: true,
+      praiseDisabled: true,
       activeClass: false,
       // 输入的内容
       replyConent: '',
@@ -356,34 +358,55 @@ export default {
       })
       this.dialogVisible = false
     },
-    // 点赞 或 收藏
-    handleBBS(item) {
+    handleBBS1() {
       if (this.handleVerifUser()) {
-        const data = {
-          topicId: this.topicsItem.id,
-          authorId: this.topicsItem.userId,
-          topicTitle: this.topicsItem.topicTitle,
-          postContentType: this.replyType,
-          token: ''
-        }
-        let url = ''
-        if (item === 1) {
-          url = '/bbsusercenter/praise/praiseOrCancel'
-        } else if (item === 2) {
-          url = '/bbsusercenter/collect/collectOrCancel'
-        }
-        this.$store.dispatch('TokenPost', {url: url, data: data}).then(res => {
-          if (res.restCode === '0000') {
-            if (item === 2) {
-              this.topicsItem.collectCount = res.data.num
-            }
-            if (item === 1) {
-              this.topicsItem.praiseCount = res.data.num
-            }
+        if (this.praiseDisabled) {
+          this.praiseDisabled = false
+          const data = {
+            topicId: this.topicsItem.id,
+            authorId: this.topicsItem.userId,
+            topicTitle: this.topicsItem.topicTitle,
+            postContentType: this.replyType,
+            token: ''
           }
-        }).catch((err) => {
-          console.log(err)
-        })
+          this.$store.dispatch('TokenPost', {url: '/bbsusercenter/praise/praiseOrCancel', data: data }).then(res => {
+            if (res.restCode === '0000') {
+              this.topicsItem.praiseCount = res.data.num
+              this.praiseDisabled = true
+            }
+          }).catch((err) => {
+            this.praiseDisabled = true
+            console.log(err)
+          })
+        } else {
+          layer.msg('提交过于频繁!')
+        }
+      }
+    },
+    // 点赞 或 收藏
+    handleBBS2() {
+      if (this.handleVerifUser()) {
+        if (this.collectDisabled) {
+          this.collectDisabled = false
+          const data = {
+            topicId: this.topicsItem.id,
+            authorId: this.topicsItem.userId,
+            topicTitle: this.topicsItem.topicTitle,
+            postContentType: this.replyType,
+            token: ''
+          }
+          this.$store.dispatch('TokenPost', {url: '/bbsusercenter/collect/collectOrCancel', data: data}).then(res => {
+            if (res.restCode === '0000') {
+              this.topicsItem.praiseCount = res.data.num
+              this.collectDisabled = true
+            }
+          }).catch((err) => {
+            this.collectDisabled = true
+            console.log(err)
+          })
+        } else {
+          layer.msg('提交过于频繁!')
+        }
       }
       //
     },
