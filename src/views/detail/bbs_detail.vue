@@ -354,6 +354,7 @@ export default {
           })
         }
       }).catch((err) => {
+        layer.msg('后台异常，请联系管理员!')
         console.log(err)
       })
       this.dialogVisible = false
@@ -376,6 +377,7 @@ export default {
             }
           }).catch((err) => {
             this.praiseDisabled = true
+            layer.msg('后台异常，请联系管理员!')
             console.log(err)
           })
         } else {
@@ -402,6 +404,7 @@ export default {
             }
           }).catch((err) => {
             this.collectDisabled = true
+            layer.msg('后台异常，请联系管理员!')
             console.log(err)
           })
         } else {

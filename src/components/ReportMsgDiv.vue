@@ -26,7 +26,7 @@
     <div class="layui-form-item">
       <div class="layui-input-block">
         <button class="layui-btn" @click="handleSubmit">立即提交</button>
-        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <button type="reset" class="layui-btn layui-btn-primary" @click="handleClose" >取消</button>
       </div>
     </div>
   </el-dialog>
@@ -56,7 +56,7 @@ export  default {
   data() {
     return {
       selectOptions: [],
-      seleValue: '',
+      seleValue: '1',
       reportMsg: ''
     }
   },
@@ -69,6 +69,7 @@ export  default {
   methods:{
     // 关闭举报窗口
     handleClose(){
+      this.reportMsg = ''
       this.$emit('handleClose')
     },
     // 下拉框的值
@@ -88,6 +89,7 @@ export  default {
       this.$store.dispatch('Get', { url: '/bbsadmin/reprotManager/allReportTypes'}).then(res => {
         if (res.restCode === '0000') {
           this.selectOptions = res.data
+          this.seleValue = res.data[0].id
         }
       }).catch((err) => {
         console.log(err)
