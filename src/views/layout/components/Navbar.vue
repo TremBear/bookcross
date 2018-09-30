@@ -100,7 +100,6 @@ export default {
     toggleSideBar() {
       this.$store.dispatch('GetInfo').then(ress => {
         if (ress.restCode === '0000') {
-          console.log(this.userInfo)
           if (this.userInfo) {
             if (this.userInfo.userLogo) {
               this.imgUrl = this.userInfo.userLogo

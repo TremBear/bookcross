@@ -9,76 +9,83 @@
               <!-- 编辑帖子 -->
             </li>
           </ul>
-          <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+          <div id="LAY_ucm" class="layui-form layui-tab-content" style="padding: 20px 0;">
             <div class="layui-tab-item layui-show">
-                <div class="layui-row layui-col-space15 layui-form-item">
-                  <div class="layui-col-md3">
-                    <label class="layui-form-label">所在标签</label>
-                    <div class="layui-input-block">
-                      <el-select v-model="labelValue" placeholder="请选择" @change='getlabelList'>
-                        <el-option
-                          v-for="item in labelList"
-                          :key="item.id"
-                          :label="item.labelName"
-                          :value="item.id">
-                        </el-option>
-                      </el-select>
-                    </div>
-                  </div>
-                  <div class="layui-col-md9">
-                    <label for="L_title" class="layui-form-label">标题</label>
-                    <div class="layui-input-block">
-                      <input v-model="title_input"  type="text" id="L_title" name="title" required lay-verify="required" autocomplete="off" class="el-input__inner" v-bind:class="{'text-danger': hasError}" clearable placeholder="请输入标题"
-                             v-on:blur.lazy="checkInput(title_input.trim())">
-                        <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
-                    </div>
-                  </div>
-                </div>
-                <div class="layui-form-item layui-form-text">
-                  <div class="layui-input-block" v-bind:class="{'div-danger':danger}">
-                    <wang-editor v-bind:menus="menus":content="content" @handleEditor="handleEditor"/>
-                  </div>
-                </div>
               <div class="layui-row layui-col-space15 layui-form-item">
                 <div class="layui-col-md3">
-                  <label  class="layui-form-label">发布形式</label>
+                  <label class="layui-form-label">所在标签</label>
+                  <div class="layui-input-block">
+                    <el-select v-model="labelValue" placeholder="请选择" >
+                      <el-option
+                        v-for="item in labelList"
+                        :key="item.id"
+                        :label="item.labelName"
+                        :value="item.id"/>
+                    </el-select>
+                  </div>
+                </div>
+                <div class="layui-col-md9">
+                  <label for="L_title" class="layui-form-label">标题</label>
+                  <div class="layui-input-block">
+                    <input
+                      id="L_title"
+                      v-model="title_input"
+                      :class="{'text-danger': hasError}"
+                      type="text"
+                      name="title"
+                      required
+                      lay-verify="required"
+                      autocomplete="off"
+                      class="el-input__inner"
+clearable placeholder="请输入标题"
+                      @blur.lazy="checkInput(title_input.trim())">
+                      <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
+                  </div>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <div :class="{'div-danger':danger}" class="layui-input-block">
+                  <wang-editor :menus="menus":content="content" @handleEditor="handleEditor"/>
+                </div>
+              </div>
+              <div class="layui-row layui-col-space15 layui-form-item">
+                <div class="layui-col-md3">
+                  <label class="layui-form-label">发布形式</label>
                   <div class="layui-input-block">
                     <el-select v-model="value" placeholder="请选择">
                       <el-option
                         v-for="item in options"
                         :key="item.value"
                         :label="item.label"
-                        :value="item.value">
-                      </el-option>
+                        :value="item.value"/>
                     </el-select>
                   </div>
                 </div>
-                  <div class="layui-col-md9">
-                    <label  class="layui-form-label">评论状态</label>
-                    <div class="layui-input-block">
-                        <el-select v-model="commentValue" placeholder="请选择">
-                          <el-option
-                            v-for="item in commentOptions"
-                            :key="item.commentValue"
-                            :label="item.label"
-                            :value="item.commentValue">
-                          </el-option>
-                        </el-select>
-                    </div>
+                <div class="layui-col-md9">
+                  <label class="layui-form-label">评论状态</label>
+                  <div class="layui-input-block">
+                    <el-select v-model="commentValue" placeholder="请选择">
+                      <el-option
+                        v-for="item in commentOptions"
+                        :key="item.commentValue"
+                        :label="item.label"
+                        :value="item.commentValue"/>
+                    </el-select>
                   </div>
                 </div>
-                <div class="layui-form-item">
-                  <button :class="sendClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" :disabled="sendClass" v-on:click="sendBBS">立即发布</button>
-                  <button :class="draftClass ? 'layui-btn layui-btn-disabled':'layui-btn'" style="margin-top: 13px;" :disabled="draftClass"  v-on:click="addDraft">存草稿箱</button>
-                  <button class="layui-btn" style="margin-top: 13px;width: 96px;" v-on:click="previewBbs" >预览</button>
-                </div>
+              </div>
+              <div class="layui-form-item">
+                <button :class="sendClass ? 'layui-btn layui-btn-disabled':'layui-btn'" :disabled="sendClass" style="margin-top: 13px;" @click="sendBBS">立即发布</button>
+                <button :class="draftClass ? 'layui-btn layui-btn-disabled':'layui-btn'" :disabled="draftClass" style="margin-top: 13px;" @click="addDraft">存草稿箱</button>
+                <button class="layui-btn" style="margin-top: 13px;width: 96px;" @click="previewBbs" >预览</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div>
-      <preview-dialog v-bind:previewData="previewData" v-bind:dialogVisible="dialogVisible" v-on:handleClose="closeDialog"></preview-dialog>
+      <preview-dialog :preview-data="previewData" :dialog-visible="dialogVisible" @handleClose="closeDialog"/>
     </div>
   </div>
 
@@ -87,15 +94,14 @@
 <script>
 import wangeditor from '@/components/wangeditor'
 import previewDialog from '@/components/PreviewDialog'
-import  store from '@/store'
+import store from '@/store'
 import { getToken } from '@/utils/auth'
-import eventVue from '@/utils/event'
 import { mapGetters } from 'vuex'
 export default {
-  name: 'bbs_publish',
+  name: 'BbsPublish',
   components: {
     'wang-editor': wangeditor,
-    'preview-dialog':previewDialog
+    'preview-dialog': previewDialog
   },
   computed: {
     ...mapGetters([
@@ -103,25 +109,30 @@ export default {
       'navType'
     ]),
     labelList() {
-	    return store.getters.labelList
+      return store.getters.labelList
     },
     navType() {
       return store.getters.navType
     }
   },
+  watch: {
+    labelList() {
+      this.getlabelList()
+    }
+  },
   data() {
     return {
-      title_input:'',
+      title_input: '',
       sendClass: false,
       draftClass: false,
       options: [{
         label: '昵称',
         value: 0
-       },{
+      }, {
         label: '匿名',
         value: 1
-       }],
-      commentOptions:[
+      }],
+      commentOptions: [
         {
           label: '开启',
           commentValue: 1
@@ -131,220 +142,218 @@ export default {
           commentValue: 0
         }
       ],
-      commentValue:1,
+      commentValue: 1,
       lables: [],
-      labelValue:'',
+      labelValue: '',
       value: 0,
       editorContent: '',
-      hasError:false,
-      danger:false,
-      dialogVisible:false,
-      previewData:{},
-      postType:'',
-      content:'',
-      topicStatus:0,
-      topicId:'',
-      menus:[
-        'head',  // 标题
-        'bold',  // 粗体
-        'fontSize',  // 字号
-        'fontName',  // 字体
-        'italic',  // 斜体
-        'underline',  // 下划线
-        'strikeThrough',  // 删除线
-        'foreColor',  // 文字颜色
-        'backColor',  // 背景颜色
-        'justify',  // 对齐方式
-        'emoticon',  // 表情
-        'image',  // 插入图片
+      hasError: false,
+      danger: false,
+      dialogVisible: false,
+      previewData: {},
+      postType: '',
+      content: '',
+      topicStatus: 0,
+      topicId: '',
+      menus: [
+        'head', // 标题
+        'bold', // 粗体
+        'fontSize', // 字号
+        'fontName', // 字体
+        'italic', // 斜体
+        'underline', // 下划线
+        'strikeThrough', // 删除线
+        'foreColor', // 文字颜色
+        'backColor', // 背景颜色
+        'justify', // 对齐方式
+        'emoticon', // 表情
+        'image' // 插入图片
       ]
     }
   },
   mounted() {
-    this.$store.commit('SET_IS_SHOW_SIDE', false)
-    //获取编辑页面信息
-    const draftId = sessionStorage.getItem('draftId')
-    const draft = {
-      token:getToken(),
-      id:draftId
-    }
-    if (draftId){
-      this.$store.dispatch('Post', { url: '/bbspost/draft/readDraftDetail', data: draft }).then(res => {
-        if (res.restCode === '0000'&& res.data) {
-            this.labelValue= res.data.labelId
+    this.init()
+  },
+  methods: {
+    init() {
+      this.$store.commit('SET_IS_SHOW_SIDE', false)
+      // 获取编辑页面信息
+      const draftId = sessionStorage.getItem('draftId')
+      const draft = {
+        token: getToken(),
+        id: draftId
+      }
+      if (draftId) {
+        this.$store.dispatch('Post', { url: '/bbspost/draft/readDraftDetail', data: draft }).then(res => {
+          if (res.restCode === '0000' && res.data) {
+            this.labelValue = res.data.labelId
             this.title_input = res.data.topicTitle
             this.content = res.data.topicContent
-            this.commentValue = res.data.isOpenComment;
+            this.commentValue = res.data.isOpenComment
             this.value = res.data.isRealName
             this.topicStatus = 1
             this.postType = res.data.postContentType
             this.topicId = res.data.id
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
-    }
-  },
-  methods: {
-
-    sendBBS(){
-
-      //组装后台数据
-      var token = getToken();
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+      if (this.labelList[0]) {
+        this.getlabelList()
+      }
+    },
+    sendBBS() {
+      // 组装后台数据
+      var token = getToken()
       var topic = {}
-      //标签id
-      topic.labelId=this.labelValue
-      if(!this.checkInput(this.title_input.trim())){
+      // 标签id
+      topic.labelId = this.labelValue
+      if (!this.checkInput(this.title_input.trim())) {
         return
       }
-      topic.topicTitle=this.title_input
-      if(this.editorContent.trim()==''&& this.content.trim()==''){
-        this.danger=true
+      topic.topicTitle = this.title_input
+      if (this.editorContent.trim() === '' && this.content.trim() === '') {
+        this.danger = true
         return
       }
-      topic.topicContent=this.editorContent.trim()?this.editorContent.trim():this.content.trim()
-      //1代表优车社区，2代表公告，3代表意见
-      topic.postType=this.postType
-      topic.isOpenComment=this.commentValue;
-      topic.isRealName = this.value;
-      //0代表普通，1代表草稿
-      topic.topicStatus = this.topicStatus;
+      topic.topicContent = this.editorContent.trim() ? this.editorContent.trim() : this.content.trim()
+      // 1代表优车社区，2代表公告，3代表意见
+      topic.postType = this.postType
+      topic.isOpenComment = this.commentValue
+      topic.isRealName = this.value
+      // 0代表普通，1代表草稿
+      topic.topicStatus = this.topicStatus
       topic.id = this.topicId
       this.sendClass = true
       const data = {
-        topic:JSON.stringify(topic),
-        token:token
+        topic: JSON.stringify(topic),
+        token: token
       }
-      //请求后台
+      // 请求后台
       this.$store.dispatch('Post', { url: 'bbspost/topic/addTopic', data: data }).then(res => {
-        console.log(res);
         if (res.restCode === '0000') {
-          //成功后跳转到发布帖子详情页面
-          layer.alert("帖子发布成功！",{
-            icon:1,
-            title:"提示"
+          // 成功后跳转到发布帖子详情页面
+          layer.alert('帖子发布成功！', {
+            icon: 1,
+            title: '提示'
           })
-          let datas={id:res.data.id, entry:res.data.entry}
-          sessionStorage.setItem("detail",JSON.stringify(datas))
-          this.$router.push({path:'detail'})
-        }
-        else{
-          console.log(res.restMsg);
-          layer.alert("帖子发布失败！",{
-            icon:5,
-            title:"提示"
+          const datas = { id: res.data.id, entry: res.data.entry }
+          sessionStorage.setItem('detail', JSON.stringify(datas))
+          this.$router.push({ path: 'detail' })
+        } else {
+          console.log(res.restMsg)
+          layer.alert('帖子发布失败！', {
+            icon: 5,
+            title: '提示'
           })
         }
       }).catch((err) => {
-        layer.alert("帖子发布失败！",{
-          icon:5,
-          title:"提示"
+        layer.alert('帖子发布失败！', {
+          icon: 5,
+          title: '提示'
         })
         this.sendClass = false
       })
     },
-    checkInput(txt){
-      if (txt==''){
-        this.hasError=true
+    checkInput(txt) {
+      if (txt === '') {
+        this.hasError = true
         return false
-      }
-      else {
-        this.hasError=false
+      } else {
+        this.hasError = false
         return true
       }
     },
-    addDraft(){
-
-      //组装后台数据
-      var token = getToken();
+    addDraft() {
+      // 组装后台数据
+      var token = getToken()
       var topic = {}
-      //标签id
-      topic.labelId=this.labelValue
-      if(!this.checkInput(this.title_input.trim())){
+      // 标签id
+      topic.labelId = this.labelValue
+      if (!this.checkInput(this.title_input.trim())) {
         return
       }
-      topic.topicTitle=this.title_input.trim()
-      if(this.editorContent==''){
-        this.danger=true
+      topic.topicTitle = this.title_input.trim()
+      if (this.editorContent == '') {
+        this.danger = true
         return
       }
-      topic.topicContent=this.editorContent.trim()
-      //1代表优车社区，2代表公告，3代表意见
-      topic.drafType=1
-      topic.isOpenComment=this.commentValue
+      topic.topicContent = this.editorContent.trim()
+      // 1代表优车社区，2代表公告，3代表意见
+      topic.drafType = 1
+      topic.isOpenComment = this.commentValue
       topic.isRealName = this.value
-      //0代表普通，1代表草稿
+      // 0代表普通，1代表草稿
       topic.topicStatus = this.topicStatus
       topic.id = this.topicId
       this.draftClass = true
       const data = {
-        draft:JSON.stringify(topic),
-        token:token
+        draft: JSON.stringify(topic),
+        token: token
       }
-      //请求后台
+      // 请求后台
       this.$store.dispatch('Post', { url: 'bbspost/topic/addDraft', data: data }).then(res => {
         if (res.restCode === '0000') {
-          //成功后跳转到发布帖子详情页面
-          layer.alert("保存草稿成功！",{
-            icon:1,
-            title:"提示"
+          // 成功后跳转到发布帖子详情页面
+          layer.alert('保存草稿成功！', {
+            icon: 1,
+            title: '提示'
           })
-          this.$router.push({path:'/manager/user_bbs',query: { pageId: 'myDraft' }})
-        }
-        else{
-          layer.alert("保存草稿失败！",{
-            icon:5,
-            title:"提示"
+          this.$router.push({ path: '/manager/user_bbs', query: { pageId: 'myDraft' }})
+        } else {
+          layer.alert('保存草稿失败！', {
+            icon: 5,
+            title: '提示'
           })
         }
       }).catch((err) => {
-        layer.alert("保存草稿失败！",{
-          icon:5,
-          title:"提示"
+        layer.alert('保存草稿失败！', {
+          icon: 5,
+          title: '提示'
         })
         this.draftClass = false
       })
     },
-    previewBbs(){
-      if(!this.checkInput(this.title_input)){
+    previewBbs() {
+      if (!this.checkInput(this.title_input)) {
         return
       }
-      if(this.editorContent==''){
-        this.danger=true
+      if (this.editorContent == '') {
+        this.danger = true
         return
       }
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
       let name = ''
-      if ( this.value == 0 ){
-          name = userInfo.userNickname
-      }else {
+      if (this.value == 0) {
+        name = userInfo.userNickname
+      } else {
         name = '匿名用户'
       }
       this.dialogVisible = true
       this.previewData = {
-        topicTitle:this.title_input,
-        topicContent:this.editorContent,
-        topicType:this.postType,
-        labelId:this.labelValue,
-        userNickname:name,
-        modifyTime:new Date(),
-        userImagePath:userInfo.userLogo
+        topicTitle: this.title_input,
+        topicContent: this.editorContent,
+        topicType: this.postType,
+        labelId: this.labelValue,
+        userNickname: name,
+        modifyTime: new Date(),
+        userImagePath: userInfo.userLogo
       }
       console.log(this.previewData)
     },
-    closeDialog(){
+    closeDialog() {
       this.dialogVisible = false
       this.previewData = {}
     },
-    handleEditor(data){
+    handleEditor(data) {
       this.editorContent = data
     },
     getlabelList() {
-      const data = this.labelList
       if (this.lables) {
-        this.lables = data
+        this.lables = this.labelList
         this.labelValue = this.lables[0].id
-        this.postType =this.navType
+        this.postType = this.navType
       }
     }
   }
