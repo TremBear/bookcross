@@ -141,9 +141,8 @@ export default {
     handleDetail(id, type) {
       const datas = { id: id, entry: 1, type: type }
       sessionStorage.setItem('detail', JSON.stringify(datas))
-      /* this.reloadAppMain()*/
       this.$router.push({ path: 'detail' })
-      location.reload()
+      this.reloadAppMain()
     },
     // 日期互转
     formatTime(time) {
@@ -154,7 +153,7 @@ export default {
     },
     // 公告更多功能
     handleMore() {
-      this.$store.commit('SET_NAV_TYPE','2')
+      this.$store.commit('SET_NAV_TYPE', '2')
       this.$store.commit('SET_LABLE_ITEM')
       this.$router.push('/')
       this.eventVue.$emit('getLabelId')
