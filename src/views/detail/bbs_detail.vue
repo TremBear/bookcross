@@ -262,7 +262,7 @@ export default {
         }else {
           replyComment = item.replyComment
         }
-        this.replyConent = '\n 回复:' + item.replyFloor + '楼 \n@' + item.userNickname + replyComment + '\n --------------------------------------------------------------'
+        this.replyConent = '\n 回复:' + item.replyFloor + '楼 \n@' + item.userNickname + this.filterHTMLTag(replyComment).substr(0, 20) + '\n --------------------------------------------------------------'
         this.item = item
       }
     },
@@ -430,6 +430,10 @@ export default {
     handleLoginClose() {
       this.activeClass = false
       this.loginDialogVisible = false
+    },
+    filterHTMLTag(msg) {
+      var msg = msg.replace(/<\/?[^>]*>/g, '') // 去除HTML Tag
+      return msg
     }
 
   }
