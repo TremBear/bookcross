@@ -9,8 +9,8 @@
       <ul class="fly-panel-main fly-list-static " >
         <li v-for="(item, index) in noticeItme" :key="index" style="list-style-type: none;">
           <div class="fly-list-info">
-            <a link style="font-size: 14px; color: #c16262;" @click="handleDetail(item.id,2)">{{ item.topicTitle.substring(0, 16) }}</a>
-            <span class="fly-list-nums">{{ formatTime(item.modifyTime) }} ... </span>
+            <a link style="font-size: 14px; color: #c16262;" @click="handleDetail(item.id,2)">{{ item.topicTitle.substr(0, 16) }} ...</a>
+            <span class="fly-list-nums">{{ formatTime(item.modifyTime) }}  </span>
           </div>
         </li>
       </ul>
@@ -20,7 +20,7 @@
       <dt class="fly-panel-title"><h3 >最新评论</h3></dt>
       <dd v-for="(item, index) in latestItme" :key="index" style="border-bottom: 1px dotted #E9E9E9;">
         <label>#{{ item.replyFloor }}楼 {{ item.userNickname }} {{ item.publishedTime }} </label>
-        对帖子 <a style="font-size: 15px; color: #999;" @click="handleDetail(item.topicId,item.replyType)"> “{{ item.postTitle }}” </a>    评论内容：<label style="font-size: 15px; color: #c16262;" v-html="item.replyComment"/>
+        对帖子 <a style="font-size: 15px; color: #999;" @click="handleDetail(item.topicId,item.replyType)"> “ {{ item.postTitle.substr(0,18) }} ...” </a>   <br> 评论内容：<label style="font-size: 15px; color: #c16262;" v-html="filterHTMLTag(item.replyComment)"/>
 
       </dd>
     </dl>
@@ -157,6 +157,12 @@ export default {
       this.$store.commit('SET_LABLE_ITEM')
       this.$router.push('/')
       this.eventVue.$emit('getLabelId')
+    },
+    filterHTMLTag(msg) {
+      var msg = msg.replace(/<\/?[^>]*>/g, '') // 去除HTML Tag
+      msg = msg.replace(/[|]*\n/, '') // 去除行尾空格
+      msg = msg.replace(/&npsp;/ig, '') // 去掉npsp
+      return msg
     }
   }
 }
