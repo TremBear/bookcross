@@ -358,31 +358,33 @@ export default {
     },
     // 点赞 或 收藏
     handleBBS(item) {
-      const data = {
-        topicId: this.topicsItem.id,
-		    authorId:this.topicsItem.userId,
-        topicTitle: this.topicsItem.topicTitle,
-        postContentType: this.replyType,
-        token: ''
-      }
-	    let url = ''
-	    if (item === 1) {
-		    url = '/bbsusercenter/praise/praiseOrCancel'
-	     } else if(item === 2) {
-		    url = '/bbsusercenter/collect/collectOrCancel'
-	     }
-      this.$store.dispatch('TokenPost', { url: url, data: data }).then(res => {
-        if (res.restCode === '0000') {
-          if (item === 2) {
-            this.topicsItem.collectCount = res.data.num
-          }
-          if (item === 1) {
-            this.topicsItem.praiseCount = res.data.num
-          }
+      if (this.handleVerifUser()) {
+        const data = {
+          topicId: this.topicsItem.id,
+          authorId: this.topicsItem.userId,
+          topicTitle: this.topicsItem.topicTitle,
+          postContentType: this.replyType,
+          token: ''
         }
-      }).catch((err) => {
-        console.log(err)
-      })
+        let url = ''
+        if (item === 1) {
+          url = '/bbsusercenter/praise/praiseOrCancel'
+        } else if (item === 2) {
+          url = '/bbsusercenter/collect/collectOrCancel'
+        }
+        this.$store.dispatch('TokenPost', {url: url, data: data}).then(res => {
+          if (res.restCode === '0000') {
+            if (item === 2) {
+              this.topicsItem.collectCount = res.data.num
+            }
+            if (item === 1) {
+              this.topicsItem.praiseCount = res.data.num
+            }
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
       //
     },
     handleCurrentChange(val) {
