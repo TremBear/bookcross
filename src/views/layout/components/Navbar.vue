@@ -5,11 +5,11 @@
         <img :src="logoImg">
       </a>
       <ul class="layui-nav fly-nav layui-hide-xs">
-        <li class="layui-nav-item layui-this" v-for="(item, index) in sideItem" :key="index">
-          <a v-on:click="handleCategory(item)"><i class="iconfont" :class="item.categoryLogo"/>{{item.categoryName}}</a>
+        <li v-for="(item, index) in sideItem" :key="index" class="layui-nav-item layui-this">
+          <a @click="handleCategory(item)"><i :class="item.categoryLogo" class="iconfont"/>{{ item.categoryName }}</a>
         </li>
       </ul>
-      <ul class="layui-nav fly-nav-user" v-show="notlogin">
+      <ul v-show="!userInfo.userId" class="layui-nav fly-nav-user">
         <!-- 未登入的状态 -->
         <li class="layui-nav-item">
           <a class="iconfont icon-touxiang layui-hide-xs" href="login.html"/>
@@ -18,16 +18,16 @@
           <a ><router-link to="/login">登入</router-link></a>
         </li>
       </ul>
-      <ul class="layui-nav fly-nav-user"  v-show="login">
+      <ul v-show="userInfo.userId" class="layui-nav fly-nav-user">
         <!-- 登入后的状态 -->
         <li class="layui-nav-item">
           <el-dropdown @command="handleCommand">
-             <span class="el-dropdown-link">
-              {{userInfo.userName}}
-             </span>
+            <span class="el-dropdown-link">
+              {{ userInfo.userName }}
+            </span>
             <el-dropdown-menu slot="dropdown" >
               <el-dropdown-item command="/manager/user"><i class="layui-icon">&#xe620;</i>个人中心</el-dropdown-item>
-              <el-dropdown-item command="/manager/user_message"><i class="layui-icon">&#xe611;</i>我的消息  <span v-if="mesCount" class="layui-badge layui-bg-red" >{{mesCount}}</span></el-dropdown-item>
+              <el-dropdown-item command="/manager/user_message"><i class="layui-icon">&#xe611;</i>我的消息  <span v-if="mesCount" class="layui-badge layui-bg-red" >{{ mesCount }}</span></el-dropdown-item>
               <el-dropdown-item command="exit">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -48,17 +48,15 @@ import Hamburger from '@/components/Hamburger'
 import store from '@/store'
 
 export default {
+  components: {
+    Breadcrumb,
+    Hamburger
+  },
   data() {
     return {
       logoImg: './static/logo.png',
-      login: false,
-      notlogin: true,
-      imgUrl:'./static/cweg.jpg'
+      imgUrl: './static/cweg.jpg'
     }
-  },
-  components:{
-    Breadcrumb,
-    Hamburger
   },
   computed: {
     ...mapGetters([
@@ -81,17 +79,15 @@ export default {
     $route(route) {
       this.toggleSideBar()
     },
+    token() {
+      this.toggleSideBar()
+    },
     userInfo() {
       if (this.userInfo.userLogo) {
-        this.notlogin = false
-        this.login = true
         if (this.userInfo.userLogo) {
           this.imgUrl = this.userInfo.userLogo
         }
       }
-    },
-    token() {
-      this.toggleSideBar()
     }
   },
   mounted() {
@@ -103,17 +99,13 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('GetInfo').then(ress => {
-        if(ress.restCode === '0000') {
+        if (ress.restCode === '0000') {
+          console.log(this.userInfo)
           if (this.userInfo) {
-            this.notlogin = false
-            this.login = true
             if (this.userInfo.userLogo) {
               this.imgUrl = this.userInfo.userLogo
             }
           }
-        } else {
-          this.notlogin = true
-          this.login = false
         }
       }).catch((err) => {
         console.log(err)
@@ -132,8 +124,7 @@ export default {
     getElevatorList() {
       if (this.userInfo.userId) {
         this.$store.dispatch('Post', { url: 'bbsusercenter/msg/unReadCount', data: { userId: this.userInfo.userId }}).then(res => {
-          if (res.restCode === '0000')
-            this.$store.commit('SET_MES_COUNT', res.data)
+          if (res.restCode === '0000') { this.$store.commit('SET_MES_COUNT', res.data) }
         })
       }
     },
@@ -144,7 +135,7 @@ export default {
         })
         this.$router.push('/')
         // this.$router.go()
-      }else {
+      } else {
         this.$router.push(data)
       }
     }
