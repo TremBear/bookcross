@@ -69,7 +69,7 @@ export default {
           })
         }
       }).catch((err) => {
-        console.log(err)
+        layer.msg('后台处理异常，联系管理员')
       })
     }
   }
