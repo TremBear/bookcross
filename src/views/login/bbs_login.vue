@@ -41,11 +41,11 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('SET_IS_SHOW_SIDE', false)
     const params = this.$route.params
     if (params) {
       sessionStorage.setItem('path', JSON.stringify(this.$route.params))
     }
-    this.eventVue.$emit('getIsShow', false)
   },
   methods: {
     getLogin() {

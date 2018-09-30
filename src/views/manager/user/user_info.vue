@@ -16,7 +16,7 @@
                   :on-success="handleAvatarSuccess"
                   class="avatar-uploader">
                   <img v-if="userInfo.userLogo" :src="userInfo.userLogo" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  <i v-else class="el-icon-plus avatar-uploader-icon"/>
                 </el-upload>
               </div>
             </div>
@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="layui-form-item">
-            <label for="L_userInfoname" class="layui-form-label">昵称{{userInfo.nicknameChangeTimes}}</label>
+            <label for="L_userInfoname" class="layui-form-label">昵称</label>
             <div class="layui-input-inline">
 				<input id="L_userInfoname" v-model="userInfo.userNickname" type="text" name="userNickname" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === userInfo.nicknameChangeTimes">
 
@@ -79,6 +79,14 @@ export default {
         }
       },
       deep: true
+    },
+    'userInfo.userLogo': {
+      handler(newValue, oldValue) {
+        if (newValue != oldValue) {
+          this.isModify = true
+        }
+      },
+      deep: true
     }
   },
   methods: {
@@ -103,7 +111,7 @@ export default {
       }
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = res.data
+      this.userInfo.userLogo = res.data
     }
   }
 }
