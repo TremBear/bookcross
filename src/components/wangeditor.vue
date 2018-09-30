@@ -1,8 +1,8 @@
 <template>
   <div style="border: 1px solid #dcdfe6;">
-    <div id="editor" style="text-align:left;"/>
-    <div v-if="replyConent" v-html="replyConent" style="color: #187d2f;margin-left: 6px;"/>
-    <div id="editor1" style="text-align:left;height: 200px; ">
+    <div ref="editor" style="text-align:left;"/>
+    <div v-if="replyConent" style="color: #187d2f;margin-left: 6px;" v-html="replyConent"/>
+    <div ref="editor1" style="text-align:left;height: 200px; ">
       <span v-html="content"/>
     </div>
   </div>
@@ -32,11 +32,12 @@ export default {
   data() {
     return {
       editor: '',
-      wangEditor: Object
+      wangEditor: Object,
+      num: 1
     }
   },
   mounted() {
-    this.wangEditor = new E('#editor', '#editor1')
+    this.wangEditor = new E(this.$refs.editor, this.$refs.editor1)
     this.wangEditor.customConfig.onchange = (html) => {
       this.editor = html
       this.$emit('handleEditor', this.editor)
@@ -56,7 +57,10 @@ export default {
       }
     }
     this.wangEditor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024
-    this.wangEditor.create()
+    if (this.num === 1) {
+      this.wangEditor.create()
+      this.num++
+    }
   },
   methods: {
     handleClearEditor() {
