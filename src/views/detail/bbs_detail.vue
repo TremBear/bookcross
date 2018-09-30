@@ -88,21 +88,21 @@
                   <wang-editor ref="wangEditor" :menus="menus" :replyConent="replyConent" :content="content" @handleEditor="handleEditor"/>
                 </div>
               </div>
-              <div class="layui-form-item">
-                <label  class="layui-form-label">发布形式</label>
-                <div class="layui-input-block">
-                  <el-select v-model="issueValue" placeholder="请选择">
-                    <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                    </el-option>
-                  </el-select>
-                </div>
-              </div>
               <div class="layui-item">
-                <button :class="activeClass ? 'layui-btn layui-btn-disabled':'layui-btn'" :disabled="activeClass"  @click="handleReply">提交回复</button>
+                <button  style="margin-top: -3px;" :class="activeClass ? 'layui-btn layui-btn-disabled':'layui-btn'" :disabled="activeClass"  @click="handleReply">提交回复</button>
+                <div class="layui-form-item" style="display: inline-block;margin-left: 7px;">
+                  <label  class="layui-form-label">发布形式</label>
+                  <div class="layui-input-block">
+                    <el-select v-model="issueValue" placeholder="请选择">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
