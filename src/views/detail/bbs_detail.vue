@@ -262,7 +262,7 @@ export default {
         }else {
           replyComment = item.replyComment
         }
-        this.replyConent = '\n 回复:' + item.replyFloor + '楼 \n@' + item.userNickname + this.filterHTMLTag(replyComment).substr(0, 20) + '\n <\/br> --------------------------------------------------------------'
+        this.replyConent = '\n 回复:' + item.replyFloor + '楼 \n@' + item.userNickname + '<\/br> ' + this.filterHTMLTag(replyComment).substr(0, 20) + '\n <\/br> --------------------------------------------------------------'
         this.item = item
       }
     },
