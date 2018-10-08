@@ -6,7 +6,7 @@ const categoryItems = {
   3: 1001,
   2: 1002
 }
-const isRound = Math.floor(Math.random() * 10)
+const isRoundImg = './static/anonym/' + Math.floor(Math.random() * 10) + '.jpg'
 const emotions = [
   {
     title: '默认',
@@ -100,5 +100,5 @@ const emotions = [
 export default {
   categoryItems,
   emotions,
-  isRound
+  isRoundImg
 }

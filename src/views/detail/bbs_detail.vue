@@ -279,14 +279,14 @@ export default {
         }
         let imgUrl = ''
         if (this.issueValue === 1) {
-          imgUrl = './static/anonym/' + this.global.isRound + '.jpg'
+          imgUrl = this.global.isRoundImg
         }
         const data = {
           topicId: this.topicsItem.id,
           replyType: this.replyType,
           replyComment: this.editor,
           isRealName: this.issueValue,
-          imgUrl: imgUrl,
+          userImagePath: imgUrl,
           token: '',
           quoteId: ''
         }
