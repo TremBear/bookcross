@@ -262,7 +262,7 @@ export default {
         }else {
           replyComment = item.replyComment
         }
-        this.replyConent = '\n 回复:' + item.replyFloor + '楼 \n@' + item.userNickname + this.filterHTMLTag(replyComment).substr(0, 20) + '\n --------------------------------------------------------------'
+        this.replyConent = '\n 回复:' + item.replyFloor + '楼 \n@' + item.userNickname + this.filterHTMLTag(replyComment).substr(0, 20) + '\n <\/br> --------------------------------------------------------------'
         this.item = item
       }
     },
@@ -404,7 +404,7 @@ export default {
           }
           this.$store.dispatch('TokenPost', {url: '/bbsusercenter/collect/collectOrCancel', data: data}).then(res => {
             if (res.restCode === '0000') {
-              this.topicsItem.praiseCount = res.data.num
+              this.topicsItem.collectCount = res.data.num
               this.collectDisabled = true
             }
           }).catch((err) => {
