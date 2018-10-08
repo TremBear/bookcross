@@ -269,7 +269,7 @@ export default {
     handleEditor(data) {
       this.editor = data
     },
-    // 回复提交菜单
+    // 回复提交
     handleReply() {
       this.activeClass = true
       let that = this
@@ -277,11 +277,16 @@ export default {
         if (this.replyConent) {
           this.editor = this.replyConent + this.editor
         }
+        let imgUrl = ''
+        if (this.issueValue === 1) {
+          imgUrl = './static/anonym/' + this.global.isRound + '.jpg'
+        }
         const data = {
           topicId: this.topicsItem.id,
           replyType: this.replyType,
           replyComment: this.editor,
-          isRealName:this.issueValue,
+          isRealName: this.issueValue,
+          imgUrl: imgUrl,
           token: '',
           quoteId: ''
         }

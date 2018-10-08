@@ -6,7 +6,7 @@ const categoryItems = {
   3: 1001,
   2: 1002
 }
-
+const isRound = Math.floor(Math.random() * 10)
 const emotions = [
   {
     title: '默认',
@@ -99,5 +99,6 @@ const emotions = [
 
 export default {
   categoryItems,
-  emotions
+  emotions,
+  isRound
 }
