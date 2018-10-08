@@ -155,6 +155,7 @@ export default {
       content: '',
       topicStatus: 0,
       topicId: '',
+      userImagePath: '',
       menus: [
         'head', // 标题
         'bold', // 粗体
@@ -222,6 +223,9 @@ export default {
       topic.postType = this.postType
       topic.isOpenComment = this.commentValue
       topic.isRealName = this.value
+      if (this.value === 1) {
+        topic.userImagePath = this.global.isRoundImg
+      }
       // 0代表普通，1代表草稿
       topic.topicStatus = this.topicStatus
       topic.id = this.topicId
@@ -287,6 +291,9 @@ export default {
       // 0代表普通，1代表草稿
       topic.topicStatus = this.topicStatus
       topic.id = this.topicId
+      if (this.value === 1) {
+        topic.userImagePath = this.global.isRoundImg
+      }
       this.draftClass = true
       const data = {
         draft: JSON.stringify(topic),
