@@ -279,7 +279,7 @@ export default {
         }
         let imgUrl = ''
         if (this.issueValue === 1) {
-          imgUrl = this.global.isRoundImg
+          imgUrl = this.global.isRoundImg()
         }
         const data = {
           topicId: this.topicsItem.id,

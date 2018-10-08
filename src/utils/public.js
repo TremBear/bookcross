@@ -6,7 +6,9 @@ const categoryItems = {
   3: 1001,
   2: 1002
 }
-const isRoundImg = './static/anonym/' + Math.floor(Math.random() * 10) + '.jpg'
+const isRoundImg = function() {
+  return './static/anonym/' + Math.floor(Math.random() * 10) + '.jpg'
+}
 const emotions = [
   {
     title: '默认',

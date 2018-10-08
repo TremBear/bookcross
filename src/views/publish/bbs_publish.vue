@@ -224,7 +224,7 @@ export default {
       topic.isOpenComment = this.commentValue
       topic.isRealName = this.value
       if (this.value === 1) {
-        topic.userImagePath = this.global.isRoundImg
+        topic.userImagePath = this.global.isRoundImg()
       }
       // 0代表普通，1代表草稿
       topic.topicStatus = this.topicStatus
@@ -292,7 +292,7 @@ export default {
       topic.topicStatus = this.topicStatus
       topic.id = this.topicId
       if (this.value === 1) {
-        topic.userImagePath = this.global.isRoundImg
+        topic.userImagePath = this.global.isRoundImg()
       }
       this.draftClass = true
       const data = {
