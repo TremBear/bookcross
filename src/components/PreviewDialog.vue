@@ -17,7 +17,7 @@
             </div>
             <div class="detail-about">
               <a class="fly-avatar" href="user_info.html">
-                <img :src="!previewData.userImagePath?'./static/cweg.jpg':previewData.userImagePath">
+                <img :src="!previewData.userImagePath?'/static/cweg.jpg':previewData.userImagePath"  >
               </a>
               <div class="fly-detail-user">
                 <a href="user_info.html" class="fly-link">
