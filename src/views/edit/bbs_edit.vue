@@ -19,7 +19,7 @@
           </div>
           <div class="detail-about">
             <a class="fly-avatar" href="user_info.html">
-              <img :src="!topicsItem.userImagePath?'/static/cweg.jpg':topicsItem.userImagePath">
+              <img :src="!topicsItem.userImagePath?'./static/cweg.jpg':topicsItem.userImagePath">
             </a>
             <div class="fly-detail-user">
               <a href="user_info.html" class="fly-link">
@@ -120,6 +120,7 @@ export default {
     // 初始加载帖子详细信息
     getPosts() {
       const detail = sessionStorage.getItem('edit')
+
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: JSON.parse(detail) }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItem = res.data
@@ -169,14 +170,17 @@ export default {
       }
 
       // 组装后台数据
-      const data = { token: getToken(), content: appendContent, id: this.topicsItem.id }
-
+      const data = { token: getToken(), content: appendContent, id: this.topicsItem.id, topicType: this.topicsItem.postContentType }
+      console.info(data)
       if (this.handleVerifUser()) {
         // 请求后台
         this.$store.dispatch('TokenPost', { url: '/bbsusercenter/topic/appendTopicContent', data: data }).then(res => {
           if (res.restCode === '0000') {
             // 成功后跳转到帖子详情页面
             const datas = { id: this.topicsItem.id, entry: 1 }
+            if (!datas.type) {
+              datas['type'] = this.topicsItem.postContentType
+            }
             sessionStorage.setItem('detail', JSON.stringify(datas))
             this.$router.push({ path: 'detail' })
           } else {
@@ -202,7 +206,8 @@ export default {
         topicType: this.topicsItem.topicType,
         labelId: this.topicsItem.labelId,
         userNickname: this.topicsItem.userNickname,
-        modifyTime: this.topicsItem.modifyTime
+        modifyTime: this.topicsItem.modifyTime,
+        userImagePath: this.topicsItem.userImagePath
       }
       console.log(this.previewData)
     },
@@ -219,7 +224,7 @@ export default {
         topicId: this.topicsItem.id,
         topicTitle: this.topicsItem.topicTitle,
         postContentType: this.replyType,
-		authorId:this.topicsItem.userId,
+		    authorId:this.topicsItem.userId,
         token: ''
       }
 

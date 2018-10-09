@@ -19,7 +19,7 @@
             </div>
             <div class="detail-about">
               <a class="fly-avatar" href="#">
-                <img :src="!topicsItem.userImagePath?'./static/cweg.jpg':topicsItem.userImagePath" alt="贤心">
+                <img :src="!topicsItem.userImagePath?'./static/cweg.jpg':topicsItem.userImagePath">
               </a>
               <div class="fly-detail-user">
                 <a href="user_info.html" class="fly-link">
@@ -205,6 +205,8 @@ export default {
       }
       detail['pageSize'] = this.pageSize
       detail['pageNum'] = this.pageNum
+
+      console.info(detail['type'])
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: detail }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItem = res.data

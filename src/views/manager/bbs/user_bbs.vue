@@ -243,7 +243,7 @@ export default {
 
     // 跳转到追加页面
     appendTopicContent(data) {
-      const params = { id: data.id, entry: 1, type: this.type }
+      const params = { id: data.id, entry: 1, type: data.postContentType }
       sessionStorage.setItem('edit', JSON.stringify(params))
       this.$router.push({ name: 'bbs_edit', params: params })
     },
@@ -257,7 +257,6 @@ export default {
     tokenPost(url, params) {
       this.$store.dispatch('TokenPost', { url: url, data: params })
         .then(res => {
-			console.info(res)
           if (res.restCode === '0000') {
             layer.msg('操作成功') // 操作成功，弹框
             this.reload() //  刷新页面
@@ -460,7 +459,7 @@ export default {
 
     // 跳转到详情页
     handleDetail(data, entry) {
-      const datas = { id: data.id, entry: entry, type: this.type }
+      const datas = { id: data.id, entry: entry, type: data.postContentType }
       sessionStorage.setItem('detail', JSON.stringify(datas))
       this.$router.push({ name: 'detail', params: datas })
     },
