@@ -22,7 +22,7 @@
                 <img :src="!topicsItem.userImagePath?'./static/cweg.jpg':topicsItem.userImagePath">
               </a>
               <div class="fly-detail-user">
-                <a href="user_info.html" class="fly-link">
+                <a href="#" class="fly-link">
                   <cite>{{ topicsItem.userNickname }}</cite>
                 </a>
                 <span>{{ formatTime(topicsItem.modifyTime) }}</span>
@@ -205,8 +205,6 @@ export default {
       }
       detail['pageSize'] = this.pageSize
       detail['pageNum'] = this.pageNum
-
-      console.info(detail['type'])
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: detail }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItem = res.data

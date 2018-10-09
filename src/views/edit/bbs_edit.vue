@@ -20,9 +20,11 @@
           <div class="detail-about">
             <a class="fly-avatar" href="user_info.html">
               <img :src="!topicsItem.userImagePath?'./static/cweg.jpg':topicsItem.userImagePath">
+            <a class="fly-avatar" href="#">
+              <img :src="!topicsItem.userImagePath?'/static/cweg.jpg':topicsItem.userImagePath">
             </a>
             <div class="fly-detail-user">
-              <a href="user_info.html" class="fly-link">
+              <a href="#" class="fly-link">
                 <cite>{{ topicsItem.userNickname }}</cite>
               </a>
               <span>{{ formatTime(topicsItem.modifyTime) }}</span>
@@ -120,7 +122,6 @@ export default {
     // 初始加载帖子详细信息
     getPosts() {
       const detail = sessionStorage.getItem('edit')
-
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: JSON.parse(detail) }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItem = res.data

@@ -285,7 +285,7 @@ export default {
       }
       topic.topicContent = this.editorContent.trim()
       // 1代表优车社区，2代表公告，3代表意见
-      topic.drafType = 1
+      topic.drafType = this.postType
       topic.isOpenComment = this.commentValue
       topic.isRealName = this.value
       // 0代表普通，1代表草稿
