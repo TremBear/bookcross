@@ -18,7 +18,7 @@
             <ul class="mine-view jie-row">
 
               <li v-for="(item, index) in unreadList" :key="index">
-				<input style="margin-top: 4px" type='checkbox' :checked="unreadIdList.indexOf(item.id)>=0" name='checkboxinput' class='input-checkbox' @click='checkedOne(item.id)'> 
+				<input style="margin-top: 4px" type='checkbox' :checked="unreadIdList.indexOf(item.id)>=0" name='checkboxinput' class='input-checkbox' @click='checkedOne(item.id)'>
                 <a class="jie-title" target="_blank" v-on:click="msgViewData(item.id, item.status)" >{{item.title}}</a>
                 <i>{{formatTime(item.sendTime)}}</i>
               </li>
@@ -167,7 +167,7 @@
         this.dialogVisible = true
         this.magStatus = status
       },
-	  
+
 	  //checkedOne
 	  checkedOne (id) {
         let idIndex = this.unreadIdList.indexOf(id)
@@ -178,10 +178,8 @@
           // 选中该checkbox
           this.unreadIdList.push(id)
         }
-		
-		console.info(this.unreadIdList)
       },
-	  
+
 	  //checkedAll
       checkedAll () {
         this.isCheckedAll = !this.isCheckedAll
@@ -194,10 +192,8 @@
         } else {
           this.unreadIdList = []
         }
-		
-		console.info(this.unreadIdList)
 	  },
-	  
+
 	  // 批量已读
 	  readAllMsg() {
 		 let params = {userId:this.userInfo.userId, ids:this.unreadIdList.join(",")} // 组装参数
@@ -209,7 +205,7 @@
           console.log(err)
         })
 	  },
-	  
+
       // 关闭弹框
       handleClose(){
         this.dialogVisible = false

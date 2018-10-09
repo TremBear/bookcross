@@ -280,7 +280,6 @@ export default {
       }, function() { // 确定按钮
         const url = '/bbspost/topicReply/userdiscussPost'
         const params = { type: type, id: id, isOpenComment: isOpenComment, userId: that.userInfo.userId }
-        console.log(params)
         that.tokenPost(url, params)
       })
     },
@@ -296,13 +295,12 @@ export default {
 
 	  var url = '';
       if (type == 'collect') {
-		url  = '/bbsusercenter/collect/collectOrCancel';
+		    url  = '/bbsusercenter/collect/collectOrCancel';
       } else if (type == 'praise') {
-		url  = '/bbsusercenter/praise/praiseOrCancel';
+		    url  = '/bbsusercenter/praise/praiseOrCancel';
       } else {
 
       }
-      console.info(params)
 
       this.tokenPost(url, params)
     },
@@ -317,7 +315,6 @@ export default {
       }, function() { // 确定按钮
         const url = '/bbsusercenter/draft/deleteDraft'
         const params = { id: id }
-        console.log(params)
         that.tokenPost(url, params)
       })
     },
@@ -331,7 +328,6 @@ export default {
       this.$store.dispatch('TokenPost', { url: '/bbsusercenter/userCenter/myDraftTopis', data: params }) // 请求
         .then(res => {
           // 接口返回数据
-          console.log(res)
           if (res.restCode === '0000') {
             this.myDraftTopis = res.data.list
             this.total = res.data.total
@@ -343,7 +339,6 @@ export default {
 
     // 跳转到草稿箱编辑页
     handleDraftDetail(data) {
-      console.info(data)
       sessionStorage.setItem('draftId', JSON.stringify(data.id))
       this.$router.push({ name: 'publish', params: data })
     },
@@ -414,7 +409,6 @@ export default {
           if (res.restCode === '0000') {
             this.myReplyTopics = res.data.list
             this.total = res.data.total
-            console.info(res.data)
           }
         }).catch((err) => {
           console.log(err)

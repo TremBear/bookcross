@@ -194,7 +194,6 @@ export default {
 
     // 预览
     previewBbs() {
-      console.info('editorContent' + this.editorContent)
       this.dialogVisible = true
       this.previewData = {
         topicTitle: this.topicsItem.topicTitle,
@@ -205,13 +204,11 @@ export default {
         modifyTime: this.topicsItem.modifyTime,
         userImagePath: this.topicsItem.userImagePath
       }
-      console.log(this.previewData)
     },
 
     // 获取富文本框内容
     handleEditor(data) {
       this.editorContent = data
-      console.log(data)
     },
 
     // 点赞 或 收藏
