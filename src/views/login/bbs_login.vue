@@ -17,7 +17,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-inline">
-                  <input v-model="pass" type="password" required lay-verify="required" autocomplete="off" class="layui-input">
+                  <input v-model="pass" type="password" @keyup.enter="getLogin" required lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
               </div>
               <div class="layui-item">
