@@ -251,6 +251,7 @@ export default {
             icon: 5,
             title: '提示'
           })
+          this.sendClass = false
         }
       }).catch((err) => {
         layer.alert('帖子发布失败！', {
@@ -313,6 +314,7 @@ export default {
             icon: 5,
             title: '提示'
           })
+          this.sendClass = false
         }
       }).catch((err) => {
         layer.alert('保存草稿失败！', {
@@ -347,7 +349,6 @@ export default {
         modifyTime: new Date(),
         userImagePath: userInfo.userLogo
       }
-      console.log(this.previewData)
     },
     closeDialog() {
       this.dialogVisible = false

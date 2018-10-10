@@ -1,10 +1,10 @@
 const categoryItems = {
-  1000: 1,
-  1001: 3,
-  1002: 2,
-  1: 1000,
-  3: 1001,
-  2: 1002
+  10000: 1,
+  10001: 3,
+  10002: 2,
+  1: 10000,
+  3: 10001,
+  2: 10002
 }
 const isRoundImg = function() {
   return './static/anonym/' + Math.floor(Math.random() * 10) + '.jpg'
