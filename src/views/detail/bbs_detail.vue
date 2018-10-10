@@ -339,14 +339,13 @@ export default {
           commentId: item.id,
           postId: this.topicsItem.id,
           reportReson: '',
-          reportTypes: '',
-          token: ''
+          reportTypes: ''
         }
       }
     },
     // 提交举报内容
     handleSubmit(data) {
-      this.$store.dispatch('TokenPost', { url: '/reprotManager/addReport', data: data }).then(res => {
+      this.$store.dispatch('Post', { url: '/bbsadmin/reprotManager/addReport', data: data }).then(res => {
         if (res.restCode === '0000') {
           layer.alert('该内容已经举报成功！', {
             icon: 1,
