@@ -42,7 +42,7 @@
                 <a name="item-1111111111"/>
                 <div class="detail-about detail-about-reply">
                   <a class="fly-avatar" href="">
-                    <img :src="!item.userImagePath?'/static/cweg.jpg':item.userImagePath" alt=" ">
+                    <img :src="!item.userImagePath?'./static/cweg.jpg':item.userImagePath" alt=" ">
                   </a>
                   <div class="fly-detail-user">
                     <a href="" class="fly-link">
