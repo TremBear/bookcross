@@ -85,7 +85,7 @@
               <div class="layui-form-item layui-form-text">
                 <a name="comment"/>
                 <div class="layui-input-block">
-                  <wang-editor ref="wangEditor" :menus="menus" :replyConent="replyConent" :content="content" @handleEditor="handleEditor"/>
+                  <wang-editor ref="wangEditor" :menus="menus" :replyConent="replyConent" :content="content"/>
                 </div>
               </div>
               <div class="layui-item">
@@ -275,7 +275,9 @@ export default {
       let that = this
       if (this.handleVerifUser()) {
         if (this.replyConent) {
-          this.editor = this.replyConent + this.editor
+          this.editor = this.replyConent + this.$refs.wangEditor.handleEditorTxt()
+        } else{
+          this.editor = this.$refs.wangEditor.handleEditorTxt()
         }
         let imgUrl = ''
         if (this.issueValue === 1) {

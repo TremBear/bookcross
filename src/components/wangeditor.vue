@@ -65,6 +65,9 @@ export default {
   methods: {
     handleClearEditor() {
       this.wangEditor.txt.clear()
+    },
+    handleEditorTxt() {
+      return this.wangEditor.txt.html()
     }
   }
 }
