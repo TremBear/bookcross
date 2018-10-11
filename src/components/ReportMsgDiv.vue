@@ -20,7 +20,7 @@
     <div class="layui-form-item layui-form-text">
       <label class="layui-form-label">理由</label>
       <div class="layui-input-block">
-        <textarea v-model="reportMsg" required lay-verify="required" placeholder="请输入举报理由" class="layui-textarea"></textarea>
+        <textarea v-model="reportMsg" required lay-verify="required" placeholder="请输入举报理由" class="layui-textarea" oninput="if(value.length > 110)value = value.slice(0, 110)" />
       </div>
     </div>
     <div class="layui-form-item">
@@ -36,7 +36,6 @@
 
 export  default {
   name: 'ReportMsgDiv',
-
   props: {
     dialogVisible:{
       type:Boolean,
@@ -53,10 +52,17 @@ export  default {
       }
     }
   },
+  watch: {
+    reportMsg(curVal, oldVal) {
+      if (curVal.length > this.reportMsg) {
+        this.reportMsg = String(curVal).slice(0, this.reportMsg)
+      }
+    }
+  },
   data() {
     return {
       selectOptions: [],
-      seleValue: '1',
+      seleValue: 1,
       reportMsg: ''
     }
   },
