@@ -34,28 +34,21 @@
 
 <script>
 
-export  default {
+export default {
   name: 'ReportMsgDiv',
   props: {
-    dialogVisible:{
-      type:Boolean,
+    dialogVisible: {
+      type: Boolean,
       default: false
     },
-    replyTitle:{
-      type:String,
-      default:''
+    replyTitle: {
+      type: String,
+      default: ''
     },
-    replyData:{
+    replyData: {
       type: Object,
-      default: function () {
+      default: function() {
         return []
-      }
-    }
-  },
-  watch: {
-    reportMsg(curVal, oldVal) {
-      if (curVal.length > this.reportMsg) {
-        this.reportMsg = String(curVal).slice(0, this.reportMsg)
       }
     }
   },
