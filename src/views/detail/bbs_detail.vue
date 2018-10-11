@@ -327,7 +327,7 @@ export default {
           reportReson: '',
           reportTypes: '',
           topicTitle: this.topicsItem.topicTitle,
-          replyType: this.replyType
+          topicType: this.replyType
         }
       }
     },
@@ -343,7 +343,7 @@ export default {
           reportReson: '',
           topicTitle: this.topicsItem.topicTitle,
           reportTypes: '',
-          replyType: this.replyType
+          topicType: this.replyType
         }
       }
     },
