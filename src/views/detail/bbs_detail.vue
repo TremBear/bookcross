@@ -325,7 +325,9 @@ export default {
           userId: this.userInfo.userId,
           postId: item.id,
           reportReson: '',
-          reportTypes: ''
+          reportTypes: '',
+          topicTitle: this.topicsItem.topicTitle,
+          replyType: this.replyType
         }
       }
     },
@@ -339,7 +341,9 @@ export default {
           commentId: item.id,
           postId: this.topicsItem.id,
           reportReson: '',
-          reportTypes: ''
+          topicTitle: this.topicsItem.topicTitle,
+          reportTypes: '',
+          replyType: this.replyType
         }
       }
     },
