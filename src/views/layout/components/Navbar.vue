@@ -12,7 +12,7 @@
       <ul v-show="!userInfo.userId" class="layui-nav fly-nav-user">
         <!-- 未登入的状态 -->
         <li class="layui-nav-item">
-          <a class="iconfont icon-touxiang layui-hide-xs" href="login.html"/>
+          <a class="iconfont icon-touxiang layui-hide-xs" ><router-link to="/login"/></a>
         </li>
         <li class="layui-nav-item">
           <a ><router-link to="/login">登入</router-link></a>
