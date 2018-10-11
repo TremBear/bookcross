@@ -13,7 +13,7 @@ export default {
   watch: {
     $route(route) {
       if (this.device === 'mobile' && this.sidebar.opened) {
-        store.dispatch('CloseSideBar', { withoutAnimation: false })
+        // store.dispatch('CloseSideBar', { withoutAnimation: false })
       }
     }
   },
@@ -23,7 +23,7 @@ export default {
   mounted() {
     const isMobile = this.isMobile()
     if (isMobile) {
-      store.dispatch('CloseSideBar', { withoutAnimation: true })
+      // store.dispatch('CloseSideBar', { withoutAnimation: true })
     }
   },
   methods: {
@@ -36,7 +36,7 @@ export default {
         const isMobile = this.isMobile()
 
         if (isMobile) {
-          store.dispatch('CloseSideBar', { withoutAnimation: true })
+          // store.dispatch('CloseSideBar', { withoutAnimation: true })
         }
       }
     }
