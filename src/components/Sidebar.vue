@@ -33,7 +33,6 @@ export default {
       'sideItem'
     ]),
     labelList() {
-      console.log(store.getters.labelList)
       return store.getters.labelList
     },
     navType() {
