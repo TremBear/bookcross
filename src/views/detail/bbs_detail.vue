@@ -200,6 +200,7 @@ export default {
     // 初始加载帖子详细信息
     getPosts() {
       const detail = JSON.parse(sessionStorage.getItem('detail'))
+      console.log(this.navType)
       if (!detail.type) {
         detail['type'] = this.navType
       }
@@ -304,10 +305,15 @@ export default {
               icon: 1,
               title: '提示'
             })
-            setTimeout(function() {
-              that.activeClass = false
-            }, 5000)
+          }else{
+            layer.alert(res.restMsg, {
+              icon: 5,
+              title: '提示'
+            })
           }
+          setTimeout(function() {
+            that.activeClass = false
+          }, 5000)
         }).catch((err) => {
           console.log(err)
           this.item = {}
@@ -410,8 +416,10 @@ export default {
           this.$store.dispatch('TokenPost', {url: '/bbsusercenter/collect/collectOrCancel', data: data}).then(res => {
             if (res.restCode === '0000') {
               this.topicsItem.collectCount = res.data.num
-              this.collectDisabled = true
+            }else{
+              layer.msg(res.restMsg)
             }
+            this.collectDisabled = true
           }).catch((err) => {
             this.collectDisabled = true
             layer.msg('后台异常，请联系管理员!')

@@ -172,6 +172,9 @@ export default {
     },
     handleDetail(data) {
       const datas = { id: data.id, entry: 1 }
+      if (!data.labelId) {
+        datas['type'] = 2
+      }
       sessionStorage.setItem('detail', JSON.stringify(datas))
       this.$router.push({ path: 'detail' })
     },
