@@ -2,7 +2,7 @@
   <div class="fly-panel fly-column">
     <div class="layui-container">
       <ul class="layui-clear">
-        <li v-for="(item, index) in labelList" :key="index" :class="{'layui-this':isActive === item.id }">
+        <li v-for="(item, index) in labelList" :key="index" :class="{'layui-this':isActive === item.id }" v-if="item.status!=0">
           <a @click="handleSide(item)">{{ item.labelName }}</a>
         </li>
       </ul>
@@ -33,6 +33,7 @@ export default {
       'sideItem'
     ]),
     labelList() {
+      console.log(store.getters.labelList)
       return store.getters.labelList
     },
     navType() {
