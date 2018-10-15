@@ -310,7 +310,7 @@ export default {
           })
           this.$router.push({ path: '/manager/user_bbs', query: { pageId: 'myDraft' }})
         } else {
-          layer.alert('保存草稿失败！', {
+          layer.alert(res.restMsg, {
             icon: 5,
             title: '提示'
           })
