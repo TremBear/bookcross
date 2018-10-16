@@ -200,7 +200,6 @@ export default {
     // 初始加载帖子详细信息
     getPosts() {
       const detail = JSON.parse(sessionStorage.getItem('detail'))
-      console.log(this.navType)
       if (!detail.type) {
         detail['type'] = this.navType
       }
