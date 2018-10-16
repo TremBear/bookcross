@@ -5,7 +5,7 @@
         <img :src="logoImg">
       </a>
       <ul class="layui-nav fly-nav layui-hide-xs">
-        <li v-for="(item, index) in sideItem" :key="index" class="layui-nav-item layui-this">
+        <li v-for="(item, index) in sideItem" :key="index" class="layui-nav-item layui-this" v-if="item.status!=0">
           <a @click="handleCategory(item)"><i :class="item.categoryLogo" class="iconfont"/>{{ item.categoryName }}</a>
         </li>
       </ul>
