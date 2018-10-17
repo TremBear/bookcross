@@ -24,15 +24,20 @@
           <div class="layui-form-item">
             <label for="L_email" class="layui-form-label">邮箱</label>
             <div class="layui-input-inline">
-              <input id="L_email" v-model="userInfo.userMail" type="text" name="email" required lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled">
+              <input id="L_email" v-model="userInfo.userMail" type="text" name="email" required lay-verify="email" autocomplete="off" class="layui-input input_color" disabled="disabled" >
             </div>
           </div>
           <div class="layui-form-item">
             <label for="L_userInfoname" class="layui-form-label">昵称</label>
             <div class="layui-input-inline">
-				<input id="L_userInfoname" v-model="userInfo.userNickname" type="text" name="userNickname" required lay-verify="required" autocomplete="off" class="layui-input" :disabled="0 === userInfo.nicknameChangeTimes">
+              <input id="L_userInfoname" v-model="userInfo.userNickname" :disabled="0 === userInfo.nicknameChangeTimes"
+                     :class="isDisableFlag ? 'input_color layui-input' : 'layui-input'" type="text" name="userNickname"
+                     required lay-verify="required" autocomplete="off" >
 
             </div>
+          </div>
+          <div class="layui-form-item">
+            <span style="font-size: xx-small; color: red;">您还剩下{{userInfo.nicknameChangeTimes}}次修改昵称的机会哦~</span>
           </div>
           <div class="layui-form-item">
             <button class="layui-btn" @click="handleSubmit" >确认修改</button>
@@ -40,9 +45,7 @@
         </div>
 
         <div class="layui-form layui-form-pane layui-tab-item">
-          <div class="layui-form-item">
-
-          </div>
+          <div class="layui-form-item"/>
         </div>
       </div>
     </div>
@@ -54,18 +57,23 @@ import store from '@/store'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'userInfo',
+  name: 'UserInfo',
   inject: ['reload'],
   computed: {
     ...mapGetters([
       'userInfo'
     ]),
     userInfo() {
+      // 输入框是否置灰
+      if (store.getters.userInfo.nicknameChangeTimes === 0) {
+        this.isDisableFlag = true
+      }
       return store.getters.userInfo
     }
   },
   data() {
     return {
+      isDisableFlag: false,
       isModify: false,
       imageUrl: '',
       action: process.env.BASE_API + 'bbscommon/udfs/upload'
@@ -98,6 +106,10 @@ export default {
             layer.msg('修改个人信息成功')
             this.$store.dispatch('GetInfo')
             this.isModify = false
+
+            // 输入框是否置灰
+            isDisableFlag(this.userInfo)
+
             this.reload() //  刷新页面
           } else {
             layer.alert(res.restMsg, {
@@ -112,6 +124,11 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.userInfo.userLogo = res.data
+    },
+    isDisableFlag(userInfo) {
+      if (userInfo.nicknameChangeTimes === 0) {
+        this.isDisableFlag = true
+      }
     }
   }
 }
@@ -150,4 +167,14 @@ export default {
     border-radius: 100%;
   }
 
+  .input_color {
+    height: 38px;
+    line-height: 1.3;
+    border-width: 1px;
+    border-style: solid;
+    background:#F2F2F2;
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+  }
 </style>
