@@ -12,10 +12,10 @@
       <ul v-show="!userInfo.userId" class="layui-nav fly-nav-user">
         <!-- 未登入的状态 -->
         <li class="layui-nav-item">
-          <a class="iconfont icon-touxiang layui-hide-xs" ><router-link to="/login"/></a>
+          <a style="padding: 0 4px;"><router-link to="/login">登入</router-link></a>
         </li>
         <li class="layui-nav-item">
-          <a ><router-link to="/login">登入</router-link></a>
+          <a href="./#/login" class="iconfont icon-touxiang layui-hide-xs" style="padding: 0 4px;"/>
         </li>
       </ul>
       <ul v-show="userInfo.userId" class="layui-nav fly-nav-user">
