@@ -30,14 +30,21 @@
           <div class="layui-form-item">
             <label for="L_userInfoname" class="layui-form-label">昵称</label>
             <div class="layui-input-inline">
-              <input id="L_userInfoname" v-model="userInfo.userNickname" :disabled="0 === userInfo.nicknameChangeTimes"
-                     :class="isDisableFlag ? 'input_color layui-input' : 'layui-input'" type="text" name="userNickname"
-                     required lay-verify="required" autocomplete="off" >
+              <input
+                id="L_userInfoname"
+                v-model="userInfo.userNickname"
+                :disabled="0 === userInfo.nicknameChangeTimes"
+                :class="isDisableFlag ? 'input_color layui-input' : 'layui-input'"
+                type="text"
+                name="userNickname"
+                required
+                lay-verify="required"
+                autocomplete="off" >
 
             </div>
           </div>
           <div class="layui-form-item">
-            <span style="font-size: xx-small; color: red;">您还剩下{{userInfo.nicknameChangeTimes}}次修改昵称的机会哦~</span>
+            <span style="font-size: xx-small; color: red;">您还剩下{{ userInfo.nicknameChangeTimes }}次修改昵称的机会哦~</span>
           </div>
           <div class="layui-form-item">
             <button class="layui-btn" @click="handleSubmit" >确认修改</button>
@@ -82,7 +89,7 @@ export default {
   watch: {
     'userInfo.userNickname': {
       handler(newValue, oldValue) {
-        if (newValue != oldValue) {
+        if (!(JSON.stringify(newValue)=='{}') && !(JSON.stringify(oldValue)=='{}') && (newValue != oldValue)) {
           this.isModify = true
         }
       },
@@ -90,7 +97,7 @@ export default {
     },
     'userInfo.userLogo': {
       handler(newValue, oldValue) {
-        if (newValue != oldValue) {
+        if (!(JSON.stringify(newValue)=='{}') && !(JSON.stringify(oldValue)=='{}') && (newValue != oldValue)) {
           this.isModify = true
         }
       },
@@ -103,12 +110,12 @@ export default {
         this.$store.dispatch('Post', { url: '/bbsusercenter/frontuser/updateInfo', data: this.userInfo }).then(res => {
           console.info(res)
           if (res.restCode === '0000') {
-            layer.msg('修改个人信息成功')
+            layer.msg(res.restMsg)
             this.$store.dispatch('GetInfo')
             this.isModify = false
 
             // 输入框是否置灰
-            isDisableFlag(this.userInfo)
+            this.setIsDisableFlag(this.userInfo)
 
             this.reload() //  刷新页面
           } else {
@@ -125,7 +132,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.userInfo.userLogo = res.data
     },
-    isDisableFlag(userInfo) {
+    setIsDisableFlag(userInfo) {
       if (userInfo.nicknameChangeTimes === 0) {
         this.isDisableFlag = true
       }
