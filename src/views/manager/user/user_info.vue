@@ -89,16 +89,21 @@ export default {
   watch: {
     'userInfo.userNickname': {
       handler(newValue, oldValue) {
-        if (!(JSON.stringify(newValue)=='{}') && !(JSON.stringify(oldValue)=='{}') && (newValue != oldValue)) {
-          this.isModify = true
+        console.log(newValue,oldValue)
+        if (oldValue != undefined) {
+          if (newValue != oldValue) {
+            this.isModify = true
+          }
         }
       },
       deep: true
     },
     'userInfo.userLogo': {
       handler(newValue, oldValue) {
-        if (!(JSON.stringify(newValue)=='{}') && !(JSON.stringify(oldValue)=='{}') && (newValue != oldValue)) {
-          this.isModify = true
+        if (oldValue != undefined) {
+          if (newValue != oldValue) {
+            this.isModify = true
+          }
         }
       },
       deep: true
@@ -110,13 +115,11 @@ export default {
         this.$store.dispatch('Post', { url: '/bbsusercenter/frontuser/updateInfo', data: this.userInfo }).then(res => {
           console.info(res)
           if (res.restCode === '0000') {
-            layer.msg(res.restMsg)
+            layer.msg('修改个人信息成功')
             this.$store.dispatch('GetInfo')
             this.isModify = false
-
             // 输入框是否置灰
             this.setIsDisableFlag(this.userInfo)
-
             this.reload() //  刷新页面
           } else {
             layer.alert(res.restMsg, {
@@ -127,6 +130,8 @@ export default {
         }).catch((err) => {
           console.log(err)
         })
+      }else{
+        layer.msg('未检出修改个人信息')
       }
     },
     handleAvatarSuccess(res, file) {
