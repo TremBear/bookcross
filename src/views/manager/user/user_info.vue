@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="layui-form-item">
-            <span style="font-size: xx-small; color: red;">您还剩下{{ userInfo.nicknameChangeTimes }}次修改昵称的机会哦~</span>
+            <span style="font-size: xx-small; color: red;">您还剩下{{ userInfo.nicknameChangeTimes }}次修改昵称的机会，头像可无限次修改哦~</span>
           </div>
           <div class="layui-form-item">
             <button class="layui-btn" @click="handleSubmit" >确认修改</button>
