@@ -35,12 +35,12 @@
           <div class="layui-tab-item layui-show">
             <ul class="mine-view jie-row">
               <li>
-                <a>站内统计:</a>
-                <em>{{ totalCount.commentCount }}</em>
+                <a>主题数量:</a>
+                <em>{{ totalCount.topicCount }}</em>
               </li>
               <li>
-                <a>回帖数量:</a>
-                <em>{{ totalCount.topicCount }}</em>
+                <a>回帖数据:</a>
+                <em>{{ totalCount.commentCount }}</em>
               </li>
               <li>
                 <a>用户数量:</a>
@@ -56,12 +56,12 @@
           <div class="layui-tab-item">
             <ul class="mine-view jie-row">
               <li>
-                <a>站内统计:</a>
-                <em>{{ dailyCount.commentCount }}</em>
+                <a>主题数量:</a>
+                <em>{{ dailyCount.topicCount }}</em>
               </li>
               <li>
                 <a>回帖数量:</a>
-                <em>{{ dailyCount.topicCount }}</em>
+                <em>{{ dailyCount.commentCount }}</em>
               </li>
               <li>
                 <a>用户数量:</a>

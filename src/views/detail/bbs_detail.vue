@@ -208,6 +208,7 @@ export default {
       this.$store.dispatch('Post', { url: '/bbspost/topic/getPost', data: detail }).then(res => {
         if (res.restCode === '0000') {
           this.topicsItem = res.data
+          this.topicsItem.topicTitle = this.topicsItem.topicTitle.substr(0,60)
           if (res.data.replyDetail) {
             this.replyDetailList = res.data.replyDetail.list
             this.total = res.data.replyDetail.total
