@@ -87,8 +87,10 @@ export default {
     handleReport(){
       this.$store.dispatch('Get', { url: '/bbsadmin/reprotManager/allReportTypes'}).then(res => {
         if (res.restCode === '0000') {
-          this.selectOptions = res.data
-          this.seleValue = res.data[0].id
+          if(res.data.length > 0){
+            this.selectOptions = res.data
+            this.seleValue = res.data[0].id
+          }
         }
       }).catch((err) => {
         console.log(err)
