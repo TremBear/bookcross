@@ -328,7 +328,9 @@ export default {
       if (!this.checkInput(this.title_input)) {
         return
       }
-      this.editorContent = this.content
+      if(this.editorContent == ''){
+        this.editorContent = this.content
+      }
       if (this.editorContent == '') {
         this.danger = true
         return
