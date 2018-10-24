@@ -5,35 +5,40 @@
         <div class="layui-col-md8 content detail">
           <div class="fly-panel detail-box">
             <el-row :gutter="20">
-              <el-col :span="8"><div class="grid-content bg-purple">
-                <div class="block">
-                  <el-carousel height="250px" style="border:1px solid">
-                    <el-carousel-item v-for="item in 4" :key="item">
-                      <h3>{{ item }}</h3>
-                    </el-carousel-item>
-                  </el-carousel>
+              <el-col :span="8">
+                <div class="grid-content bg-purple">
+                  <div class="block">
+                    <el-carousel height="250px" style="border:1px solid">
+                      <el-carousel-item v-for="item in 4" :key="item">
+                        <h3>{{ item }}</h3>
+                      </el-carousel-item>
+                    </el-carousel>
+                  </div>
                 </div>
-              </div></el-col>
-              <el-col :span="16"><div class="grid-content bg-purple">
-                <div class="grid-demo" style="font-size: larger">
-                  <p><b>书名：</b><span>双城记</span></p>
-                  <p><b>作者：</b><span>狄更斯</span></p>
-                  <p><b>主人：</b><span>刘晓明</span></p>
-                  <p><b>类别：</b><span>国外小说</span></p>
-                  <br/>
-                  <el-rate
-                    v-model="value5"
-                    disabled
-                    show-score
-                    text-color="#ff9900"
-                    score-template="{value}">
-                  </el-rate><br/>
-                  <el-row>
-                    <el-button size="mini" type="info">正在借阅中...</el-button>
-                    <el-button size="mini" type="primary">收藏</el-button>
-                  </el-row>
+              </el-col>
+              <el-col :span="16">
+                <div class="grid-content bg-purple">
+                  <div class="grid-demo" style="font-size: larger">
+                    <p><b>书名：</b><span>双城记</span></p>
+                    <p><b>作者：</b><span>狄更斯</span></p>
+                    <p><b>主人：</b><span>刘晓明</span></p>
+                    <p><b>类别：</b><span>国外小说</span></p>
+                    <br/>
+                    <el-rate
+                      v-model="value5"
+                      disabled
+                      show-score
+                      text-color="#ff9900"
+                      score-template="{value}">
+                    </el-rate>
+                    <br/>
+                    <el-row>
+                      <el-button size="mini" type="info">正在借阅中...</el-button>
+                      <el-button size="mini" type="primary">收藏</el-button>
+                    </el-row>
+                  </div>
                 </div>
-              </div></el-col>
+              </el-col>
             </el-row>
             <div style="
             	position: relative;

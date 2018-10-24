@@ -11,15 +11,13 @@
               <span class="fly-mid"/>
             </div>
             <ul class="fly-list">
-              <li v-for="item in 4" :key="item">
+              <li v-for="(item, index) in topicsItme" :key="index">
                 <a href="#" class="fly-avatar">
-                  <img src="/static/cweg.jpg" :alt="item.userNickname">
+                  <img :src="!item.userImagePath?'./static/cweg.jpg':item.userImagePath" :alt="item.userNickname">
                 </a>
                 <h2>
-                  <a class="layui-badge" >
-                    {{value5}}
-                  </a>
-                  <a @click="handleDetail(item)" >双城记</a>
+                  <a class="layui-badge" v-if="item.labelId" >{{ lableDic(item.labelId) }}</a>
+                  <a @click="handleDetail(item)" >{{ item.topicTitle }}</a>
                 </h2>
                 <div class="fly-list-info">
                   <a href="#" link>
@@ -28,8 +26,8 @@
                   <span>{{ formatTime(item.modifyTime) }}</span>
 
                   <span class="fly-list-kiss layui-hide-xs" >
-                    <span >•2018-10-3 </span>&nbsp;&nbsp;&nbsp;
-                    <span v-if="item===2" > •来自于 <a href="/">刘晓明</a> </span>
+                    <span v-if="item.publishedTime">•{{ item.publishedTime }} </span>
+                    <span v-if="item.replyUsername">•最后回复来自{{ item.replyUsername }}</span>
                   </span>
                   <span class="fly-list-nums">
                     <a onclick="clickCollectBBS()"><i class="layui-icon" title="收藏">&#xe658;</i>{{ item.collectCount }}</a>
@@ -40,7 +38,7 @@
                 </div>
                 <div class="fly-list-badge">
                   <span v-if="item.topicType===3 || item.topicType===4" class="layui-badge layui-bg-red" >置顶</span>
-                  <span  v-if="item===3" class="layui-badge layui-bg-red" >精华</span>
+                  <span v-if="item.topicType===2 || item.topicType===4" class="layui-badge layui-bg-red" >精华</span>
                 </div>
               </li>
 
@@ -88,7 +86,6 @@ export default {
   },
   data() {
     return {
-      value5:3.7,
       topicsItme: [],
       total: 0,
       lableItem: {},
@@ -110,9 +107,9 @@ export default {
   mounted() {
     this.$nextTick(function() {
       this.$store.commit('SET_IS_SHOW_SIDE', true)
-      // this.handleLabelId()
-      // this.handleSarch()
-      // this.getAlNotice()
+      this.handleLabelId()
+      this.handleSarch()
+      this.getAlNotice()
     })
   },
   methods: {
